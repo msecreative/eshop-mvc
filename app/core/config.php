@@ -8,6 +8,8 @@
     define("DB_PASS", "");
     define("DB_SERVER", "localhost");
 
+    define("THEME", "eshop/");
+
 
     define("DEBUG", "true");
 
