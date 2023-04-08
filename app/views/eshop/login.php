@@ -6,7 +6,7 @@
 				<div class="col-sm-4 col-sm-offset-4">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="#">
+						<form action="#" method="post">
 							<input type="text" placeholder="Name" />
 							<input type="email" placeholder="Email Address" />
 							<span>
