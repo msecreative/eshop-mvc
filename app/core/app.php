@@ -10,6 +10,7 @@ class App {
         $url = $this->parseURL();
 
         if (file_exists("../app/controllers/" . strtolower($url[0]) . ".php")) {
+
             $this->controller = strtolower($url[0]);
             unset($url[0]);
         }
@@ -18,7 +19,9 @@ class App {
         $this->controller = new $this->controller;
 
         if (isset($url[1])) {
+
             $url[1] = strtolower($url[1]);
+
             if (method_exists($this->controller, $url[1])) {
                 $this->method = $url[1];
                 unset($url[1]);
@@ -27,7 +30,7 @@ class App {
 
         $this->params = (count($url) > 0) ? $url : ["home"];
 
-        $ss = call_user_func_array([$this->controller,$this->method], $this->params);
+        call_user_func_array([$this->controller,$this->method], $this->params);
     }
 
     private function parseURL ()
