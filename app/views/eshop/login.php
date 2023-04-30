@@ -4,11 +4,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-4">
+					<?php chk_error(); ?>
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
 						<form action="#" method="post">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
+							<input type="email" value="<?= isset($_POST["email"]) ? $_POST["email"] : ""; ?>" name="email" placeholder="Email Address" />
+							<input type="password" value="<?= isset($_POST["password"]) ? $_POST["password"] : ""; ?>" name="password" placeholder="Password" />
 							<span>
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in

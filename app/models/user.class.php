@@ -19,8 +19,8 @@
 
             //Check email if already exist
             $sql = "SELECT * FROM users WHERE email = :email limit 1";
-            //$arr['email'] = $data['email'];
-            $emailchk = $db->read($sql, array("email" => $data["email"]));
+            $arr['email'] = $data['email'];
+            $emailchk = $db->read($sql, $arr);
             if (is_array($emailchk)) {
                 $this->error .= "That email is already used. <br>";
             }
@@ -37,10 +37,16 @@
             if (strlen($data["password"]) < 6 ) {
                 $this->error .= "Password must be atleast 6 characters long. <br>";
             }
+            $data["url_address"] = $this->get_random_string_max(60);
+            $sql = "SELECT * FROM users WHERE url_address = :url_address limit 1";
+            $arr_url["url_address"] = $data["url_address"];
+            $check = $db->read($sql, $arr_url);
+            if (is_array($check)) {
+                $data["url_address"] = $this->get_random_string_max(60);
+            }
 
             if (empty($this->error)) {
                 $data["rank"] = "customer";
-                $data["url_address"] = $this->get_random_string_max(60);
                 $data["date"] = date("Y-m-d H:i:s");
                 $data["password"] = hash('sha1', $data["password"]);
 
@@ -58,6 +64,40 @@
         }
 
         public function login($post){
+
+            $data               = array();
+            $db = Database::getInstance();
+            $data["email"]      = trim($_POST['email']);
+            $data["password"]   = trim($_POST['password']);
+
+            
+            if (empty($data["email"]) || !filter_var($data["email"], FILTER_VALIDATE_EMAIL)) {
+                
+                $this->error .= "Please enter a valid email. <br>";
+            }
+
+            if (strlen($data["password"]) < 6 ) {
+                $this->error .= "Password must be atleast 6 characters long. <br>";
+            }
+            
+            
+
+            if (empty($this->error)) {
+                $data["password"] = hash('sha1', $data["password"]);
+
+                //read data from database
+                $sql = "SELECT * FROM users WHERE email = :email && password = :password limit 1";
+                $result = $db->read($sql, $data);
+                if (is_array($result)) {
+                    $_SESSION["user_url"] = $result[0]->url_address;
+                    header("Location:" .ROOT . "home");
+                    die;
+                }
+                $this->error .= "Email or Password doesn't match. <br>";
+
+            }
+
+            $_SESSION['error'] = $this->error;
 
         }
 
@@ -79,5 +119,29 @@
 
              return $text;
         }
+
+        function check_login(){
+            if (isset($_SESSION["user_url"])) {
+                $arr["url_address"] = $_SESSION["user_url"];
+                $sql = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
+                $db = Database::getInstance();
+                $result = $db->read($sql, $arr);
+                if (is_array($result)) {
+                    return $result[0];
+                }
+
+            }
+
+            return false;
+        }
+
+        public function logout(){
+            if (isset($_SESSION["user_url"])) {
+                unset($_SESSION["user_url"]);
+            }
+            header("Location:" .ROOT . "home");
+            die;
+        }
+
     }
 ?>
