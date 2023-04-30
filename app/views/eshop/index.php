@@ -757,4 +757,4 @@
 		</div>
 	</section>
 
-	<?php $this->view("footer") ?>
+	<?php $this->view("footer", $data) ?>

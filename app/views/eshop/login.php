@@ -7,7 +7,7 @@
 					<?php chk_error(); ?>
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="#" method="post">
+						<form method="post">
 							<input type="email" value="<?= isset($_POST["email"]) ? $_POST["email"] : ""; ?>" name="email" placeholder="Email Address" />
 							<input type="password" value="<?= isset($_POST["password"]) ? $_POST["password"] : ""; ?>" name="password" placeholder="Password" />
 							<span>
