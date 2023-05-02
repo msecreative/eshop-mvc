@@ -13,6 +13,15 @@
     <link href="<?= ASSETS . THEME ?>css/animate.css" rel="stylesheet">
 	<link href="<?= ASSETS . THEME ?>css/main.css" rel="stylesheet">
 	<link href="<?= ASSETS . THEME ?>css/responsive.css" rel="stylesheet">
+	<!-- Taken from admin -->
+	<link rel="stylesheet" type="text/css" href="<?=ASSETS . THEME ?>admin/css/zabuto_calendar.css">
+    <link rel="stylesheet" type="text/css" href="<?=ASSETS . THEME ?>admin/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" type="text/css" href="<?=ASSETS . THEME ?>admin/lineicons/style.css">    
+    
+    <!-- Custom styles for this template -->
+    <!-- <link href="<?=ASSETS . THEME ?>admin/css/style.css" rel="stylesheet">
+    <link href="<?=ASSETS . THEME ?>admin/css/style-responsive.css" rel="stylesheet"> -->
+	<!-- Taken from admin end -->
     <!--[if lt IE 9]>
     <script src="<?= ASSETS . THEME ?>js/html5shiv.js"></script>
     <script src="<?= ASSETS . THEME ?>js/respond.min.js"></script>
@@ -89,7 +98,11 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+								<?php 
+									if (isset($data["user_data"]) && $data["user_data"]->rank == "admin") {	
+								?>
+								<li><a href="<?=ROOT ?>profile"><i class="fa fa-user"></i> Account</a></li>
+								<?php } ?>
 								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
