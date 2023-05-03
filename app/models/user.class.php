@@ -120,21 +120,42 @@
              return $text;
         }
 
-        function check_login($redirect = false){
-            if (isset($_SESSION["user_url"])) {
-                $arr["url_address"] = $_SESSION["user_url"];
-                $sql = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
-                $db = Database::getInstance();
-                $result = $db->read($sql, $arr);
-                if (is_array($result)) {
-                    return $result[0];
-                }
+        function check_login($redirect = false, $allowed = array()){
 
-            }
-            if ($redirect) {
-                header("Location:" .ROOT . "login");
-                die;
-            }
+            $db = Database::getInstance();
+
+            if (count($allowed) > 0 ) {
+
+            $url_arr["url_address"] = $_SESSION["user_url"];
+            $sql = "SELECT `rank` FROM users WHERE url_address =:url_address LIMIT 1";
+            $result = $db->read($sql,$url_arr);
+                if (is_array($result)) {
+
+                    $result = $result[0];
+                    if (in_array($result->rank, $allowed)) {
+
+                        return $result;
+                    }
+                }  //if (is_array($result)) {
+                    header("Location:" .ROOT . "login");
+                    die;
+                
+            }else{ //if (count($allowed) > 0 ) {
+                
+                if (isset($_SESSION["user_url"])) {
+                    $arr["url_address"] = $_SESSION["user_url"];
+                    $sql = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
+                    $result = $db->read($sql, $arr);
+                    if (is_array($result)) {
+                        return $result[0];
+                    }
+
+                }
+                if ($redirect) {
+                    header("Location:" .ROOT . "login");
+                    die;
+                }
+            } //end //if (count($allowed) > 0 ) {
             return false;
         }
 

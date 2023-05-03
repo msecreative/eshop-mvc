@@ -13,6 +13,12 @@
                           <span>Dashboard</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a target="_blank" href="<?=ROOT?>index">
+                          <i class="fa fa-shopping-cart"></i>
+                          <span>Shop Website</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
