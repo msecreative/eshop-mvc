@@ -6,6 +6,7 @@
         background: #f4f4f4;
         color: #11151b;
         margin-bottom: 40px;
+        padding-bottom: 30px;
     }
 
     .white-panel p {
@@ -40,18 +41,26 @@
                 <!-- WHITE PANEL - TOP USER -->
                 <div class="white-panel pn">
                     <div class="white-header">
-                        <h5><?=$data["user_data"]->rank ?></h5>
+                        <h5><?=strtoupper($data["user_data"]->rank) ?></h5>
                     </div>
                     <p><img src="<?=ASSETS . THEME ?>admin/img/ui-zac.jpg" class="img-circle" width="80"></p>
                     <p><b><?=$data["user_data"]->name ?></b></p>
                     <div class="row">
                         <div class="col-md-6">
                             <p class="small mt">MEMBER SINCE</p>
-                            <p>2012</p>
+                            <p><?=date("d-M-Y", strtotime($data["user_data"]->date)) ?></p>
                         </div>
                         <div class="col-md-6">
                             <p class="small mt">TOTAL SPEND</p>
                             <p>$ 47,60</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="">Edit</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="">Delete</a>
                         </div>
                     </div>
                 </div>

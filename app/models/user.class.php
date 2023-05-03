@@ -120,7 +120,7 @@
              return $text;
         }
 
-        function check_login(){
+        function check_login($redirect = false){
             if (isset($_SESSION["user_url"])) {
                 $arr["url_address"] = $_SESSION["user_url"];
                 $sql = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
@@ -131,7 +131,10 @@
                 }
 
             }
-
+            if ($redirect) {
+                header("Location:" .ROOT . "login");
+                die;
+            }
             return false;
         }
 
