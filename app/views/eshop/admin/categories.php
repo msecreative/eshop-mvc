@@ -59,11 +59,10 @@
                                   <th></th>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table_body">
                                 <tr>
-                                    <td><a href="basic_table.html#">Company Ltd</a></td>
+                                    <td><a href="basic_table.html#">1</a></td>
                                     <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                    <td>12000.00$ </td>
                                     <td><span class="label label-info label-mini">Due</span></td>
                                     <td>
                                         <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
@@ -97,16 +96,21 @@
                if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
                 alert("Please enter a valid category name");
                }
-               sendData(cateInput.value.trim());
+
+               var data = cateInput.value.trim()
+               sendData({
+                    data:data,
+                    data_type: "add_category"
+                    });
 
 
             }
-            function sendData(data){
+            function sendData(data = {}){
 
                 var ajax = new XMLHttpRequest();
-                var form = new FormData();
+                // var form = new FormData();
 
-                form.append('data', 'data');
+                // form.append('data', data);
 
                 ajax.addEventListener("readystatechange", function(){
                     if (ajax.readyState == 4 && ajax.status == 200) {
@@ -114,11 +118,27 @@
                     }
                 });
                 ajax.open("POST", "<?=ROOT?>ajax", true);
-                ajax.send(form);
+                ajax.send(JSON.stringify(data));
             }
 
             function handleResult(result){
-                showAddNew();
+                console.log(result);
+                if (result != "") {
+                    var obj = JSON.parse(result);
+
+                    if (typeof obj.message_type != "undefined") {
+
+                        if (obj.message_type == "info") {
+                            alert(obj.message);
+                            showAddNew();
+
+                            var table_body = document.querySelector("#table_body");
+                            table_body.innerHTML = obj.data;
+                        }else{
+                            alert(obj.message);
+                        }
+                    }
+                }
 
             }
         </script>
