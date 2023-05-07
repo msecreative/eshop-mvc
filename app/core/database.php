@@ -25,6 +25,12 @@
             
         }
 
+        public static function newInstance(){
+
+            return $instance = new self();
+            
+        }
+
         // Read data
         public function read($query, $data = array()){
             

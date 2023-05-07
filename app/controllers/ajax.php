@@ -15,15 +15,15 @@
                         $arr["message"] = $_SESSION["error"];
                         $_SESSION['error'] = "";
                         $arr["message_type"] = "error";
-                        $allCategory = $category->getAllCategory();
-                        $arr["data"] = $category->make_table($allCategory);
+                        $arr["data"] = "";
 
-                        
                         echo json_encode($arr);
                     }else{
                         $arr["message"] = "Category added successfully";
                         $arr["message_type"] = "info";
-                        $arr["data"] = "";
+                        $allCategory = $category->getAllCategory();
+                        $arr["data"] = $category->make_table($allCategory);
+                        
                         echo json_encode($arr);
                     }
                 }

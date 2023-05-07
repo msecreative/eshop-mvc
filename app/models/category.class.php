@@ -30,8 +30,8 @@
 
         } 
         public function getAllCategory(){
-            $db = Database::getInstance();
-            return $result =  $db->read("SELECT * FROM categories");
+            $db = Database::newInstance();
+            return $db->read("SELECT * FROM categories ORDER BY catId DESC");
 
 
         }
@@ -39,12 +39,13 @@
         public function make_table($allCategory){
             $result = "";
             if (is_array($allCategory)) {
+                $i = 1;
                 foreach ($allCategory as $catRow) {
                    $result .= "<tr>";
                         $result .= '
-                            <td>'.$catRow[0]->catId.'</td>
-                            <td class="hidden-phone"><a href="'.$catRow[0]->catId.'">'.$catRow[0]->category.'</a></td>
-                            <td><span class="label label-info label-mini">'.$catRow[0]->disabled.'</span></td>
+                            <td>'.$i.'</td>
+                            <td class="hidden-phone"><a href="'.$catRow->catId.'">'.$catRow->category.'</a></td>
+                            <td><span class="label label-info label-mini">'.$catRow->disabled.'</span></td>
                             <td>
                                 <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
                                 <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
@@ -52,6 +53,7 @@
                             </td>
                         ';
                     $result .= "</tr>";
+                    $i++;
                 }
             }
 

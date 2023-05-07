@@ -18,7 +18,7 @@
             position: absolute;
             padding: 10px;
             left: 25%;
-            top: 40%;
+            top: 0;
             border-radius: 3px;
             box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2)
         }
@@ -60,16 +60,15 @@
                               </tr>
                             </thead>
                             <tbody id="table_body">
-                                <tr>
-                                    <td><a href="basic_table.html#">1</a></td>
-                                    <td class="hidden-phone">Lorem Ipsum dolor</td>
-                                    <td><span class="label label-info label-mini">Due</span></td>
-                                    <td>
-                                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                    </td>
-                                </tr>
+                                <?php 
+                                
+                                    $db = Database::newInstance();
+                                    $allCategories = $db->read("SELECT * FROM categories ORDER BY catId DESC");
+
+                                    $category = $this->load_model("Category");
+                                    echo $category->make_table($allCategories);
+
+                                ?>
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->
@@ -122,7 +121,6 @@
             }
 
             function handleResult(result){
-                console.log(result);
                 if (result != "") {
                     var obj = JSON.parse(result);
 
