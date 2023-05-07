@@ -5,7 +5,7 @@
               <ul class="sidebar-menu" id="nav-accordion">
               
               	  <p class="centered"><a href="profile.html"><img src="<?=ASSETS . THEME ?>admin/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-              	  <h5 class="centered">Marcel Newman</h5>
+              	  <h5 class="centered"><?=ucwords($data["user_data"]->name) ?></h5>
               	  	
                   <li class="mt">
                       <a href="index.html">
@@ -23,16 +23,65 @@
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-desktop"></i>
-                          <span>UI Elements</span>
+                          <span>Products</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="general.html">General</a></li>
-                          <li><a  href="buttons.html">Buttons</a></li>
-                          <li><a  href="panels.html">Panels</a></li>
+                          <li><a  href="<?=ROOT ?>admin/products">Products List</a></li>
+                          <li><a  href="<?=ROOT ?>admin/products/add">Add New Products</a></li>
+                          <li><a  href="<?=ROOT ?>admin/products/edit">Edit Products</a></li>
+                          <li><a  href="<?=ROOT ?>admin/products/delete">Delete Products</a></li>
                       </ul>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?=ROOT ?>admin/categories/list" >
+                          <i class="fa fa-list-alt"></i>
+                          <span>Categories</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="<?=ROOT ?>admin/categories">View Category</a></li>
+                          <li><a  href="<?=ROOT ?>admin/categories/list">Category List</a></li>
+                          <li><a  href="<?=ROOT ?>admin/categories/add">Add Category</a></li>
+                          <li><a  href="<?=ROOT ?>admin/categories/delete">Edit Category</a></li>
+                      </ul>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="<?=ROOT ?>admin/orders" >
+                          <i class="fa fa-reorder"></i>
+                          <span>Orders</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?=ROOT ?>admin/settings" >
+                          <i class="fa fa-cogs"></i>
+                          <span>Settings</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="<?=ROOT ?>admin/settings/slider-image">Home Image</a></li>
+                      </ul>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?=ROOT ?>admin/users" >
+                          <i class="fa fa-users"></i>
+                          <span>Users</span>
+                      </a>
+                      <ul class="sub">
+                          <li><a  href="<?=ROOT ?>admin/users/customers">Customer</a></li>
+                          <li><a  href="<?=ROOT ?>admin/users/admins">Admins</a></li>
+                      </ul>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="<?=ROOT ?>admin/backub" >
+                          <i class="fa fa-hdd-o"></i>
+                          <span>Website Backup</span>
+                      </a>
                   </li>
               </ul>
               <!-- sidebar menu end-->
           </div>
       </aside>
       <!--sidebar end-->
+            <!--main content start-->
+        <section id="main-content">
+          <section class="wrapper site-min-height">
+          	<h3><i class="fa fa-angle-right"></i> <?= ucwords($data["page_title"]) ?></h3>

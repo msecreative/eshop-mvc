@@ -127,7 +127,7 @@
             if (count($allowed) > 0 ) {
 
             $url_arr["url_address"] = $_SESSION["user_url"];
-            $sql = "SELECT `rank` FROM users WHERE url_address =:url_address LIMIT 1";
+            $sql = "SELECT * FROM users WHERE url_address =:url_address LIMIT 1";
             $result = $db->read($sql,$url_arr);
                 if (is_array($result)) {
 

@@ -1,3 +1,6 @@
+        
+        </section><! --/wrapper -->
+    </section><!-- /MAIN CONTENT -->
      <!--footer start-->
      <footer class="site-footer">
           <div class="text-center">
