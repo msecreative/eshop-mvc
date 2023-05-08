@@ -49,8 +49,8 @@
                             <td><span class="label label-info label-mini">'.$catRow->disabled.'</span></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
-                                <button id="'.$catRow->catId.'" onclick="edit_row(event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button id="'.$catRow->catId.'" onclick="delete_row(event)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                <button catid="'.$catRow->catId.'" onclick="edit_row(event, '.$catRow->catId.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button catid="'.$catRow->catId.'" onclick="delete_row(event, '.$catRow->catId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                             </td>
                         ';
                     $result .= "</tr>";

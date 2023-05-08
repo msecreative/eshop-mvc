@@ -120,24 +120,42 @@
                 if (result != "") {
                     var obj = JSON.parse(result);
 
-                    if (typeof obj.message_type != "undefined") {
+                    if (typeof obj.data_type != "undefined") {
 
-                        if (obj.message_type == "info") {
-                            alert(obj.message);
-                            showAddNew();
-
-                            var table_body = document.querySelector("#table_body");
-                            table_body.innerHTML = obj.data;
-                        }else{
-                            alert(obj.message);
+                        if (obj.data_type == "add_new") {
+                            
+                            if (obj.message_type == "info") {
+                                alert(obj.message);
+                                showAddNew();
+                                
+                                var table_body = document.querySelector("#table_body");
+                                table_body.innerHTML = obj.data;
+                            }else{
+                                alert(obj.message);
+                            }
+                        }else 
+                            if (obj.data_type == "delete_row") {
+                                alert(obj.message);
                         }
                     }
                 }
 
             }
             // Edit category
-            function edit_row(obj){
-                console.log(obj);
+            function edit_row(e,catId){
+
+                sendData({
+                    data_type: "",
+                });
+            }
+            function delete_row(e,catId){
+                if (!confirm("Are your sure you want to delete this category")) {
+                    return;
+                }
+                sendData({
+                    data_type: "delete_row",
+                    catId:catId
+                });
             }
         </script>
       <!--main content end-->
