@@ -62,7 +62,7 @@
                             <tbody id="table_body">
                                 <?php 
                                 
-                                    echo $data["table_rows"];
+                                    echo $table_rows;
 
                                 ?>
                             </tbody>
@@ -134,6 +134,10 @@
                     }
                 }
 
+            }
+            // Edit category
+            function edit_row(obj){
+                console.log(obj);
             }
         </script>
       <!--main content end-->

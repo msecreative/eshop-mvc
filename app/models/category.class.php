@@ -41,15 +41,16 @@
             if (is_array($allCategory)) {
                 $i = 1;
                 foreach ($allCategory as $catRow) {
-                   $result .= "<tr>";
+                    $catRow->disabled = $catRow->disabled ? "Enabled" : "Disabled";
+                    $result .= "<tr>";
                         $result .= '
                             <td>'.$i.'</td>
                             <td class="hidden-phone"><a href="'.$catRow->catId.'">'.$catRow->category.'</a></td>
                             <td><span class="label label-info label-mini">'.$catRow->disabled.'</span></td>
                             <td>
-                                <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
+                                <button id="'.$catRow->catId.'" onclick="edit_row(event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button id="'.$catRow->catId.'" onclick="delete_row(event)" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                             </td>
                         ';
                     $result .= "</tr>";
