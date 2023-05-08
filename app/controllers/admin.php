@@ -21,6 +21,17 @@
                 $data["user_data"] = $user_data;
             }
 
+            // Show category all data after refreshing page
+            $db = Database::newInstance();
+            $allCategories = $db->read("SELECT * FROM categories ORDER BY catId DESC");
+
+            $category = $this->load_model("Category");
+            $table_rows =  $category->make_table($allCategories);
+
+            if (is_array($allCategories)) {
+                $data["table_rows"] = $table_rows;
+            }
+
             $data["page_title"] = "Categories";
             $this ->view("admin/categories", $data);
         }

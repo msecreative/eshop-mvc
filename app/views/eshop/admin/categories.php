@@ -62,11 +62,7 @@
                             <tbody id="table_body">
                                 <?php 
                                 
-                                    $db = Database::newInstance();
-                                    $allCategories = $db->read("SELECT * FROM categories ORDER BY catId DESC");
-
-                                    $category = $this->load_model("Category");
-                                    echo $category->make_table($allCategories);
+                                    echo $data["table_rows"];
 
                                 ?>
                             </tbody>
