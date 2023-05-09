@@ -26,7 +26,12 @@
 
         } 
 
-        public function delete(){
+        public function delete($catId){
+
+            $db = Database::newInstance();
+            $catId = (int)$catId;
+            $sql = "DELETE FROM categories WHERE catId = '$catId' LIMIT 1";
+            $db->write($sql);
 
         } 
         public function getAllCategory(){

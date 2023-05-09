@@ -52,10 +52,14 @@
                 
                 }elseif ($data->data_type == "delete_row") {
 
+                        $category->delete($data->catId);
                         $arr["message"] = "Your category was successfully deleted";
                         $_SESSION['error'] = "";
                         $arr["message_type"] = "info";
-                        $arr["data"] = "";
+
+                        $allCategory = $category->getAllCategory();
+                        $arr["data"] = $category->make_table($allCategory);
+
                         $arr["data_type"] = "delete_row";
 
                         echo json_encode($arr);
