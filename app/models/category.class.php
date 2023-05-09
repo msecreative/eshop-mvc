@@ -42,15 +42,17 @@
                 $i = 1;
                 foreach ($allCategory as $catRow) {
                     $catRow->disabled = $catRow->disabled ? "Enabled" : "Disabled";
+                    $status_color = $catRow->disabled == "Enabled" ? "info" : "danger";
+                    $args = $catRow->catId.",'".$catRow->disabled."'";
                     $result .= "<tr>";
                         $result .= '
                             <td>'.$i.'</td>
                             <td class="hidden-phone"><a href="'.$catRow->catId.'">'.$catRow->category.'</a></td>
-                            <td><span class="label label-info label-mini">'.$catRow->disabled.'</span></td>
+                            <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$catRow->disabled.'</span></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
-                                <button catid="'.$catRow->catId.'" onclick="edit_row(event, '.$catRow->catId.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button catid="'.$catRow->catId.'" onclick="delete_row(event, '.$catRow->catId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                <button onclick="edit_row('.$catRow->catId.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button onclick="delete_row('.$catRow->catId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                             </td>
                         ';
                     $result .= "</tr>";

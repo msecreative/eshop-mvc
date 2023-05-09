@@ -7,8 +7,10 @@
 
             if (is_object($data) && isset($data->data_type)) {
 
+                $db = Database::getInstance();
+                $category = $this->load_model("Category");
+
                 if ($data->data_type == "add_category") {
-                    $category = $this->load_model("Category");
                     $check = $category->create($data);
 
                     if ($_SESSION["error"] != "") {
@@ -29,6 +31,25 @@
                         
                         echo json_encode($arr);
                     }
+                }elseif ($data->data_type == "disable_row") {
+
+                        $disabled = ($data->current_state == "Enabled") ? "0" : "1";
+                        $catId = $data->catId;
+
+                        $sql = "UPDATE categories SET `disabled` = '$disabled' WHERE catId = '$catId' LIMIT 1";
+                        $db->write($sql);
+
+                        $arr["message"] = "";
+                        $_SESSION['error'] = "";
+                        $arr["message_type"] = "info";
+
+                        $allCategory = $category->getAllCategory();
+                        $arr["data"] = $category->make_table($allCategory);
+                       
+                        $arr["data_type"] = "disable_row";
+
+                        echo json_encode($arr);
+                
                 }elseif ($data->data_type == "delete_row") {
 
                         $arr["message"] = "Your category was successfully deleted";

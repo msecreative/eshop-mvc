@@ -134,6 +134,11 @@
                                 alert(obj.message);
                             }
                         }else 
+                            if (obj.data_type == "disable_row") {
+                                var table_body = document.querySelector("#table_body");
+                                table_body.innerHTML = obj.data;
+
+                            }else
                             if (obj.data_type == "delete_row") {
                                 alert(obj.message);
                         }
@@ -142,19 +147,28 @@
 
             }
             // Edit category
-            function edit_row(e,catId){
+            function edit_row(catId){
 
                 sendData({
                     data_type: "",
                 });
             }
-            function delete_row(e,catId){
+            // Delete category
+            function delete_row(catId){
                 if (!confirm("Are your sure you want to delete this category")) {
                     return;
                 }
                 sendData({
                     data_type: "delete_row",
                     catId:catId
+                });
+            }
+            // Disable category
+            function disable_row(catId,state){
+                sendData({
+                    data_type: "disable_row",
+                    catId:catId,
+                    current_state:state
                 });
             }
         </script>
