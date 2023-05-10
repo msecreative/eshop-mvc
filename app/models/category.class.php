@@ -2,7 +2,7 @@
     class Category {
 
         public function create($DATA){
-            $db = Database::getInstance();
+            $db = Database::newInstance();
             $arr['category'] = ucwords($DATA->data);
 
             if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['category']))) {
@@ -48,7 +48,9 @@
                 foreach ($allCategory as $catRow) {
                     $catRow->disabled = $catRow->disabled ? "Enabled" : "Disabled";
                     $status_color = $catRow->disabled == "Enabled" ? "info" : "danger";
+
                     $args = $catRow->catId.",'".$catRow->disabled."'";
+                    $editArgs = $catRow->catId.",'".$catRow->category."'";
                     $result .= "<tr>";
                         $result .= '
                             <td>'.$i.'</td>
@@ -56,7 +58,7 @@
                             <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$catRow->disabled.'</span></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
-                                <button onclick="edit_row('.$catRow->catId.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button onclick="show_edit_category('.$editArgs.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                                 <button onclick="delete_row('.$catRow->catId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                             </td>
                         ';

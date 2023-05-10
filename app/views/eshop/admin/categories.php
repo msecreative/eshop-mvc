@@ -11,7 +11,7 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
     <style>
-        .add-new-category{
+        .add-new-category, .edit-category{
             width: 50%;
             height: 300px;
             background-color: #cecccc;
@@ -34,6 +34,7 @@
                                 <h4><i class="fa fa-angle-right"></i>Product Categories List</h4>
                                 <button onclick="showAddNew(event)" class="btn btn-success btn-xs"><i style="margin-right: 10px;"  class="fa fa-plus"></i>Add New Category</button>
                             </div>
+                            <!-- Add new category -->
                             <div class="add-new-category hide">
                                 <!-- BASIC FORM ELELEMNTS -->
                                 <h4 class="mb"><i class="fa fa-angle-right"></i>Add Category</h4>
@@ -48,6 +49,24 @@
                                     <button onclick="showAddNew(event)" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
                                 </form>
                             </div>
+                            <!-- Add new category end-->
+
+                            <!-- Edit category -->
+                            <div class="edit-category hide">
+                                <!-- BASIC FORM ELELEMNTS -->
+                                <h4 class="mb"><i class="fa fa-angle-right"></i>Edit Category</h4>
+                                <form class="form-horizontal style-form" method="POST">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Category Name</label>
+                                        <div class="col-sm-8">
+                                            <input name="category" id="category_edit" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
+                                    <button onclick="show_edit_category(0,'')" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
+                                </form>
+                            </div>
+                            <!-- Edit category end-->
                             
                             <hr>
                             <thead>
@@ -73,8 +92,8 @@
 			
 		
         <script>
-            // add and hide modal
-            function showAddNew(e){
+            // add and hide category modal
+            function showAddNew(){
                 var showCatBox = document.querySelector(".add-new-category");
                 var cateInput = document.querySelector("#category");
                 if (showCatBox.classList.contains("hide")) {
@@ -82,6 +101,21 @@
                     cateInput.focus();
                 }else{
                     showCatBox.classList.add("hide");
+                    cateInput.value = "";
+                }
+            }
+
+            // Edit and hide category modal
+            function show_edit_category(id,category){
+                var showEditCatBox = document.querySelector(".edit-category");
+                var cateInput = document.querySelector("#category_edit");
+
+                cateInput.value = category;
+                if (showEditCatBox.classList.contains("hide")) {
+                    showEditCatBox.classList.remove("hide"); 
+                    cateInput.focus();
+                }else{
+                    showEditCatBox.classList.add("hide");
                     cateInput.value = "";
                 }
             }
@@ -143,7 +177,7 @@
 
                                 var table_body = document.querySelector("#table_body");
                                 table_body.innerHTML = obj.data;
-                                
+
                                 alert(obj.message);
                         }
                     }
