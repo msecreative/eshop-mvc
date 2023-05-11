@@ -22,7 +22,13 @@
             return false;
         } 
 
-        public function edit(){
+        public function edit($catId,$category){
+
+            $db = Database::newInstance();
+            $arr['catId'] = $catId;
+            $arr['category'] = $category;
+            $sql = "UPDATE categories SET category = :category  WHERE catId = :catId LIMIT 1";
+            $db->write($sql,$arr);
 
         } 
 
@@ -72,3 +78,4 @@
         } 
 
     }
+

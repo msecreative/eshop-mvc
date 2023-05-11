@@ -50,6 +50,20 @@
 
                         echo json_encode($arr);
                 
+                }elseif ($data->data_type == "edit_category") {
+
+                        $category->edit($data->catId, $data->category);
+                        $arr["message"] = "Your category was successfully edited";
+                        $_SESSION['error'] = "";
+                        $arr["message_type"] = "info";
+
+                        $allCategory = $category->getAllCategory();
+                        $arr["data"] = $category->make_table($allCategory);
+
+                        $arr["data_type"] = "edit_category";
+
+                        echo json_encode($arr);
+
                 }elseif ($data->data_type == "delete_row") {
 
                         $category->delete($data->catId);

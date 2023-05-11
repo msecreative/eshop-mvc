@@ -92,6 +92,9 @@
 			
 		
         <script>
+            
+            var  EDIT_ID = 0;
+
             // add and hide category modal
             function showAddNew(){
                 var showCatBox = document.querySelector(".add-new-category");
@@ -106,7 +109,8 @@
             }
 
             // Edit and hide category modal
-            function show_edit_category(id,category){
+            function show_edit_category(catId,category,e){
+                EDIT_ID = catId;
                 var showEditCatBox = document.querySelector(".edit-category");
                 var cateInput = document.querySelector("#category_edit");
 
@@ -120,7 +124,7 @@
                 }
             }
 
-            function collectData(){
+            function collectData(e){
                var cateInput = document.querySelector("#category"); 
                if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
                 alert("Please enter a valid category name");
@@ -134,6 +138,23 @@
 
 
             }
+
+            function collectEditData(e){
+               var cateInput = document.querySelector("#category_edit"); 
+               if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
+                alert("Please enter a valid category name");
+               }
+
+               var data = cateInput.value.trim()
+               sendData({
+                    catId:EDIT_ID,
+                    category:data,
+                    data_type: "edit_category"
+                    });
+
+
+            }
+
             function sendData(data = {}){
 
                 var ajax = new XMLHttpRequest();
@@ -168,6 +189,15 @@
                                 alert(obj.message);
                             }
                         }else 
+                            if (obj.data_type == "edit_category") {
+
+                                show_edit_category(0,'',false);
+                                
+                                var table_body = document.querySelector("#table_body");
+                                table_body.innerHTML = obj.data;
+                                //alert(obj.message);
+
+                            }else
                             if (obj.data_type == "disable_row") {
                                 var table_body = document.querySelector("#table_body");
                                 table_body.innerHTML = obj.data;
