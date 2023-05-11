@@ -39,9 +39,6 @@
                       </a>
                       <ul class="sub">
                           <li><a  href="<?=ROOT ?>admin/categories">View Category</a></li>
-                          <li><a  href="<?=ROOT ?>admin/categories/list">Category List</a></li>
-                          <li><a  href="<?=ROOT ?>admin/categories/add">Add Category</a></li>
-                          <li><a  href="<?=ROOT ?>admin/categories/delete">Edit Category</a></li>
                       </ul>
                   </li>
 
