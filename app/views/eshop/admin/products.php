@@ -11,9 +11,13 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
     <style>
+        .add-new-product .form-group, 
+        .edit-product .form-group{
+            padding-bottom: 35px;
+        }
         .add-new-product, .edit-product{
             width: 50%;
-            height: 300px;
+            height: 550px;
             background-color: #cecccc;
             position: absolute;
             padding: 10px;
@@ -40,9 +44,49 @@
                                 <h4 class="mb"><i class="fa fa-angle-right"></i>Add Product</h4>
                                 <form class="form-horizontal style-form" method="POST">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">Product Description</label>
+                                        <label class="col-sm-4 control-label">Product Name</label>
                                         <div class="col-sm-8">
-                                            <input name="description" id="description" type="text" class="form-control">
+                                            <input name="description" id="product" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Category</label>
+                                        <div class="col-sm-8">
+                                            <select name="category" id="category" class="form-control">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Quantity</label>
+                                        <div class="col-sm-8">
+                                            <input name="quantity" id="product_qty" type="number" value="1" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Price</label>
+                                        <div class="col-sm-8">
+                                            <input name="price" id="product_qty" type="number" value="0.00" step="0.01" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image2" id="product_qty" type="file" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image 3 (optional)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image3" id="product_qty" type="file" class="form-control">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image 4 (optional)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image4" id="product_qty" type="file" class="form-control">
                                         </div>
                                     </div>
                                     <button onclick="collectData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
@@ -59,14 +103,14 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Name</label>
                                         <div class="col-sm-8">
-                                            <input name="description" id="description_edit" type="text" class="form-control">
+                                            <input name="description" id="product_edit" type="text" class="form-control">
                                         </div>
                                     </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
                                     <button onclick="show_edit_product(0,'')" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
                                 </form>
                             </div>
-                            <!-- Edit category end-->
+                            <!-- Edit product end-->
                             
                             <hr>
                             <thead>
@@ -95,10 +139,10 @@
             
             var  EDIT_ID = 0;
 
-            // add and hide category modal
+            // add and hide product modal
             function showAddNew(){
                 var showCatBox = document.querySelector(".add-new-product");
-                var cateInput = document.querySelector("#category");
+                var cateInput = document.querySelector("#product");
                 if (showCatBox.classList.contains("hide")) {
                     showCatBox.classList.remove("hide"); 
                     cateInput.focus();
@@ -108,13 +152,13 @@
                 }
             }
 
-            // Edit and hide category modal
-            function show_edit_product(catId,category,e){
-                EDIT_ID = catId;
+            // Edit and hide product modal
+            function show_edit_product(pId,description,e){
+                EDIT_ID = pId;
                 var showEditCatBox = document.querySelector(".edit-product");
-                var cateInput = document.querySelector("#category_edit");
+                var cateInput = document.querySelector("#product_edit");
 
-                cateInput.value = category;
+                cateInput.value = description;
                 if (showEditCatBox.classList.contains("hide")) {
                     showEditCatBox.classList.remove("hide"); 
                     cateInput.focus();
@@ -125,31 +169,31 @@
             }
 
             function collectData(e){
-               var cateInput = document.querySelector("#category"); 
-               if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
-                alert("Please enter a valid category name");
+               var productInput = document.querySelector("#product"); 
+               if (productInput.value.trim() == "" || !isNaN(productInput.value.trim())) {
+                alert("Please enter a valid product name");
                }
 
-               var data = cateInput.value.trim()
+               var data = productInput.value.trim()
                sendData({
                     data:data,
-                    data_type: "add_category"
+                    data_type: "add_product"
                     });
 
 
             }
 
             function collectEditData(e){
-               var cateInput = document.querySelector("#category_edit"); 
+               var cateInput = document.querySelector("#product_edit"); 
                if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
-                alert("Please enter a valid category name");
+                alert("Please enter a valid product name");
                }
 
                var data = cateInput.value.trim()
                sendData({
-                    catId:EDIT_ID,
-                    category:data,
-                    data_type: "edit_category"
+                    pId:EDIT_ID,
+                    product:data,
+                    data_type: "edit_product"
                     });
 
 
@@ -167,7 +211,7 @@
                         handleResult(ajax.responseText);
                     }
                 });
-                ajax.open("POST", "<?=ROOT?>ajax", true);
+                ajax.open("POST", "<?=ROOT?>ajax_product", true);
                 ajax.send(JSON.stringify(data));
             }
 
@@ -189,7 +233,7 @@
                                 alert(obj.message);
                             }
                         }else 
-                            if (obj.data_type == "edit_category") {
+                            if (obj.data_type == "edit_product") {
 
                                 show_edit_product(0,'',false);
                                 
@@ -214,28 +258,28 @@
                 }
 
             }
-            // Edit category
-            function edit_row(catId){
+            // Edit product
+            function edit_row(pId){
 
                 sendData({
                     data_type: "",
                 });
             }
-            // Delete category
-            function delete_row(catId){
-                if (!confirm("Are your sure you want to delete this category")) {
+            // Delete product
+            function delete_row(pId){
+                if (!confirm("Are your sure you want to delete this product")) {
                     return;
                 }
                 sendData({
                     data_type: "delete_row",
-                    catId:catId
+                    pId:pId
                 });
             }
-            // Disable category
-            function disable_row(catId,state){
+            // Disable product
+            function disable_row(pId,state){
                 sendData({
                     data_type: "disable_row",
-                    catId:catId,
+                    pId:pId,
                     current_state:state
                 });
             }

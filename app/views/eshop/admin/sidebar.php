@@ -26,10 +26,7 @@
                           <span>Products</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="<?=ROOT ?>admin/products">Products List</a></li>
-                          <li><a  href="<?=ROOT ?>admin/products/add">Add New Products</a></li>
-                          <li><a  href="<?=ROOT ?>admin/products/edit">Edit Products</a></li>
-                          <li><a  href="<?=ROOT ?>admin/products/delete">Delete Products</a></li>
+                          <li><a  href="<?=ROOT ?>admin/products">View Products</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">

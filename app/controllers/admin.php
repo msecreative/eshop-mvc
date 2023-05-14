@@ -44,14 +44,18 @@
                 $data["user_data"] = $user_data;
             }
 
-            // Show category all data after refreshing page
+            // Show Product all data after refreshing page
             $db = Database::newInstance();
             $allProducts = $db->read("SELECT * FROM products ORDER BY pId DESC");
+            // For display add product
+            $db = Database::newInstance();
+            $allcategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY catId DESC");
 
             $product = $this->load_model("Product");
             $table_rows =  $product->make_table($allProducts);
 
             $data["table_rows"] = $table_rows;
+            $data["allcategories"] = $allcategories;
 
             $data["page_title"] = "Products";
             $this ->view("admin/products", $data);

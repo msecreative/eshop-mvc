@@ -53,16 +53,12 @@
             if (is_array($allproduct)) {
                 $i = 1;
                 foreach ($allproduct as $productRow) {
-                    $productRow->disabled = $productRow->disabled ? "Enabled" : "Disabled";
-                    $status_color = $productRow->disabled == "Enabled" ? "info" : "danger";
-
-                    $args = $productRow->pId.",'".$productRow->disabled."'";
-                    $editArgs = $productRow->pId.",'".$productRow->product."'";
+                    $editArgs = $productRow->pId.",'".$productRow->description."'";
                     $result .= "<tr>";
                         $result .= '
                             <td>'.$i.'</td>
-                            <td class="hidden-phone"><a href="'.$productRow->pId.'">'.$productRow->product.'</a></td>
-                            <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$productRow->disabled.'</span></td>
+                            <td class="hidden-phone"><a href="'.$productRow->pId.'">'.$productRow->description.'</a></td>
+                            <td></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
                                 <button onclick="show_edit_product('.$editArgs.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
