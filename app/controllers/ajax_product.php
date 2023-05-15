@@ -9,7 +9,7 @@
 
                 $db = Database::getInstance();
                 $product = $this->load_model("Product");
-
+                // Add new product
                 if ($data->data_type == "add_product") {
                     $check = $product->create($data);
 

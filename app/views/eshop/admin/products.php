@@ -46,47 +46,61 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Name</label>
                                         <div class="col-sm-8">
-                                            <input name="description" id="product" type="text" class="form-control">
+                                            <input name="description" id="description" type="text" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Category</label>
                                         <div class="col-sm-8">
-                                            <select name="category" id="category" class="form-control">
-                                                <option value=""></option>
+                                            <select name="category" id="category" class="form-control" required>
+                                                <option value="">Select a category</option>
+                                                <?php 
+                                                    if (is_array($allcategories)) {
+                                                    foreach ($allcategories as $category) {
+                                                ?>
+                                                <option value="<?=$category->catId ?>"><?=$category->category ?></option>
+                                                <?php } } ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Quantity</label>
                                         <div class="col-sm-8">
-                                            <input name="quantity" id="product_qty" type="number" value="1" class="form-control">
+                                            <input name="quantity" id="quantity" type="number" value="1" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Price</label>
                                         <div class="col-sm-8">
-                                            <input name="price" id="product_qty" type="number" value="0.00" step="0.01" class="form-control">
+                                            <input name="price" id="price" type="number" value="0.00" step="0.01" class="form-control" required>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image (Required)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image" id="image" type="file" class="form-control" required>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image2" id="product_qty" type="file" class="form-control">
+                                            <input name="image2" id="image2" type="file" class="form-control">
                                         </div>
                                     </div>
+                                    
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 3 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image3" id="product_qty" type="file" class="form-control">
+                                            <input name="image3" id="image3" type="file" class="form-control">
                                         </div>
                                     </div>
                                 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 4 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image4" id="product_qty" type="file" class="form-control">
+                                            <input name="image4" id="image4" type="file" class="form-control">
                                         </div>
                                     </div>
                                     <button onclick="collectData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
@@ -142,13 +156,13 @@
             // add and hide product modal
             function showAddNew(){
                 var showCatBox = document.querySelector(".add-new-product");
-                var cateInput = document.querySelector("#product");
+                var productInput = document.querySelector("#description");
                 if (showCatBox.classList.contains("hide")) {
                     showCatBox.classList.remove("hide"); 
-                    cateInput.focus();
+                    productInput.focus();
                 }else{
                     showCatBox.classList.add("hide");
-                    cateInput.value = "";
+                    productInput.value = "";
                 }
             }
 
@@ -169,15 +183,39 @@
             }
 
             function collectData(e){
-               var productInput = document.querySelector("#product"); 
+               var productInput = document.querySelector("#description"); 
                if (productInput.value.trim() == "" || !isNaN(productInput.value.trim())) {
                 alert("Please enter a valid product name");
+                return;
                }
+               var categoryInput = document.querySelector("#category"); 
+               if (categoryInput.value.trim() == "" || isNaN(categoryInput.value.trim())) {
+                alert("Please enter a valid category name");
+                return;
+               }
+               var quantityInput = document.querySelector("#quantity"); 
+               if (quantityInput.value.trim() == "" || isNaN(quantityInput.value.trim())) {
+                alert("Please enter a valid quantity name");
+                return;
+               }
+               var priceInput = document.querySelector("#price"); 
+               if (priceInput.value.trim() == "" || isNaN(priceInput.value.trim())) {
+                alert("Please enter a valid price name");
+                return;
+               }
+            //    var categoryInput = document.querySelector("#category"); 
+            //    if (categoryInput.value.trim() == "" || !isNaN(categoryInput.value.trim())) {
+            //     alert("Please enter a valid category name");
+            //     return;
+            //    }
 
                var data = productInput.value.trim()
                sendData({
-                    data:data,
-                    data_type: "add_product"
+                    description:    productInput.value.trim(),
+                    category:       categoryInput.value.trim(),
+                    quantity:       quantityInput.value.trim(),
+                    price:          priceInput.value.trim(),
+                    data_type:      "add_product"
                     });
 
 
@@ -216,6 +254,7 @@
             }
 
             function handleResult(result){
+                console.log(result);
                 if (result != "") {
                     var obj = JSON.parse(result);
 

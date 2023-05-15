@@ -4,15 +4,33 @@
         public function create($DATA){
 
             $db = Database::newInstance();
-            $arr['description'] = ucwords($DATA->data);
+
+            $_SESSION['error'] = "";
+
+            $arr['description'] = ucwords($DATA->description);
+            $arr['category']    = ucwords($DATA->category);
+            $arr['quantity']    = ucwords($DATA->quantity);
+            $arr['price']       = ucwords($DATA->price);
+            $arr['date']        = date("Y-m-d H:i:s");
+            $arr['user_url']    = $_SESSION["user_url"];
 
             if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
-                $_SESSION['error'] = "Please enter a valid product name";
+
+                $_SESSION['error'] .= "Please enter a valid product name </br>";
+            }
+            if (!is_numeric($arr['category'])) {
+                $_SESSION['error'] .= "Please enter a valid category </br>";
+            }
+            if (!is_numeric($arr['quantity'])) {
+                $_SESSION['error'] .= "Please enter a valid quantity </br>";
+            }
+            if (!is_numeric($arr['price'])) {
+                $_SESSION['error'] .= "Please enter a valid price </br>";
             }
 
             if (isset($_SESSION['error']) || $_SESSION['error'] == "") {
             
-                $sql = "INSERT INTO products (`description`) VALUES (:description)";
+                $sql = "INSERT INTO products (`description`,`category`,`quantity`,`price`,`date`,`user_url`) VALUES (:description,:category,:quantity,:price,:date,:user_url)";
                 
                 $check = $db->write($sql, $arr);
                 if ($check) {
