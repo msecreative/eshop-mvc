@@ -52,7 +52,8 @@
             $allcategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY catId DESC");
 
             $product = $this->load_model("Product");
-            $table_rows =  $product->make_table($allProducts);
+            $category = $this->load_model("Category");
+            $table_rows =  $product->make_table($allProducts,$category);
 
             $data["table_rows"] = $table_rows;
             $data["allcategories"] = $allcategories;

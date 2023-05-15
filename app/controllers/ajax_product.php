@@ -5,6 +5,9 @@
            $data = file_get_contents("php://input");
             $data = json_decode($data);
 
+            show($_POST);
+            show($_FILES);
+
             if (is_object($data) && isset($data->data_type)) {
 
                 $db = Database::getInstance();

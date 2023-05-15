@@ -131,7 +131,10 @@
                               <tr>
                                   <th><i class="fa fa-bullhorn"></i> Id</th>
                                   <th class="hidden-phone"><i class="fa fa-question-circle"></i>Name</th>
-                                  <th><i class=" fa fa-edit"></i> Status</th>
+                                  <th><i class=" fa fa-edit"></i> Category</th>
+                                  <th><i class=" fa fa-edit"></i> Qty</th>
+                                  <th><i class=" fa fa-edit"></i> Price</th>
+                                  <th><i class=" fa fa-edit"></i> Date</th>
                                   <th><i class="fa fa-bookmark"></i> Action</th>
                                   <th></th>
                               </tr>
@@ -203,20 +206,38 @@
                 alert("Please enter a valid price name");
                 return;
                }
-            //    var categoryInput = document.querySelector("#category"); 
-            //    if (categoryInput.value.trim() == "" || !isNaN(categoryInput.value.trim())) {
-            //     alert("Please enter a valid category name");
-            //     return;
-            //    }
+               var imageInput = document.querySelector("#image"); 
+               if (imageInput.files.length == 0 ) {
+                alert("Please enter a valid image");
+                return;
+               }
 
-               var data = productInput.value.trim()
-               sendData({
-                    description:    productInput.value.trim(),
-                    category:       categoryInput.value.trim(),
-                    quantity:       quantityInput.value.trim(),
-                    price:          priceInput.value.trim(),
-                    data_type:      "add_product"
-                    });
+               var data = new FormData();
+              
+               var image2Input = document.querySelector("#image2"); 
+               if (image2Input.files.length > 0 ) {
+                data.append("image2", image2Input.files[0]);
+               }
+
+             
+               var image3Input = document.querySelector("#image3"); 
+               if (image3Input.files.length > 0 ) {
+                data.append("image3", image3Input.files[0]);
+               }
+              
+               var image4Input = document.querySelector("#image4"); 
+               if (image4Input.files.length > 0 ) {
+                data.append("image4", image4Input.files[0]);
+               }
+               
+               data.append("description", productInput.value.trim());
+               data.append("category", categoryInput.value.trim());
+               data.append("quantity", quantityInput.value.trim());
+               data.append("price", priceInput.value.trim());
+               data.append("image", imageInput.files[0]);
+               data.append("data_type", "add_product");
+               
+               sendDataFile(data);
 
 
             }
@@ -236,7 +257,7 @@
 
 
             }
-
+            // Send only post data
             function sendData(data = {}){
 
                 var ajax = new XMLHttpRequest();
@@ -251,6 +272,22 @@
                 });
                 ajax.open("POST", "<?=ROOT?>ajax_product", true);
                 ajax.send(JSON.stringify(data));
+            }
+            // Send only form data like files, images
+            function sendDataFile(formData){
+
+                var ajax = new XMLHttpRequest();
+                // var form = new FormData();
+
+                // form.append('data', data);
+
+                ajax.addEventListener("readystatechange", function(){
+                    if (ajax.readyState == 4 && ajax.status == 200) {
+                        handleResult(ajax.responseText);
+                    }
+                });
+                ajax.open("POST", "<?=ROOT?>ajax_product", true);
+                ajax.send(formData);
             }
 
             function handleResult(result){

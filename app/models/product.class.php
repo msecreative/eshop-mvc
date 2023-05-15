@@ -66,17 +66,22 @@
 
         }
 
-        public function make_table($allproduct){
+        public function make_table($allproduct, $catModal = NULL){
             $result = "";
             if (is_array($allproduct)) {
                 $i = 1;
                 foreach ($allproduct as $productRow) {
                     $editArgs = $productRow->pId.",'".$productRow->description."'";
+                    //$catClass = $this->load_model("Category");
+                    $singleCat = $catModal->getSingleCategory($productRow->category);
                     $result .= "<tr>";
                         $result .= '
                             <td>'.$i.'</td>
                             <td class="hidden-phone"><a href="'.$productRow->pId.'">'.$productRow->description.'</a></td>
-                            <td></td>
+                            <td>'.$singleCat->category.'</td>
+                            <td>'.$productRow->quantity.'</td>
+                            <td>'.$productRow->price.'</td>
+                            <td>'.date("d-M-Y H:i:s", strtotime($productRow->date)).'</td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
                                 <button onclick="show_edit_product('.$editArgs.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>

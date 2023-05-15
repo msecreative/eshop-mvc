@@ -40,9 +40,20 @@
             $db->write($sql);
 
         } 
+        // Get All Category
         public function getAllCategory(){
             $db = Database::newInstance();
             return $db->read("SELECT * FROM categories ORDER BY catId DESC");
+
+
+
+        }
+        // Get single category
+        public function getSingleCategory($catId){
+            $catId = (int)$catId;
+            $db = Database::newInstance();
+            $data =  $db->read("SELECT category FROM categories WHERE catId = '$catId' LIMIT 1 ");
+            return $data[0];
 
 
         }
