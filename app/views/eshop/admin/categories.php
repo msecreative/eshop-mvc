@@ -11,6 +11,9 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
     <style>
+        .add-new-category .form-group, .edit-category .from-group{
+            padding-bottom: 35px;
+        }
         .add-new-category, .edit-category{
             width: 50%;
             height: 300px;
@@ -45,6 +48,21 @@
                                             <input name="category" id="category" type="text" class="form-control">
                                         </div>
                                     </div>
+                                    <!-- Sub category -->
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Parent Name (Optional)</label>
+                                        <div class="col-sm-8">
+                                            <select name="parent" id="parent" class="form-control" required>
+                                                <option value="">Select a category</option>
+                                                <?php 
+                                                    if (is_array($forSubCategories)) {
+                                                    foreach ($forSubCategories as $category) {
+                                                ?>
+                                                <option value="<?=$category->catId ?>"><?=$category->category ?></option>
+                                                <?php } } ?>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <button onclick="collectData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
                                     <button onclick="showAddNew(event)" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
                                 </form>
@@ -60,6 +78,21 @@
                                         <label class="col-sm-4 control-label">Category Name</label>
                                         <div class="col-sm-8">
                                             <input name="category" id="category_edit" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Sub category -->
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Parent Name (Optional)</label>
+                                        <div class="col-sm-8">
+                                            <select name="parent_edit" id="parent" class="form-control" required>
+                                                <option value="">Select a category</option>
+                                                <?php 
+                                                    if (is_array($forSubCategories)) {
+                                                    foreach ($forSubCategories as $category) {
+                                                ?>
+                                                <option value="<?=$category->catId ?>"><?=$category->category ?></option>
+                                                <?php } } ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
@@ -129,10 +162,16 @@
                if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
                 alert("Please enter a valid category name");
                }
+               var parentInput = document.querySelector("#parent"); 
+               if (isNaN(parentInput.value.trim())) {
+                alert("Please enter a valid parent category name");
+               }
 
-               var data = cateInput.value.trim()
+               var category = cateInput.value.trim();
+               var parent = parentInput.value.trim();
                sendData({
-                    data:data,
+                    category:category,
+                    parent:parent,
                     data_type: "add_category"
                     });
 
@@ -145,10 +184,17 @@
                 alert("Please enter a valid category name");
                }
 
-               var data = cateInput.value.trim()
+               var parentInput = document.querySelector("#parent_edit"); 
+               if (isNaN(parentInput.value.trim())) {
+                alert("Please enter a valid parent category name");
+               }
+
+               var category = cateInput.value.trim();
+               var parent   = parentInput.value.trim();
                sendData({
                     catId:EDIT_ID,
-                    category:data,
+                    category:category,
+                    parent:parent,
                     data_type: "edit_category"
                     });
 

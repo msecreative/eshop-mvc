@@ -3,7 +3,8 @@
 
         public function create($DATA){
             $db = Database::newInstance();
-            $arr['category'] = ucwords($DATA->data);
+            $arr['category'] = ucwords($DATA->category);
+            $arr['parent'] = ucwords($DATA->parent);
 
             if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['category']))) {
                 $_SESSION['error'] = "Please enter a valid category name";
@@ -11,7 +12,7 @@
 
             if (isset($_SESSION['error']) || $_SESSION['error'] == "") {
             
-                $sql = "INSERT INTO categories (category) VALUES (:category)";
+                $sql = "INSERT INTO categories (category,parent) VALUES (:category,:parent)";
                 
                 $check = $db->write($sql, $arr);
                 if ($check) {
@@ -22,12 +23,13 @@
             return false;
         } 
 
-        public function edit($catId,$category){
+        public function edit($data){
 
             $db = Database::newInstance();
-            $arr['catId'] = $catId;
-            $arr['category'] = $category;
-            $sql = "UPDATE categories SET category = :category  WHERE catId = :catId LIMIT 1";
+            $arr['catId'] = $data->catId;
+            $arr['category'] = $data->category;
+            $arr['parent'] = $data->parent;
+            $sql = "UPDATE categories SET category = :category, parent =:parent  WHERE catId = :catId LIMIT 1";
             $db->write($sql,$arr);
 
         } 

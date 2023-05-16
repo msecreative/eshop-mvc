@@ -25,11 +25,13 @@
             // Show category all data after refreshing page
             $db = Database::newInstance();
             $allCategories = $db->read("SELECT * FROM categories ORDER BY catId DESC");
+            $forSubCategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY catId DESC");
 
             $category = $this->load_model("Category");
             $table_rows =  $category->make_table($allCategories);
 
             $data["table_rows"] = $table_rows;
+            $data["forSubCategories"] = $forSubCategories;
 
             $data["page_title"] = "Categories";
             $this ->view("admin/categories", $data);

@@ -52,7 +52,7 @@
                 
                 }elseif ($data->data_type == "edit_category") {
 
-                        $category->edit($data->catId, $data->category);
+                        $category->edit($data);
                         $arr["message"] = "Your category was successfully edited";
                         $_SESSION['error'] = "";
                         $arr["message_type"] = "info";
