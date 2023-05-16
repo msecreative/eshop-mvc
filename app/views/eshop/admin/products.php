@@ -117,7 +117,61 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Name</label>
                                         <div class="col-sm-8">
-                                            <input name="description" id="product_edit" type="text" class="form-control">
+                                            <input name="description" id="edit_description" type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Category</label>
+                                        <div class="col-sm-8">
+                                            <select name="category" id="edit_category" class="form-control" required>
+                                                <option value="">Select a category</option>
+                                                <?php 
+                                                    if (is_array($allcategories)) {
+                                                    foreach ($allcategories as $category) {
+                                                ?>
+                                                <option value="<?=$category->catId ?>"><?=$category->category ?></option>
+                                                <?php } } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Quantity</label>
+                                        <div class="col-sm-8">
+                                            <input name="quantity" id="edit_quantity" type="number" value="1" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Price</label>
+                                        <div class="col-sm-8">
+                                            <input name="price" id="edit_price" type="number" value="0.00" step="0.01" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image (Required)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image" id="edit_image" type="file" class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image2" id="edit_image2" type="file" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image 3 (optional)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image3" id="edit_image3" type="file" class="form-control">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Image 4 (optional)</label>
+                                        <div class="col-sm-8">
+                                            <input name="image4" id="edit_image4" type="file" class="form-control">
                                         </div>
                                     </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
@@ -135,6 +189,7 @@
                                   <th><i class=" fa fa-edit"></i> Qty</th>
                                   <th><i class=" fa fa-edit"></i> Price</th>
                                   <th><i class=" fa fa-edit"></i> Date</th>
+                                  <th><i class=" fa fa-edit"></i> Image</th>
                                   <th><i class="fa fa-bookmark"></i> Action</th>
                                   <th></th>
                               </tr>
@@ -172,16 +227,16 @@
             // Edit and hide product modal
             function show_edit_product(pId,description,e){
                 EDIT_ID = pId;
-                var showEditCatBox = document.querySelector(".edit-product");
-                var cateInput = document.querySelector("#product_edit");
+                var showEditProductBox = document.querySelector(".edit-product");
+                var editDescInput = document.querySelector("#edit_description");
 
-                cateInput.value = description;
-                if (showEditCatBox.classList.contains("hide")) {
-                    showEditCatBox.classList.remove("hide"); 
-                    cateInput.focus();
+                editDescInput.value = description;
+                if (showEditProductBox.classList.contains("hide")) {
+                    showEditProductBox.classList.remove("hide"); 
+                    editDescInput.focus();
                 }else{
-                    showEditCatBox.classList.add("hide");
-                    cateInput.value = "";
+                    showEditProductBox.classList.add("hide");
+                    editDescInput.value = "";
                 }
             }
 

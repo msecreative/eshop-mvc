@@ -1,7 +1,7 @@
 <?php 
     class Product{
         
-        public function create($DATA){
+        public function create($DATA, $FILES){
 
             $db = Database::newInstance();
 
@@ -27,10 +27,41 @@
             if (!is_numeric($arr['price'])) {
                 $_SESSION['error'] .= "Please enter a valid price </br>";
             }
+            // Check for files
+                $arr["image"]  = "";
+                $arr["image2"] = "";
+                $arr["image3"] = "";
+                $arr["image4"] = "";
+                // Allow files type
+                $allowed[] = "image/jpeg";
+                // $allowed[] = "image/png";
+                // $allowed[] = "image/gif";
+                // $allowed[] = "application/pdf";
+                $size = 10;
+                $size = ($size * 1024 * 1024);
 
-            if (isset($_SESSION['error']) || $_SESSION['error'] == "") {
+                $folder = "uploads/";
+                if (!file_exists($folder)) {
+                    mkdir($folder,0777,true);
+                }
+
+            foreach ($FILES as $key => $img_row) {
+
+                if ($img_row["error"] == 0 && in_array($img_row["type"], $allowed)) {
+
+                    if ($img_row["size"] < $size) {
+                        $destination = $folder . $img_row["name"];
+                        move_uploaded_file($img_row["tmp_name"], $destination);
+                        $arr[$key] = $destination;
+                    }else{
+                        $_SESSION['error'] .= $key . "is bigger than required size";
+                    }
+                }
+            }
+
+            if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
             
-                $sql = "INSERT INTO products (`description`,`category`,`quantity`,`price`,`date`,`user_url`) VALUES (:description,:category,:quantity,:price,:date,:user_url)";
+                $sql = "INSERT INTO products (`description`,`category`,`quantity`,`price`,`date`,`user_url`,`image`,`image2`,`image3`,`image4`) VALUES (:description,:category,:quantity,:price,:date,:user_url,:image,:image2,:image3,:image4)";
                 
                 $check = $db->write($sql, $arr);
                 if ($check) {
@@ -82,6 +113,7 @@
                             <td>'.$productRow->quantity.'</td>
                             <td>'.$productRow->price.'</td>
                             <td>'.date("d-M-Y H:i:s", strtotime($productRow->date)).'</td>
+                            <td><a href=""><img src="' .ROOT. $productRow->image.'" alt="product_img" style="height: 50px; width: 50px;"></a></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
                                 <button onclick="show_edit_product('.$editArgs.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
