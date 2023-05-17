@@ -72,12 +72,15 @@
             return false;
         } 
 
-        public function edit($pId,$description){
-
+        public function edit($data){
+            // $id
+            $arr['pId']         = $data->pId;
+            $arr['description'] = $data->description;
+            $arr['category']    = $data->category;
+            $arr['quantity']    = $data->quantity;
+            $arr['price']       = $data->price;
             $db = Database::newInstance();
-            $arr['pId'] = $pId;
-            $arr['description'] = $description;
-            $sql = "UPDATE products SET `description` = :description  WHERE pId = :pId LIMIT 1";
+            $sql = "UPDATE products SET `description` = :description,`category` = :category, `quantity` = :quantity, `price` = :price   WHERE pId = :pId LIMIT 1";
             $db->write($sql,$arr);
 
         } 
@@ -103,7 +106,19 @@
                 $i = 1;
                 foreach ($allproduct as $productRow) {
                     $editArgs = $productRow->pId.",'".$productRow->description."'";
-                    //$catClass = $this->load_model("Category");
+                    $info = array();
+                    $info["pId"] = $productRow->pId;
+                    $info["description"] = $productRow->description;
+                    $info["category"] = $productRow->category;
+                    $info["quantity"] = $productRow->quantity;
+                    $info["price"] = $productRow->price;
+                    $info["image"] = $productRow->image;
+                    $info["image2"] = $productRow->image2;
+                    $info["image3"] = $productRow->image3;
+                    $info["image4"] = $productRow->image4;
+                    
+                    $info = str_replace('"',"'",json_encode($info));
+
                     $singleCat = $catModal->getSingleCategory($productRow->category);
                     $result .= "<tr>";
                         $result .= '
@@ -116,7 +131,7 @@
                             <td><a href=""><img src="' .ROOT. $productRow->image.'" alt="product_img" style="height: 50px; width: 50px;"></a></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
-                                <button onclick="show_edit_product('.$editArgs.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button info="'.$info.'" onclick="show_edit_product('.$editArgs.',event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                                 <button onclick="delete_row('.$productRow->pId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
                             </td>
                         ';

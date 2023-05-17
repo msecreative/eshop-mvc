@@ -58,13 +58,16 @@
                 
                 }elseif ($data->data_type == "edit_product") {
 
-                        $product->edit($data->pId, $data->product);
+                    // show($data);
+                    // show($_FILES);
+                    // die;
+                        $product->edit($data,$_FILES);
                         $arr["message"] = "Your product was successfully edited";
                         $_SESSION['error'] = "";
                         $arr["message_type"] = "info";
 
                         $allProduct = $product->getAllProduct();
-                        $arr["data"] = $product->make_table($allProduct);
+                        $arr["data"] = $product->make_table($allProduct,$category);
 
                         $arr["data_type"] = "edit_product";
 

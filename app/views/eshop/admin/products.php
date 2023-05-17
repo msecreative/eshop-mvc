@@ -15,9 +15,10 @@
         .edit-product .form-group{
             padding-bottom: 35px;
         }
+       
         .add-new-product, .edit-product{
             width: 50%;
-            height: 550px;
+            height: 600px;
             background-color: #cecccc;
             position: absolute;
             padding: 10px;
@@ -26,6 +27,20 @@
             border-radius: 3px;
             box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2)
         }
+        .edit-product{
+        height: 700px;
+       }
+        .edit-product-images img {
+            margin: 20px 10px 0 0;
+            border: 2px solid blue;
+            height: 100px;
+            width: 100%;
+        }
+
+        .edit-product-images {
+            display: flex;
+        }
+
         .hide {
             display: none;
         }
@@ -174,6 +189,9 @@
                                             <input name="image4" id="edit_image4" type="file" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="js-product-images edit-product-images">
+
+                                    </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
                                     <button onclick="show_edit_product(0,'')" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
                                 </form>
@@ -206,11 +224,10 @@
           		</div>
           	</div>
 			
-		
         <script>
-            
+                  
             var  EDIT_ID = 0;
-
+            
             // add and hide product modal
             function showAddNew(){
                 var showCatBox = document.querySelector(".add-new-product");
@@ -223,14 +240,37 @@
                     productInput.value = "";
                 }
             }
-
+            
             // Edit and hide product modal
             function show_edit_product(pId,description,e){
-                EDIT_ID = pId;
-                var showEditProductBox = document.querySelector(".edit-product");
-                var editDescInput = document.querySelector("#edit_description");
 
-                editDescInput.value = description;
+                var showEditProductBox = document.querySelector(".edit-product");
+                if (e) {
+                    var a = e.currentTarget.getAttribute("info");
+                    var info =JSON.parse(a.replaceAll("'",'"'))
+                    //alert(info);
+                    EDIT_ID = info.pId;
+                    
+                    var editDescInput = document.querySelector("#edit_description");
+                    editDescInput.value = info.description;
+                    
+                    var editCateInput = document.querySelector("#edit_category");
+                    editCateInput.value = info.category;
+                    
+                    var editQuantityInput = document.querySelector("#edit_quantity");
+                    editQuantityInput.value = info.quantity;
+                    
+                    var editPriceInput = document.querySelector("#edit_price");
+                    editPriceInput.value = info.price;
+                    
+                    var editImageInput = document.querySelector(".js-product-images");
+                    editImageInput.innerHTML = `<img src='<?=ROOT?>${info.image} ' alt=''>`;
+                    editImageInput.innerHTML += `<img src='<?=ROOT?>${info.image2} ' alt=''>`;
+                    editImageInput.innerHTML += `<img src='<?=ROOT?>${info.image3} ' alt=''>`;
+                    editImageInput.innerHTML += `<img src='<?=ROOT?>${info.image4} ' alt=''>`;
+                
+                }
+                
                 if (showEditProductBox.classList.contains("hide")) {
                     showEditProductBox.classList.remove("hide"); 
                     editDescInput.focus();
@@ -298,17 +338,58 @@
             }
 
             function collectEditData(e){
-               var cateInput = document.querySelector("#product_edit"); 
-               if (cateInput.value.trim() == "" || !isNaN(cateInput.value.trim())) {
-                alert("Please enter a valid product name");
-               }
+                var productInput = document.querySelector("#edit_description"); 
+                if (productInput.value.trim() == "" || !isNaN(productInput.value.trim())) {
+                    alert("Please enter a valid product name");
+                    return;
+                }
+                var categoryInput = document.querySelector("#edit_category"); 
+                if (categoryInput.value.trim() == "" || isNaN(categoryInput.value.trim())) {
+                    alert("Please enter a valid category name");
+                    return;
+                }
+                var quantityInput = document.querySelector("#edit_quantity"); 
+                if (quantityInput.value.trim() == "" || isNaN(quantityInput.value.trim())) {
+                    alert("Please enter a valid quantity name");
+                    return;
+                }
+                var priceInput = document.querySelector("#edit_price"); 
+                if (priceInput.value.trim() == "" || isNaN(priceInput.value.trim())) {
+                    alert("Please enter a valid price name");
+                    return;
+                }
 
-               var data = cateInput.value.trim()
-               sendData({
-                    pId:EDIT_ID,
-                    product:data,
-                    data_type: "edit_product"
-                    });
+                var data = new FormData();
+                
+                var imageInput = document.querySelector("#edit_image"); 
+                if (imageInput.files.length > 0 ) {
+                    data.append("image", imageInput.files[0]);
+                }
+
+                var image2Input = document.querySelector("#edit_image2"); 
+                if (image2Input.files.length > 0 ) {
+                    data.append("image2", image2Input.files[0]);
+                }
+
+                
+                var image3Input = document.querySelector("#edit_image3"); 
+                if (image3Input.files.length > 0 ) {
+                    data.append("image3", image3Input.files[0]);
+                }
+                
+                var image4Input = document.querySelector("#edit_image4"); 
+                if (image4Input.files.length > 0 ) {
+                    data.append("image4", image4Input.files[0]);
+                }
+                
+                data.append("description", productInput.value.trim());
+                data.append("category", categoryInput.value.trim());
+                data.append("quantity", quantityInput.value.trim());
+                data.append("price", priceInput.value.trim());
+                data.append("pId", EDIT_ID);
+                data.append("data_type", "edit_product");
+                
+                sendDataFile(data);
 
 
             }
