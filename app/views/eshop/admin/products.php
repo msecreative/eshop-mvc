@@ -193,7 +193,7 @@
 
                                     </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
-                                    <button onclick="show_edit_product(0,'')" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
+                                    <button onclick="show_edit_product(0,'',false)" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
                                 </form>
                             </div>
                             <!-- Edit product end-->
@@ -245,13 +245,13 @@
             function show_edit_product(pId,description,e){
 
                 var showEditProductBox = document.querySelector(".edit-product");
+                var editDescInput = document.querySelector("#edit_description");
                 if (e) {
                     var a = e.currentTarget.getAttribute("info");
                     var info =JSON.parse(a.replaceAll("'",'"'))
                     //alert(info);
                     EDIT_ID = info.pId;
                     
-                    var editDescInput = document.querySelector("#edit_description");
                     editDescInput.value = info.description;
                     
                     var editCateInput = document.querySelector("#edit_category");

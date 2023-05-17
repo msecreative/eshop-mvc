@@ -18,9 +18,14 @@
     <link rel="stylesheet" type="text/css" href="<?=ASSETS . THEME ?>admin/js/gritter/css/jquery.gritter.css" />
     <link rel="stylesheet" type="text/css" href="<?=ASSETS . THEME ?>admin/lineicons/style.css">    
     
-    <!-- Custom styles for this template -->
-    <!-- <link href="<?=ASSETS . THEME ?>admin/css/style.css" rel="stylesheet">
-    <link href="<?=ASSETS . THEME ?>admin/css/style-responsive.css" rel="stylesheet"> -->
+   <style>
+	.product-overley{
+		transition: all .5s ease;
+	}
+	.product-overley:hover{
+		transform: scale(1.5);
+	}
+   </style>
 	<!-- Taken from admin end -->
     <!--[if lt IE 9]>
     <script src="<?= ASSETS . THEME ?>js/html5shiv.js"></script>

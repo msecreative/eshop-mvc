@@ -72,16 +72,67 @@
             return false;
         } 
 
-        public function edit($data){
+        public function edit($data,$FILES){
             // $id
             $arr['pId']         = $data->pId;
             $arr['description'] = $data->description;
             $arr['category']    = $data->category;
             $arr['quantity']    = $data->quantity;
             $arr['price']       = $data->price;
-            $db = Database::newInstance();
-            $sql = "UPDATE products SET `description` = :description,`category` = :category, `quantity` = :quantity, `price` = :price   WHERE pId = :pId LIMIT 1";
-            $db->write($sql,$arr);
+
+            $image_string = "";
+
+            if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
+
+                $_SESSION['error'] .= "Please enter a valid product name </br>";
+            }
+            if (!is_numeric($arr['category'])) {
+                $_SESSION['error'] .= "Please enter a valid category </br>";
+            }
+            if (!is_numeric($arr['quantity'])) {
+                $_SESSION['error'] .= "Please enter a valid quantity </br>";
+            }
+            if (!is_numeric($arr['price'])) {
+                $_SESSION['error'] .= "Please enter a valid price </br>";
+            }
+
+            // Check for files
+           
+            // Allow files type
+            $allowed[] = "image/jpeg";
+            // $allowed[] = "image/png";
+            // $allowed[] = "image/gif";
+            // $allowed[] = "application/pdf";
+            $size = 10;
+            $size = ($size * 1024 * 1024);
+
+            $folder = "uploads/";
+            if (!file_exists($folder)) {
+                mkdir($folder,0777,true);
+            }
+
+            foreach ($FILES as $key => $img_row) {
+
+                if ($img_row["error"] == 0 && in_array($img_row["type"], $allowed)) {
+
+                    if ($img_row["size"] < $size) {
+                        $destination = $folder . $img_row["name"];
+                        move_uploaded_file($img_row["tmp_name"], $destination);
+                        $arr[$key] = $destination;
+
+                        $image_string .=",". $key ." = :".$key;
+                    }else{
+                        $_SESSION['error'] .= $key . "is bigger than required size";
+                    }
+                }
+            }
+            // Check for files end
+
+            if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
+                $db = Database::newInstance();
+                $sql = "UPDATE products SET `description` = :description,`category` = :category, `quantity` = :quantity, `price` = :price $image_string  WHERE pId = :pId LIMIT 1";
+                $db->write($sql,$arr);
+            }
 
         } 
 
