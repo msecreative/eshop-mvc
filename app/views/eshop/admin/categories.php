@@ -53,7 +53,7 @@
                                         <label class="col-sm-4 control-label">Parent Name (Optional)</label>
                                         <div class="col-sm-8">
                                             <select name="parent" id="parent" class="form-control" required>
-                                                <option value="">Select a category</option>
+                                                <option value="">Select a parent category</option>
                                                 <?php 
                                                     if (is_array($forSubCategories)) {
                                                     foreach ($forSubCategories as $category) {
@@ -84,7 +84,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Parent Name (Optional)</label>
                                         <div class="col-sm-8">
-                                            <select name="parent_edit" id="parent" class="form-control" required>
+                                            <select name="parent" id="parent_edit" class="form-control" required>
                                                 <option value="">Select a category</option>
                                                 <?php 
                                                     if (is_array($forSubCategories)) {
@@ -106,6 +106,7 @@
                               <tr>
                                   <th><i class="fa fa-bullhorn"></i> Id</th>
                                   <th class="hidden-phone"><i class="fa fa-question-circle"></i> Category Name</th>
+                                  <th class="hidden-phone"><i class="fa fa-question-circle"></i> Parent Name</th>
                                   <th><i class=" fa fa-edit"></i> Status</th>
                                   <th><i class="fa fa-bookmark"></i> Action</th>
                                   <th></th>
@@ -142,12 +143,16 @@
             }
 
             // Edit and hide category modal
-            function show_edit_category(catId,category,e){
+            function show_edit_category(catId,category,parent,e){
                 EDIT_ID = catId;
                 var showEditCatBox = document.querySelector(".edit-category");
-                var cateInput = document.querySelector("#category_edit");
 
+                var cateInput = document.querySelector("#category_edit");
                 cateInput.value = category;
+
+                var ParentCateInput = document.querySelector("#parent_edit");
+                ParentCateInput.value = parent;
+
                 if (showEditCatBox.classList.contains("hide")) {
                     showEditCatBox.classList.remove("hide"); 
                     cateInput.focus();

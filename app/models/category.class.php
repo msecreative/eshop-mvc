@@ -10,7 +10,7 @@
                 $_SESSION['error'] = "Please enter a valid category name";
             }
 
-            if (isset($_SESSION['error']) || $_SESSION['error'] == "") {
+            if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
             
                 $sql = "INSERT INTO categories (category,parent) VALUES (:category,:parent)";
                 
@@ -69,11 +69,19 @@
                     $status_color = $catRow->disabled == "Enabled" ? "info" : "danger";
 
                     $args = $catRow->catId.",'".$catRow->disabled."'";
-                    $editArgs = $catRow->catId.",'".$catRow->category."'";
+                    $editArgs = $catRow->catId.",'".$catRow->category."',".$catRow->parent;
+
+                    $parent = "";
+                    foreach ($allCategory as $catRow2) {
+                        if ($catRow->parent == $catRow2->catId) {
+                           $parent = $catRow2->category;
+                        }
+                    }
                     $result .= "<tr>";
                         $result .= '
                             <td>'.$i.'</td>
                             <td class="hidden-phone"><a href="'.$catRow->catId.'">'.$catRow->category.'</a></td>
+                            <td class="hidden-phone"><a href="'.$catRow->parent.'">'.$parent.'</a></td>
                             <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$catRow->disabled.'</span></td>
                             <td>
                                 <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
