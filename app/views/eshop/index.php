@@ -224,8 +224,8 @@
 										<img class="product-overley" src="<?=ROOT.$product->image?>" alt="" />
 										</div>
 										<h2>$<?=$product->price?></h2>
-										<p><a href="<?=$product->pId?>"><?=$product->description?></a></p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<p><a href="productDetails/<?=$product->pId?>"><?=$product->description?></a></p>
+										<a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 								</div>
 								<div class="choose">
