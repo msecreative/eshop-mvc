@@ -13,8 +13,9 @@
             $arr['price']       = ucwords($DATA->price);
             $arr['date']        = date("Y-m-d H:i:s");
             $arr['user_url']    = $_SESSION["user_url"];
+            $arr['slag']        = $this->str_to_url($DATA->description);
 
-            if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
+            if (!preg_match("/^[a-zA-Z 0-9]+$/", trim($arr['description']))) {
 
                 $_SESSION['error'] .= "Please enter a valid product name </br>";
             }
@@ -61,7 +62,7 @@
 
             if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
             
-                $sql = "INSERT INTO products (`description`,`category`,`quantity`,`price`,`date`,`user_url`,`image`,`image2`,`image3`,`image4`) VALUES (:description,:category,:quantity,:price,:date,:user_url,:image,:image2,:image3,:image4)";
+                $sql = "INSERT INTO products (`description`,`category`,`quantity`,`price`,`date`,`user_url`,`image`,`image2`,`image3`,`image4`,`slag`) VALUES (:description,:category,:quantity,:price,:date,:user_url,:image,:image2,:image3,:image4,:slag)";
                 
                 $check = $db->write($sql, $arr);
                 if ($check) {
@@ -194,5 +195,15 @@
             return $result;
 
         } 
+
+        // Convert slug from product description
+        public function str_to_url($url) {
+            $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
+            $url = trim($url, "-");
+            $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
+            $url = strtolower($url);
+            $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
+            return $url;
+        }
     }
 ?>
