@@ -18,7 +18,7 @@
        
         .add-new-product, .edit-product{
             width: 50%;
-            height: 600px;
+            height: 700px;
             background-color: #cecccc;
             position: absolute;
             padding: 10px;
@@ -27,9 +27,7 @@
             border-radius: 3px;
             box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2)
         }
-        .edit-product{
-        height: 700px;
-       }
+    
         .edit-product-images img {
             margin: 20px 10px 0 0;
             border: 2px solid blue;
@@ -94,29 +92,35 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image (Required)</label>
                                         <div class="col-sm-8">
-                                            <input name="image" id="image" type="file" class="form-control" required>
+                                            <input name="image" id="image" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image2" id="image2" type="file" class="form-control">
+                                            <input name="image2" id="image2" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 3 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image3" id="image3" type="file" class="form-control">
+                                            <input name="image3" id="image3" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
                                         </div>
                                     </div>
                                 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 4 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image4" id="image4" type="file" class="form-control">
+                                            <input name="image4" id="image4" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
                                         </div>
+                                    </div>
+                                    <div class="js-product-images-add edit-product-images">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
+                                        <img src="" alt="">
                                     </div>
                                     <button onclick="collectData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
                                     <button onclick="showAddNew(event)" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
@@ -165,31 +169,31 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image (Required)</label>
                                         <div class="col-sm-8">
-                                            <input name="image" id="edit_image" type="file" onchange="display_image(this.files[0],this.name)" class="form-control" required>
+                                            <input name="image" id="edit_image" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image2" id="edit_image2" type="file" onchange="display_image(this.files[0],this.name)" class="form-control">
+                                            <input name="image2" id="edit_image2" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 3 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image3" id="edit_image3" type="file" onchange="display_image(this.files[0],this.name)" class="form-control">
+                                            <input name="image3" id="edit_image3" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
                                         </div>
                                     </div>
                                 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 4 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image4" id="edit_image4" type="file" onchange="display_image(this.files[0],this.name)" class="form-control">
+                                            <input name="image4" id="edit_image4" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="js-product-images edit-product-images">
+                                    <div class="js-product-images-add edit-product-images">
 
                                     </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
@@ -496,7 +500,7 @@
                 });
             }
             // Display image
-            function display_image(file,name){
+            function display_image(file,name,element){
                 var index = 0;
                 if (name == "image2") {
                     var index = 1;
@@ -507,7 +511,7 @@
                 if (name == "image4") {
                     var index = 3;
                 }
-                var imgage_holder = document.querySelector(".js-product-images");
+                var imgage_holder = document.querySelector("."+element);
                 var images = imgage_holder.querySelectorAll("IMG");
 
                 images[index].src = URL.createObjectURL(file);

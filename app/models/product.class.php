@@ -15,7 +15,7 @@
             $arr['user_url']    = $_SESSION["user_url"];
             $arr['slag']        = $this->str_to_url($DATA->description);
 
-            if (!preg_match("/^[a-zA-Z 0-9]+$/", trim($arr['description']))) {
+            if (!preg_match("/^[a-zA-Z 0-9._\-,]+$/", trim($arr['description']))) {
 
                 $_SESSION['error'] .= "Please enter a valid product name </br>";
             }
@@ -28,6 +28,16 @@
             if (!is_numeric($arr['price'])) {
                 $_SESSION['error'] .= "Please enter a valid price </br>";
             }
+
+            // Make sure slag is unique
+            $slag_arr['slag'] = $arr['slag'];
+            $sql = "SELECT slag FROM products WHERE slag =:slag LIMIT 1";
+            
+                $check = $db->read($sql,$slag_arr);
+                if ($check) {
+                    $arr['slag'] .= "-" . rand(0,99999);
+                }
+
             // Check for files
                 $arr["image"]  = "";
                 $arr["image2"] = "";
@@ -83,7 +93,7 @@
 
             $image_string = "";
 
-            if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['description']))) {
+            if (!preg_match("/^[a-zA-Z 0-9._\-,]+$/", trim($arr['description']))) {
 
                 $_SESSION['error'] .= "Please enter a valid product name </br>";
             }
