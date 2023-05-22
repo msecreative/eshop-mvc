@@ -2,12 +2,13 @@
     class Ajax_Product extends Controller
     {
         public function index() {
-            // $data = file_get_contents("php://input");
-            // $data = json_decode($data);
+            if (count($_POST) > 0 ) {
+                $data = (object)$_POST;
+            }else{
+                $data = file_get_contents("php://input");
+                //$data = json_decode($data);
+            }
 
-            // show($_POST);
-            // show($_FILES);
-            $data = (object)$_POST;
 
             if (is_object($data) && isset($data->data_type)) {
 

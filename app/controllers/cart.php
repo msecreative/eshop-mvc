@@ -11,7 +11,7 @@
             }
 
             $db = Database::newInstance();
-
+            $product_rows = false;
             $product_ids = array();
 
             if (isset($_SESSION["CART"])) {
@@ -20,10 +20,23 @@
 
                 $product_rows = $db->read("SELECT * FROM products WHERE pId in ($ids_str)");
             }
-            show($product_rows);
-            show($product_ids);
-            show($_SESSION["CART"]);
-            $product_rows = $db->read("SELECT * FROM products");
+           
+            if (is_array($product_rows)) {
+
+                foreach ($product_rows as $key => $product_row) {
+                
+                    foreach ($_SESSION["CART"] as $item) {
+
+                        if ($product_row->pId == $item["pId"]) {
+                            $product_rows[$key]->cart_qty = $item["qty"];
+                            break;
+                        }
+                    }
+                    
+                }
+                
+            }
+           
 
             $data["page_title"] = "Cart";
             if ($product_rows) {
