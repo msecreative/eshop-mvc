@@ -14,10 +14,11 @@
                 $db = Database::getInstance();
                 $product = $this->load_model("Product");
                 $category = $this->load_model("Category");
+                $image_class = $this->load_model("Image");
                 // Add new product
                 if ($data->data_type == "add_product") {
                      
-                    $check = $product->create($data, $_FILES);
+                    $check = $product->create($data, $_FILES, $image_class);
 
                     if ($_SESSION["error"] != "") {
                         
@@ -61,7 +62,7 @@
                     // show($data);
                     // show($_FILES);
                     // die;
-                        $product->edit($data,$_FILES);
+                        $product->edit($data,$_FILES, $image_class);
                         $arr["message"] = "Your product was successfully edited";
                         $_SESSION['error'] = "";
                         $arr["message_type"] = "info";

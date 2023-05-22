@@ -1,7 +1,7 @@
 <?php 
     class Product{
         
-        public function create($DATA, $FILES){
+        public function create($DATA, $FILES, $image_class = null){
 
             $db = Database::newInstance();
 
@@ -61,9 +61,10 @@
                 if ($img_row["error"] == 0 && in_array($img_row["type"], $allowed)) {
 
                     if ($img_row["size"] < $size) {
-                        $destination = $folder . $img_row["name"];
+                        $destination = $folder . $image_class->generate_filename(60) . ".jpg";
                         move_uploaded_file($img_row["tmp_name"], $destination);
                         $arr[$key] = $destination;
+                        $image_class->resize_image($destination,$destination,1500,1500);
                     }else{
                         $_SESSION['error'] .= $key . "is bigger than required size";
                     }
@@ -83,7 +84,7 @@
             return false;
         } 
 
-        public function edit($data,$FILES){
+        public function edit($data,$FILES, $image_class = null){
             // $id
             $arr['pId']         = $data->pId;
             $arr['description'] = $data->description;
@@ -127,9 +128,10 @@
                 if ($img_row["error"] == 0 && in_array($img_row["type"], $allowed)) {
 
                     if ($img_row["size"] < $size) {
-                        $destination = $folder . $img_row["name"];
+                        $destination = $folder . $image_class->generate_filename(60) . ".jpg";
                         move_uploaded_file($img_row["tmp_name"], $destination);
                         $arr[$key] = $destination;
+                        $image_class->resize_image($destination,$destination,1500,1500);
 
                         $image_string .=",". $key ." = :".$key;
                     }else{

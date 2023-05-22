@@ -220,7 +220,7 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-										<div>
+										<div style="overflow: hidden;">
 										<img class="product-overley" src="<?=ROOT.$product->image?>" alt="" />
 										</div>
 										<h2>$<?=$product->price?></h2>
