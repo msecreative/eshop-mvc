@@ -46,7 +46,7 @@
             if (isset($_SESSION["CART"])) {
                 foreach ($_SESSION["CART"] as $key => $item) {
                    if ($item["pId"] == $pId) {
-                    $_SESSION["CART"][$key]["qty"]++;
+                    $_SESSION["CART"][$key]["qty"]+= 1;
                     break;
                    }
                 }

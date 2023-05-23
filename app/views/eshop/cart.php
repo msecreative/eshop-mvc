@@ -53,12 +53,23 @@
 								<p class="cart_total_price">$<?=$product_row->price * $product_row->cart_qty ?></p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href="<?=ROOT?>add_to_cart/remove/<?=$product_row->pId?>"><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete" delete_id="<?=$product_row->pId?>" onclick="delete_item(getAttribute('delete_id'))" href="<?=ROOT?>add_to_cart/remove/<?=$product_row->pId?>"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
-					<?php } } ?>
+					<?php } }else{ ?>
+						<div style="font-size:18px; text-align:center;padding:6px">No item found!</div>
+						<?php } ?>
 					</tbody>
 				</table>
+			</div>
+			<div class="pull-right" style="font-size: 25px;">Sub Total: $<?=number_format($sub_total, 2)?></div><br>
+			<div style="display: flex;align-items: center;justify-content: space-between;width: 100%; margin-bottom: 20px;">
+				<a href="<?=ROOT?>shop">
+					<input type="button" class="btn btn-primary pull-left" value="Continue Shopping" name="">
+				</a>
+				<a href="<?=ROOT?>checkout">
+					<input type="button" class="btn btn-primary pull-right" value="Checkout" name="">
+				</a>
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
@@ -127,10 +138,10 @@
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
-							<li>Cart Sub Total <span>$59</span></li>
+							<li>Cart Sub Total <span>$<?=number_format($sub_total, 2)?></span></li>
 							<li>Eco Tax <span>$2</span></li>
 							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>$61</span></li>
+							<li>Total <span>$<?=number_format($sub_total, 2)?></span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Update</a>
 							<a class="btn btn-default check_out" href="">Check Out</a>
@@ -152,6 +163,12 @@
 				},"edit_quantity");
 		}
 
+		function delete_item(pId){
+				sendData({
+					pId:pId.trim()
+				},"delete_item");
+		}
+
 		// Send only post data
 		function sendData(data = {},data_type){
 
@@ -162,7 +179,7 @@
 				}
 			});
 			ajax.open("POST", "<?=ROOT?>ajax_cart/"+data_type+"/"+JSON.stringify(data), true);
-			ajax.send(JSON.stringify(data));
+			ajax.send();
 		}
 
 		function handleResult(result){
@@ -172,6 +189,9 @@
 
 				if (typeof obj.data_type != "undefined") {
 
+					if (obj.data_type == "delete_item") {
+						window.location.href = window.location.href;
+					}else
 					if (obj.data_type == "edit_quantity") {
 						window.location.href = window.location.href;
 					}

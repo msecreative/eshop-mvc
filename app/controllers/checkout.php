@@ -1,5 +1,5 @@
 <?php 
-    class Cart extends Controller
+    class Checkout extends Controller
     {
         public function index() {
             $user = $this->load_model("User");
@@ -38,7 +38,7 @@
             }
            
 
-            $data["page_title"] = "Cart";
+            $data["page_title"] = "Checkout";
 
             $data["sub_total"] = 0;
             if ($product_rows) {
@@ -50,7 +50,7 @@
             }
             rsort($product_rows);
             $data["product_rows"] = $product_rows;
-            $this ->view("cart", $data);
+            $this ->view("checkout", $data);
         }
     }
     
