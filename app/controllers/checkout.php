@@ -48,7 +48,11 @@
                     $data["sub_total"] += $mytotal;
                 }
             }
-            rsort($product_rows);
+            
+            if (is_array($product_rows)) {
+                rsort($product_rows);
+            }
+            
             $data["product_rows"] = $product_rows;
             $this ->view("checkout", $data);
         }

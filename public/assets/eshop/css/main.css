@@ -1899,10 +1899,10 @@ h2.title {
 }
 
 
-.shopper-info > form > input, 
-.form-two > form > select, 
-.form-two > form > input, 
-.form-one > form > input {
+.shopper-info input, 
+.form-one select, 
+.form-one input, 
+.form-one input {
   background:#F0F0E9;
   border: 0 none;
   margin-bottom:10px;
@@ -1922,7 +1922,6 @@ h2.title {
 
 .order-message textarea {
   font-size: 12px;
-  height: 335px;
   margin-bottom: 20px;
   padding: 15px 20px;
 }

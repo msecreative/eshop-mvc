@@ -13,6 +13,7 @@
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div>
+			<?php if ($product_rows) { ?>
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
@@ -27,7 +28,7 @@
 					</thead>
 					<tbody>
 					<?php 
-						if ($product_rows) {
+						
 							foreach ($product_rows as $product_row) {
 							
 					?>
@@ -56,14 +57,12 @@
 								<a class="cart_quantity_delete" delete_id="<?=$product_row->pId?>" onclick="delete_item(getAttribute('delete_id'))" href="<?=ROOT?>add_to_cart/remove/<?=$product_row->pId?>"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
-					<?php } }else{ ?>
-						<div style="font-size:18px; text-align:center;padding:6px">No item found!</div>
-						<?php } ?>
+					<?php }  ?>
 					</tbody>
 				</table>
 			</div>
 			<div class="pull-right" style="font-size: 25px;">Sub Total: $<?=number_format($sub_total, 2)?></div><br>
-			<div style="display: flex;align-items: center;justify-content: space-between;width: 100%; margin-bottom: 20px;">
+			<div style="display: flex;align-items: center;justify-content: space-between;width: 100%; margin-bottom: 50px;">
 				<a href="<?=ROOT?>shop">
 					<input type="button" class="btn btn-primary pull-left" value="Continue Shopping" name="">
 				</a>
@@ -71,85 +70,13 @@
 					<input type="button" class="btn btn-primary pull-right" value="Checkout" name="">
 				</a>
 			</div>
+			<?php 
+				}else{ ?>
+					<div style="font-size:18px; text-align:center;padding:6px; margin-bottom:50px">No item found!</div>
+				<?php }
+			?>
 		</div>
 	</section> <!--/#cart_items-->
-
-	<section id="do_action">
-		<div class="container">
-			<div class="heading">
-				<h3>What would you like to do next?</h3>
-				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="chose_area">
-						<ul class="user_option">
-							<li>
-								<input type="checkbox">
-								<label>Use Coupon Code</label>
-							</li>
-							<li>
-								<input type="checkbox">
-								<label>Use Gift Voucher</label>
-							</li>
-							<li>
-								<input type="checkbox">
-								<label>Estimate Shipping & Taxes</label>
-							</li>
-						</ul>
-						<ul class="user_info">
-							<li class="single_field">
-								<label>Country:</label>
-								<select>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
-								</select>
-								
-							</li>
-							<li class="single_field">
-								<label>Region / State:</label>
-								<select>
-									<option>Select</option>
-									<option>Dhaka</option>
-									<option>London</option>
-									<option>Dillih</option>
-									<option>Lahore</option>
-									<option>Alaska</option>
-									<option>Canada</option>
-									<option>Dubai</option>
-								</select>
-							
-							</li>
-							<li class="single_field zip-field">
-								<label>Zip Code:</label>
-								<input type="text">
-							</li>
-						</ul>
-						<a class="btn btn-default update" href="">Get Quotes</a>
-						<a class="btn btn-default check_out" href="">Continue</a>
-					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="total_area">
-						<ul>
-							<li>Cart Sub Total <span>$<?=number_format($sub_total, 2)?></span></li>
-							<li>Eco Tax <span>$2</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>$<?=number_format($sub_total, 2)?></span></li>
-						</ul>
-							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="">Check Out</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section><!--/#do_action-->
 
 	<script>
 		// Edit product quantity
