@@ -54,6 +54,17 @@
             }
             
             $data["product_rows"] = $product_rows;
+            // get countries and states
+            $countries = $this->load_model("Countries");
+            $data["countries"] = $countries->get_countries();
+
+            // Capture the from data
+
+            if (count($_POST) > 0) {
+                show($_POST);
+                show($product_rows);
+            }
+
             $this ->view("checkout", $data);
         }
     }
