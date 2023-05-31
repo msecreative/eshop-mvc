@@ -63,7 +63,14 @@
                     // show($_FILES);
                     // die;
                         $product->edit($data,$_FILES, $image_class);
-                        $arr["message"] = "Your product was successfully edited";
+                        if ($_SESSION['error'] != "") {
+                            $arr["message"] = $_SESSION['error'];
+                            $arr["message_type"] = "error";
+                        }else{
+                            $arr["message"] = "Your product was successfully edited";
+                            $arr["message_type"] = "info";
+                        }
+
                         $_SESSION['error'] = "";
                         $arr["message_type"] = "info";
 
