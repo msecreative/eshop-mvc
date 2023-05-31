@@ -6,9 +6,8 @@
                 $data = (object)$_POST;
             }else{
                 $data = file_get_contents("php://input");
-                //$data = json_decode($data);
+                $data = json_decode($data);
             }
-
 
             if (is_object($data) && isset($data->data_type)) {
 
@@ -83,7 +82,7 @@
                         $arr["message_type"] = "info";
 
                         $allProduct = $product->getAllProduct();
-                        $arr["data"] = $product->make_table($allProduct);
+                        $arr["data"] = $product->make_table($allProduct, $category);
 
                         $arr["data_type"] = "delete_row";
 

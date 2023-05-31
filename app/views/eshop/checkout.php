@@ -22,6 +22,11 @@
 			</div><!--/register-req-->
 
 			<div class="shopper-informations">
+				<?php 
+					if (isset($errors) && count($errors) > 0) {
+						show($errors);
+					}
+				?>
 				<form method="POST">
 					<div class="row">
 						<div class="col-sm-8 clearfix">

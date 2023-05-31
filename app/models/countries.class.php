@@ -21,4 +21,28 @@
         return $data;
 
        } 
+
+
+       public function get_country($countryId){
+
+         $arr["countryId"] = (int)$countryId;
+
+        $db = Database::newInstance();
+        $sql = "SELECT * FROM countries WHERE countryId = '$countryId'";
+        $data = $db->read($sql);
+
+        return is_array($data) ? $data[0] : false;
+        
+       } 
+   
+       public function get_state($stateId){
+
+        $arr["stateId"] = (int)$stateId;
+        $db = Database::newInstance();
+        $sql = "SELECT * FROM states WHERE stateId = '$stateId'";
+        $data = $db->read($sql);
+
+        return is_array($data) ? $data[0] : false;
+
+       } 
     }

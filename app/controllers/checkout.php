@@ -72,6 +72,7 @@
                 }
                 $order = $this->load_model("Order");
                 $order->save_order($_POST,$product_rows,$user_url,$sessionid);
+                $data["errors"] = $order->errors;
 
                 // header("Location:" .ROOT. "thank_you");
                 // die;

@@ -31,8 +31,8 @@
         .edit-product-images img {
             margin: 20px 10px 0 0;
             border: 2px solid blue;
-            height: 100px;
-            width: 100%;
+            height: 120px;
+            width: 150px;
         }
 
         .edit-product-images {
@@ -169,31 +169,31 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image (Required)</label>
                                         <div class="col-sm-8">
-                                            <input name="image" id="edit_image" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control" required>
+                                            <input name="image" id="edit_image" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-edit')" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image2" id="edit_image2" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
+                                            <input name="image2" id="edit_image2" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-edit')" class="form-control">
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 3 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image3" id="edit_image3" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
+                                            <input name="image3" id="edit_image3" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-edit')" class="form-control">
                                         </div>
                                     </div>
                                 
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Image 4 (optional)</label>
                                         <div class="col-sm-8">
-                                            <input name="image4" id="edit_image4" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-add')" class="form-control">
+                                            <input name="image4" id="edit_image4" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-edit')" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="js-product-images-add edit-product-images">
+                                    <div class="js-product-images-edit edit-product-images">
 
                                     </div>
                                     <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
@@ -267,7 +267,7 @@
                     var editPriceInput = document.querySelector("#edit_price");
                     editPriceInput.value = info.price;
                     
-                    var editImageInput = document.querySelector(".js-product-images");
+                    var editImageInput = document.querySelector(".js-product-images-edit");
                     editImageInput.innerHTML = `<img src='<?=ROOT?>${info.image} ' alt=''>`;
                     editImageInput.innerHTML += `<img src='<?=ROOT?>${info.image2} ' alt=''>`;
                     editImageInput.innerHTML += `<img src='<?=ROOT?>${info.image3} ' alt=''>`;
@@ -451,10 +451,16 @@
                         }else 
                             if (obj.data_type == "edit_product") {
 
-                                show_edit_product(0,'',false);
+                                if (obj.message_type == "info") {
+                                    alert(obj.message);
+
+                                    show_edit_product(0,'',false);
                                 
-                                var table_body = document.querySelector("#table_body");
-                                table_body.innerHTML = obj.data;
+                                    var table_body = document.querySelector("#table_body");
+                                    table_body.innerHTML = obj.data;
+                                }else{
+                                    alert(obj.message);
+                                }
                                 //alert(obj.message);
 
                             }else
