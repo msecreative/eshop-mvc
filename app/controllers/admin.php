@@ -33,7 +33,7 @@
             $data["table_rows"] = $table_rows;
             $data["forSubCategories"] = $forSubCategories;
 
-            $data["page_title"] = "Categories";
+            $data["page_title"] = "Admin - Categories";
             $this ->view("admin/categories", $data);
         }
 
@@ -60,8 +60,40 @@
             $data["table_rows"] = $table_rows;
             $data["allcategories"] = $allcategories;
 
-            $data["page_title"] = "Products";
+            $data["page_title"] = "Admin - Products";
             $this ->view("admin/products", $data);
+        }
+
+        public function orders(){
+
+            $user = $this->load_model("User");
+            $order = $this->load_model("Order");
+            $user_data = $user->check_login(true, ["admin"]);
+
+            if (is_object($user_data)) {
+                $data["user_data"] = $user_data;
+            }
+
+            $orders = $order->get_all_orders_by_user();
+
+            if (is_array($orders)) {
+
+                foreach ($orders as $key => $order_row) {
+
+                    $details = $order->get_all_orders_details($order_row->orderId);
+                    $orders[$key]->details = $details;
+
+                    $user_name = $user->get_user($order_row->user_url);
+                    $orders[$key]->user_name = $user_name;
+
+                }
+                
+            }
+
+            $data["orders"] = $orders;
+
+            $data["page_title"] = "Admin - Orders";
+            $this ->view("admin/orders", $data);
         }
 
     }

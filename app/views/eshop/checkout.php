@@ -1,4 +1,5 @@
 <?php $this->view("header", $data) ?>
+
 <style>
 	.form-one > select {
     padding: 10px 5px;
@@ -24,7 +25,9 @@
 			<div class="shopper-informations">
 				<?php 
 					if (isset($errors) && count($errors) > 0) {
-						show($errors);
+						foreach ($errors as $error) {?>
+						<div class='alert alert-danger'><?=$error?></div>
+					<?php	}
 					}
 				?>
 				<form method="POST">
@@ -88,6 +91,7 @@
 	</section> <!--/#cart_items-->
 
 	<script>
+		 
 		function get_states(countryId){
 				sendData({
 					countryId:countryId.trim()
@@ -129,7 +133,5 @@
 			}
 		}
 	</script>
-
-	
 
 	<?php $this->view("footer", $data) ?>

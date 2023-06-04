@@ -17,7 +17,7 @@
                     }
                 }
             }
-            return;
+            // return;
             //show($user_url);
             //show($post);die;
             $total = 0;
@@ -79,6 +79,30 @@
                 }
             }
 
+        }
+
+        public function get_all_orders_by_user(){
+
+            $orders = false;
+
+            $db = Database::newInstance();
+
+            $sql = "SELECT * FROM orders ORDER BY orderId DESC  limit 100";
+            $orders = $db->read($sql);
+        
+            return $orders;
+        }
+        public function get_all_orders_details($orderId){
+
+            $details = false;
+            $data["orderId"] = addslashes($orderId);
+
+            $db = Database::newInstance();
+
+            $sql = "SELECT * FROM order_details WHERE orderId = :orderId ORDER BY orderDetailId DESC";
+            $details = $db->read($sql,$data);
+        
+            return $details;
         }
     }
 ?>

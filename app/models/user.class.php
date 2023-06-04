@@ -102,7 +102,16 @@
         }
 
         public function get_user($url){
+            
+            $db = Database::newInstance();
 
+            $get_arr["url_address"] = addslashes($url);
+            $sql = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
+            $result = $db->read($sql, $get_arr);
+            if (is_array($result)) {
+                return $result[0];
+            }
+            return false;
         }
 
         private function get_random_string_max($length){
@@ -143,6 +152,7 @@
             }else{ //if (count($allowed) > 0 ) {
                 
                 if (isset($_SESSION["user_url"])) {
+
                     $arr["url_address"] = $_SESSION["user_url"];
                     $sql = "SELECT * FROM users WHERE url_address = :url_address LIMIT 1";
                     $result = $db->read($sql, $arr);

@@ -21,22 +21,16 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="<?=ROOT ?>admin/products" >
                           <i class="fa fa-desktop"></i>
                           <span>Products</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="<?=ROOT ?>admin/products">View Products</a></li>
-                      </ul>
                   </li>
                   <li class="sub-menu">
-                      <a href="<?=ROOT ?>admin/categories/list" >
+                      <a href="<?=ROOT ?>admin/categories" >
                           <i class="fa fa-list-alt"></i>
                           <span>Categories</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="<?=ROOT ?>admin/categories">View Category</a></li>
-                      </ul>
                   </li>
 
                   <li class="sub-menu">
