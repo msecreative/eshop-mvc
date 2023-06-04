@@ -2,8 +2,10 @@
     class Order extends Controller{
 
         public $errors = array();
-        
-        public function save_order($post,$product_rows,$user_url,$sessionid){
+
+        public function validate($post){
+
+            $this->errors = array();
             foreach ($post as $key => $value) {
                 
                 if ($key == "country") {
@@ -17,6 +19,10 @@
                     }
                 }
             }
+        }
+        
+        public function save_order($post,$product_rows,$user_url,$sessionid){
+           
             // return;
             //show($user_url);
             //show($post);die;

@@ -10,7 +10,7 @@
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
-				  <li><a href="#">Home</a></li>
+				  <li><a href="<?=ROOT?>shop">Shop</a></li>
 				  <li class="active">Check out</li>
 				</ol>
 			</div><!--/breadcrums-->
@@ -74,7 +74,7 @@
 							<input type="button" class="btn btn-primary pull-right" value="Back to cart" name="">
 						</a>
 						<a href="<?=ROOT?>pay">
-							<input type="submit" class="btn btn-primary pull-left" value="Payment" name="">
+							<input type="submit" class="btn btn-primary pull-left" value="Continue" name="">
 						</a>
 					</div>
 				</form>

@@ -61,6 +61,27 @@
             // Capture the from data
 
             if (count($_POST) > 0) {
+                
+                $order = $this->load_model("Order");
+                $order->validate($_POST);
+                $data["errors"] = $order->errors;
+
+                $_SESSION["POST_DATA"] = $_POST;
+
+                if (count($order->errors) == 0) {
+                    header("Location:" .ROOT. "checkout/summary");
+                    die;
+                }
+            }
+
+            $this ->view("checkout", $data);
+        }
+
+        // Checkout summary
+
+        public function summary() {
+
+            if (count($_POST) > 0) {
                 // show($_POST);
                 // show($product_rows);
                 $sessionid = session_id();
@@ -74,11 +95,11 @@
                 $order->save_order($_POST,$product_rows,$user_url,$sessionid);
                 $data["errors"] = $order->errors;
 
-                // header("Location:" .ROOT. "thank_you");
-                // die;
+                header("Location:" .ROOT. "thank_you");
+                die;
             }
 
-            $this ->view("checkout", $data);
+            $this ->view("checkout.summary", $data);
         }
     }
     
