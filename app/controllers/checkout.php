@@ -59,14 +59,20 @@
             $data["countries"] = $countries->get_countries();
 
             // Capture the from data
+            //check if old post data exists
+            if (isset($_SESSION["POST_DATA"])) {
+                # code...
+                $data["POST_DATA"] = $_SESSION["POST_DATA"];
+            }
 
             if (count($_POST) > 0) {
-                
+
                 $order = $this->load_model("Order");
                 $order->validate($_POST);
                 $data["errors"] = $order->errors;
 
                 $_SESSION["POST_DATA"] = $_POST;
+                $data["POST_DATA"]     = $_POST;
 
                 if (count($order->errors) == 0) {
                     header("Location:" .ROOT. "checkout/summary");
@@ -81,7 +87,17 @@
 
         public function summary() {
 
-            if (count($_POST) > 0) {
+            $user = $this->load_model("User");
+            $image_class = $this->load_model("Image");
+            $user_data = $user->check_login();
+
+            if (is_object($user_data)) {
+                $data["user_data"] = $user_data;
+            }
+
+            $data["page_title"] = "Checkout Summary";
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["POST_DATA"])) {
                 // show($_POST);
                 // show($product_rows);
                 $sessionid = session_id();
@@ -92,7 +108,7 @@
                     $user_url = $_SESSION["user_url"];
                 }
                 $order = $this->load_model("Order");
-                $order->save_order($_POST,$product_rows,$user_url,$sessionid);
+                $order->save_order($_SESSION["POST_DATA"],$product_rows,$user_url,$sessionid);
                 $data["errors"] = $order->errors;
 
                 header("Location:" .ROOT. "thank_you");

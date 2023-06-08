@@ -60,15 +60,14 @@
 								<div class="form-one" style="margin-left: 5%;">
 									<input name="postcode"	value="<?=$postcode?>" type="text" placeholder="Zip / Postal Code *" required>
 
-									<select name="country"	value="<?=$country?>" class="js-country" onchange="get_states(this.value)" required>
+									<select name="country" class="js-country" onchange="get_states(this.value)" required>
 										<?php 
-											if ($country == "") {
+											if ($country == "") { ?>
 												echo "<option>-- Country --</option>";
-											}else{
+										<?php }else{ ?>
+											echo "<option>$country</option>";
+										<?php } ?>
 
-												echo "<option>$country</option>";	
-											}
-										?>
 										<?php 
 											if (isset($countries) && is_array($countries)) {
 												foreach ($countries as $country) {
@@ -78,7 +77,7 @@
 										<?php } } ?>
 										
 									</select>
-									<select name="state"	value="<?=$state?>" class="js-state" required>
+									<select name="state" value="<?=$state?>" class="js-state" required>
 										<option>-- State / Province / Region --</option>
 									</select>
 								</div>
@@ -93,8 +92,8 @@
 											
 					</div>
 					<div style="display: flex;align-items: center;justify-content: space-between;width: 100%; margin-bottom: 50px;">
-						<a href="<?=ROOT?>cart">
-							<input type="button" class="btn btn-primary pull-right" value="Back to cart" name="">
+						<a href="<?=ROOT?>checkout">
+							<input type="button" class="btn btn-primary pull-right" value="Back to checkout" name="">
 						</a>
 						<a href="<?=ROOT?>pay">
 							<input type="submit" class="btn btn-primary pull-left" value="Continue" name="">
@@ -105,8 +104,8 @@
 				<?php }else{ ?>
 					<div style="padding-bottom:50px;overflow:hidden">
 						<p style="display:block; padding:6px; text-align:center; font-size:18px;">Please add some items in the cart first!</p>
-						<a href="<?=ROOT?>cart">
-							<input type="button" class="btn btn-primary pull-left" value="Back to cart" name="">
+						<a href="<?=ROOT?>checkout">
+							<input type="button" class="btn btn-primary pull-left" value="Back to checkout" name="">
 						</a>
 					</div>
 				<?php } ?>

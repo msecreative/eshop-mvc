@@ -43,10 +43,10 @@
                 $data["sessionId"]        = $sessionid;
                 $data["delevery_address"] = $post["address1"] ." " .$post["address2"];
                 $data["total"]            = $total;
-                $country_obj              = $countries->get_country($post["country"]);
-                $data["country"]          = $country_obj->country;
-                $state_obj                = $countries->get_state($post["state"]);
-                $data["state"]            = $state_obj->state;
+                //$country_obj              = $countries->get_country($post["country"]);
+                $data["country"]          = $post["country"];
+                //$state_obj                = $countries->get_state($post["state"]);
+                $data["state"]            = $post["state"];
                 $data["zip"]              = $post["postcode"];
                 $data["tax"]              = 0;
                 $data["shipping"]         = 0;
