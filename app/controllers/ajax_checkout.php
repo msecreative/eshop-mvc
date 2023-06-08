@@ -1,12 +1,14 @@
 <?php 
     class Ajax_checkout extends Controller
     {
-        public function index($data_type, $countryId = "") {
-           // print_r($countryId);
+        public function index($data_type, $country = "") {
+            $info = file_get_contents("php://input");
+            $info = json_decode($info);
+            
 
-            $countryId = json_decode($countryId);
+            $country = $info->data->country;
             $countries = $this->load_model("Countries");
-            $data = $countries->get_states($countryId->countryId);
+            $data = $countries->get_states($country);
 
             $info = (object)[];
             $info->data = $data;

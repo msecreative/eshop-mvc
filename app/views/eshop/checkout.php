@@ -79,7 +79,13 @@
 										
 									</select>
 									<select name="state"	value="<?=$state?>" class="js-state" required>
-										<option>-- State / Province / Region --</option>
+										<?php 
+											if ($state == "") {
+												echo "<option>-- State / Province / Region --</option>";
+											}else{
+												echo "<option>$state</option>";
+											}
+										?>
 									</select>
 								</div>
 							</div>
@@ -116,9 +122,9 @@
 
 	<script>
 		 
-		function get_states(countryId){
+		function get_states(country){
 				sendData({
-					countryId:countryId.trim()
+					country:country.trim()
 				},"get_states");
 		}
 
@@ -131,8 +137,13 @@
 					handleResult(ajax.responseText);
 				}
 			});
-			ajax.open("POST", "<?=ROOT?>ajax_checkout/"+data_type+"/"+JSON.stringify(data), true);
-			ajax.send();
+
+			var info = {};
+			info.data_type = data_type;
+			info.data = data;
+
+			ajax.open("POST", "<?=ROOT?>ajax_checkout", true);
+			ajax.send(JSON.stringify(info));
 		}
 
 		function handleResult(result){

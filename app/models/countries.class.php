@@ -11,12 +11,23 @@
         
        } 
    
-       public function get_states($countryId){
+       public function get_states($country){
 
-        $arr["countryId"] = (int)$countryId;
+        $arr["country"] = addslashes($country);
         $db = Database::newInstance();
-        $sql = "SELECT * FROM states WHERE countryId = :countryId ORDER BY `state` DESC";
-        $data = $db->read($sql,$arr);
+
+        $sql = "SELECT countryId FROM countries WHERE country = :country LIMIT 1";
+        $echek = $db->read($sql,$arr);
+        $data = false;
+
+        if (is_array($echek)) {
+
+            $id_arr["countryId"] = $echek[0]->countryId;
+
+            
+            $sql = "SELECT * FROM states WHERE countryId = :countryId ORDER BY `state` DESC";
+            $data = $db->read($sql,$id_arr);
+         }
 
         return $data;
 
