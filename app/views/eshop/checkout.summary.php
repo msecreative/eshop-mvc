@@ -15,91 +15,106 @@
 				</ol>
 			</div><!--/breadcrums-->
 			<?php 
-				if (is_array($product_rows)) {
+				if (is_array($order_details)) {
 
 			?>
 			<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+				<p>Please confirm the information below</p>
 			</div><!--/register-req-->
 
 			<div class="shopper-informations">
-				<?php 
-					if (isset($errors) && count($errors) > 0) {
-						foreach ($errors as $error) {?>
-						<div class='alert alert-danger'><?=$error?></div>
-					<?php	}
-					}
-				?>
-				<?php 
 
-					$address1 = "";
-					$address2 = "";
-					$phone = "";
-					$mobilePhone = "";
-					$postcode = "";
-					$country = "";
-					$state = "";
-					$message = "";
-					if (isset($POST_DATA)) {
-
-						extract($POST_DATA);
-					}
-				?>
-				<form method="POST">
-					<div class="row">
-						<div class="col-sm-8 clearfix">
-							<div class="bill-to">
-								<p>Bill To</p>
-								<div class="form-one">
-								
-									<input name="address1" value="<?=$address1?>" type="text" placeholder="Address 1 *" autofocus="autofocus" required>
-									<input name="address2" value="<?=$address2?>" type="text" placeholder="Address 2">
-									<input name="phone" value="<?=$phone?>" type="text" placeholder="Phone *" required>
-									<input name="mobilePhone" value="<?=$mobilePhone?>" type="text" placeholder="Mobile Phone" required>
-								</div>
-								<div class="form-one" style="margin-left: 5%;">
-									<input name="postcode"	value="<?=$postcode?>" type="text" placeholder="Zip / Postal Code *" required>
-
-									<select name="country" class="js-country" onchange="get_states(this.value)" required>
-										<?php 
-											if ($country == "") { ?>
-												echo "<option>-- Country --</option>";
-										<?php }else{ ?>
-											echo "<option>$country</option>";
-										<?php } ?>
-
-										<?php 
-											if (isset($countries) && is_array($countries)) {
-												foreach ($countries as $country) {
-													
-										?>
-										<option value="<?=$country->country ?>"><?=$country->country ?></option>
-										<?php } } ?>
-										
-									</select>
-									<select name="state" value="<?=$state?>" class="js-state" required>
-										<option>-- State / Province / Region --</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="order-message">
-								<p>Shipping Order</p>
-								<textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="10"><?=$message?></textarea>
-							</div>	
-						</div>
-											
-					</div>
-					<div style="display: flex;align-items: center;justify-content: space-between;width: 100%; margin-bottom: 50px;">
-						<a href="<?=ROOT?>checkout">
-							<input type="button" class="btn btn-primary pull-right" value="Back to checkout" name="">
-						</a>
-						<a href="<?=ROOT?>pay">
-							<input type="submit" class="btn btn-primary pull-left" value="Continue" name="">
-						</a>
-					</div>
-				</form>
+				<div class="order-table">
+                    <h4><i class="fa fa-angle-right"></i>Product List</h4>  
+                    <hr>
+                    <table class="table table-striped table-advance table-hover table-class">
+                        <thead>
+                            <tr>
+                                <th>Serial</th>
+                                <th>Customer Name</th>
+                                <th>Delevery Address</th>
+                                <th>Total</th>
+                                <th>Order Date</th>
+                                <th>...</th>
+                            </tr>
+                        </thead>
+                        <tbody onclick="show_details(event)">
+                            <?php 
+                                $i = 0;
+                                foreach ($orders as $order) {
+                                $order = (object)$order;
+                                $i++;
+                            ?>
+                            <tr>
+                                <td><?=$i ?></td>
+                                <td><a href="<?=ROOT?>profile/<?=$order->user_name->url_address?>"><?=$order["user_name"]->name ?></a></td>
+                                <td style="font-size: 10px;"><?=$order->delevery_address ?></td>
+                                <td>$<?=$order->total ?></td>
+                                <td style="font-size: 10px;"><?=date("d-M-Y H:i:a", strtotime($order->date)) ?></td>
+                                <td>
+                                    <i class="fa fa-arrow-down"></i>
+                                    <div class="js-order-details order-details">
+                                        <div style="display: flex; justify-content:space-between; align-items:center">
+                                            <div>
+                                                <h3>Order No: <?=$order->orderId ?></h3>
+                                                <h4 style="margin-left:0">Customer Name: <?=$order->user_name->name ?></h4>
+                                            </div>
+                                            <div><button class="btn btn-danger">Close</button></div>
+                                        </div>
+                                        
+                                        <?php 
+                                            if (isset($order->details) && is_array($order->details)) { 
+                                        ?>
+                                        <hr>
+                                        <div style="display: flex;">
+                                            <table class="table table-striped table-advance table-hover" style="flex:1;margin:5px">
+                                                <tr><th>Country</th>:<td><?=$order->country?></td></tr>
+                                                <tr><th>State</th><td><?=$order->state?></td></tr>
+                                                <tr><th>Delevery Address</th><td><?=$order->delevery_address?></td></tr>
+                                            </table>
+                                            <table class="table table-striped table-advance table-hover" style="flex:1;margin:5px">
+                                                <tr><th>Phone</th><td><?=$order->phone?></td></tr>
+                                                <tr><th>Mobile</th><td><?=$order->mobilePhone?></td></tr>
+                                                <tr><th>Order Date</th><td><?=$order->date?></td></tr>
+                                                
+                                            </table>
+                                        </div>
+                                        <br>
+                                        <hr>
+                                        <table class="table table-striped table-advance table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl</th>
+                                                    <th>Product Name</th>
+                                                    <th>Amount</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($order->details as $value) {  ?>
+                                                <tr>
+                                                    <td><?=$i ?></td>
+                                                    <td><?=$value->description ?></td>
+                                                    <td><?=$value->qty ?></td>
+                                                    <td><?=$value->amount ?></td>
+                                                    <td><?=$value->total ?></td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                        <div style="float: right;"><h3>Sub Total: <?=$order->total ?></h3> </div>
+                                            
+                                        <?php }else{ ?>
+                                            <div>No order details found</div>
+                                        <?php } ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
 			
 				<?php }else{ ?>
 					<div style="padding-bottom:50px;overflow:hidden">

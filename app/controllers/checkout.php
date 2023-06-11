@@ -95,6 +95,46 @@
                 $data["user_data"] = $user_data;
             }
 
+            // Get data for summary show in summary page
+
+            $db = Database::newInstance();
+            $product_rows = false;
+            $product_ids = array();
+
+            if (isset($_SESSION["CART"])) {
+                $product_ids = array_column($_SESSION["CART"], "pId");
+                $ids_str = "'" . implode("','", $product_ids) . "'";
+
+                $product_rows = $db->read("SELECT * FROM products WHERE pId in ($ids_str)");
+            }
+           
+            if (is_array($product_rows)) {
+
+                foreach ($product_rows as $key => $product_row) {
+                
+                    foreach ($_SESSION["CART"] as $item) {
+
+                        if ($product_row->pId == $item["pId"]) {
+                            $product_rows[$key]->cart_qty = $item["qty"];
+                            break;
+                        }
+                    }
+                    
+                }
+                
+            }
+
+            $data["sub_total"] = 0;
+            if ($product_rows) {
+                foreach ($product_rows as $key => $product_row) {
+                    $mytotal = $product_row->price * $product_row->cart_qty;
+                    $data["sub_total"] += $mytotal;
+                }
+            }
+            
+            
+            $data["order_details"] = $product_rows;
+            $data["orders"][] = $_SESSION["POST_DATA"];
             $data["page_title"] = "Checkout Summary";
 
             if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["POST_DATA"])) {

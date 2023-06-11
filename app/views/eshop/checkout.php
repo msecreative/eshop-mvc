@@ -19,7 +19,7 @@
 
 			?>
 			<div class="register-req">
-				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+				<p>Please add some information below</p>
 			</div><!--/register-req-->
 
 			<div class="shopper-informations">
