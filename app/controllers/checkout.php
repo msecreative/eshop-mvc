@@ -151,8 +151,8 @@
                 $order->save_order($_SESSION["POST_DATA"],$product_rows,$user_url,$sessionid);
                 $data["errors"] = $order->errors;
 
-                header("Location:" .ROOT. "thank_you");
-                die;
+                // header("Location:" .ROOT. "thank_you");
+                // die;
             }
 
             $this ->view("checkout.summary", $data);

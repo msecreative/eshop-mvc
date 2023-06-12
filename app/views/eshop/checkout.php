@@ -102,9 +102,7 @@
 						<a href="<?=ROOT?>cart">
 							<input type="button" class="btn btn-primary pull-right" value="Back to cart" name="">
 						</a>
-						<a href="<?=ROOT?>pay">
-							<input type="submit" class="btn btn-primary pull-left" value="Continue" name="">
-						</a>
+						<input type="submit" class="btn btn-primary pull-left" value="Continue" name="">
 					</div>
 				</form>
 			

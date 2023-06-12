@@ -11,7 +11,7 @@
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
 				  <li><a href="<?=ROOT?>shop">Shop</a></li>
-				  <li class="active">Check out</li>
+				  <li class="active">Checkout Summary</li>
 				</ol>
 			</div><!--/breadcrums-->
 			<?php 
@@ -43,20 +43,24 @@
                                 <hr>
                                 <div style="display: flex;">
                                     <table class="table table-striped table-advance table-hover" style="flex:1;margin:5px">
-                                        <tr><th>Country</th>:<td><?=$order->country?></td></tr>
+                                        <tr><th>Country</th><td><?=$order->country?></td></tr>
                                         <tr><th>State</th><td><?=$order->state?></td></tr>
                                         <tr><th>Delevery Address 1</th><td><?=$order->address1?></td></tr>
                                         <tr><th>Delevery Address 2</th><td><?=$order->address2?></td></tr>
                                     </table>
                                     <table class="table table-striped table-advance table-hover" style="flex:1;margin:5px">
+                                        <tr><th>Zip/Postal Code</th><td><?=$order->postcode?></td></tr>
                                         <tr><th>Phone</th><td><?=$order->phone?></td></tr>
                                         <tr><th>Mobile</th><td><?=$order->mobilePhone?></td></tr>
                                         <tr><th>Order Date</th><td><?=date("Y-m-d")?></td></tr>
-                                        
                                     </table>
                                 </div>
                                 <br>
                                 <hr>
+                                <div style="border:1px solid #ddd; width: 50%;margin:0 auto; padding:10px 15px">
+                                    <h4>Customer Message</h4>
+                                    <p><?=$order->message?></p>
+                                </div>
                                 <h4>Order Summary</h4>
                                 <?php 
                                     if (isset($order_details) && is_array($order_details)) {
@@ -92,13 +96,15 @@
                             
                         <?php } ?>
                 </div>
-                <div style="padding-bottom:50px;overflow:hidden">
+
+                <div style="display: flex;align-items: center;justify-content: space-between;width: 100%; margin-bottom: 50px;">
                     <a href="<?=ROOT?>checkout">
-                        <input type="button" class="btn btn-primary pull-left" value="Back to checkout" name="">
+                        <input type="button" class="btn btn-primary pull-right" value="Back to checkout" name="">
                     </a>
+                    <form action="" method="POST">
+                        <input type="submit" class="btn btn-primary pull-left" value="Payment" name="">
+                    </form>
                 </div>
-                
-			
                     <?php }else{ ?>
                         <div style="padding-bottom:50px;overflow:hidden">
                             <p style="display:block; padding:6px; text-align:center; font-size:18px;">Please add some items in the cart first!</p>
