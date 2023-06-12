@@ -11,7 +11,7 @@
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
 				  <li><a href="<?=ROOT?>shop">Shop</a></li>
-				  <li class="active">Checkout Summary</li>
+				  <li class="active"><?=$data["page_title"] ?></li>
 				</ol>
 			</div><!--/breadcrums-->
 			<?php 

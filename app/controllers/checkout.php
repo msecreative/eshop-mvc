@@ -151,11 +151,19 @@
                 $order->save_order($_SESSION["POST_DATA"],$product_rows,$user_url,$sessionid);
                 $data["errors"] = $order->errors;
 
-                // header("Location:" .ROOT. "thank_you");
-                // die;
+                unset($_SESSION["POST_DATA"]);
+                unset($_SESSION["CART"]);
+
+                header("Location:" .ROOT. "checkout/thank_you");
+                die;
             }
 
             $this ->view("checkout.summary", $data);
+        }
+
+        public function thank_you(){
+            $data["page_title"] = "Thank you";
+            $this ->view("checkout.thank_you", $data);
         }
     }
     

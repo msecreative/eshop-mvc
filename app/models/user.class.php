@@ -114,6 +114,32 @@
             return false;
         }
 
+        public function get_customers(){
+            
+            $db = Database::newInstance();
+
+            $customer_arr["rank"] = "customer";
+            $sql = "SELECT * FROM users WHERE `rank` = :rank";
+            $result = $db->read($sql, $customer_arr);
+            if (is_array($result)) {
+                return $result;
+            }
+            return false;
+        }
+
+        public function get_admins(){
+            
+            $db = Database::newInstance();
+
+            $admin_arr["rank"] = "admin";
+            $sql = "SELECT * FROM users WHERE `rank` = :rank";
+            $result = $db->read($sql, $admin_arr);
+            if (is_array($result)) {
+                return $result;
+            }
+            return false;
+        }
+
         private function get_random_string_max($length){
             $array = array(0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','x','A','B','C','D','E','F','G','H','I','J','L','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
             

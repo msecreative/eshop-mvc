@@ -18,6 +18,21 @@
                         $this->errors[] = "Please enter a valid state";
                     }
                 }
+                if ($key == "address1") {
+                    if (empty($value)) {
+                        $this->errors[] = "Please enter a valid address";
+                    }
+                }
+                if ($key == "postcode") {
+                    if (empty($value)) {
+                        $this->errors[] = "Please enter a valid postcode";
+                    }
+                }
+                if ($key == "mobilePhone") {
+                    if (empty($value)) {
+                        $this->errors[] = "Please enter a valid mobile no.";
+                    }
+                }
             }
         }
         
@@ -87,17 +102,43 @@
 
         }
 
-        public function get_all_orders_by_user(){
+        public function get_all_orders_by_user($user_url){
 
             $orders = false;
 
             $db = Database::newInstance();
+            $data["user_url"] = $user_url;
 
-            $sql = "SELECT * FROM orders ORDER BY orderId DESC  limit 100";
-            $orders = $db->read($sql);
+            $sql = "SELECT * FROM orders WHERE user_url = :user_url ORDER BY orderId DESC limit 100";
+            $orders = $db->read($sql, $data);
         
             return $orders;
         }
+
+        public function get_orders_count($user_url){
+
+            $db = Database::newInstance();
+            $data["user_url"] = $user_url;
+
+            $sql = "SELECT orderId FROM orders WHERE user_url = :user_url";
+            $result = $db->read($sql, $data);
+            $orders = is_array($result) ? count($result) : 0;
+            return $orders;
+        }
+
+        public function get_all_orders(){
+
+            $orders = false;
+    
+            $db = Database::newInstance();
+    
+            $query = "SELECT * FROM orders ORDER BY orderId DESC LIMIT 100";
+            $orders = $db->read($query);
+    
+            return $orders;
+    
+        }
+
         public function get_all_orders_details($orderId){
 
             $details = false;

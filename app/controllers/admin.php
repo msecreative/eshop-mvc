@@ -74,7 +74,7 @@
                 $data["user_data"] = $user_data;
             }
 
-            $orders = $order->get_all_orders_by_user();
+            $orders = $order->get_all_orders();
 
             if (is_array($orders)) {
 
@@ -94,6 +94,37 @@
 
             $data["page_title"] = "Admin - Orders";
             $this ->view("admin/orders", $data);
+        }
+
+        function users($type = "customers"){
+
+            $user = $this->load_model("User");
+            $order = $this->load_model("Order");
+
+            $user_data = $user->check_login(true, ["admin"]);
+
+            if (is_object($user_data)) {
+                $data["user_data"] = $user_data;
+            }
+
+
+            if ( $type == "admins") {
+                $users = $user->get_admins();
+            }else{
+                $users = $user->get_customers();
+            }
+            if (is_array($users)) {
+                foreach ($users as $key => $row) {
+                    $orders_num = $order->get_orders_count($row->url_address);
+                    $users[$key]->orders_count = $orders_num;
+                }
+            }
+           
+            $data["users"] = $users;
+            //show($data["users"]);
+
+            $data["page_title"] = "Admin - $type";
+            $this ->view("admin/users", $data);
         }
 
     }
