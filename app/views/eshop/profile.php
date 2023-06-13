@@ -56,18 +56,21 @@
 <section class="user-profile">
     <div class="container">
         <div class="row">
+            <?php 
+                if (is_object($profile_data)) {
+            ?>
             <div class="col-md-4">
                 <!-- WHITE PANEL - TOP USER -->
                 <div class="white-panel pn">
                     <div class="white-header">
-                        <h5><?=strtoupper($data["user_data"]->rank) ?></h5>
+                        <h5><?=strtoupper($profile_data->rank) ?></h5>
                     </div>
                     <p><img src="<?=ASSETS . THEME ?>admin/img/ui-zac.jpg" class="img-circle" width="80"></p>
-                    <p><b><?=$data["user_data"]->name ?></b></p>
+                    <p><b><?=$profile_data->name ?></b></p>
                     <div class="row">
                         <div class="col-md-6">
                             <p class="small mt">MEMBER SINCE</p>
-                            <p><?=date("d-M-Y", strtotime($data["user_data"]->date)) ?></p>
+                            <p><?=date("d-M-Y", strtotime($profile_data->date)) ?></p>
                         </div>
                         <div class="col-md-6">
                             <p class="small mt">TOTAL SPEND</p>
@@ -84,6 +87,7 @@
                     </div>
                 </div>
             </div><!-- /col-md-4 -->
+            
             <div class="col-md-8">
                 
                 <?php 
@@ -162,6 +166,9 @@
                     <div>No order found</div>
                     <?php } ?>
             </div>
+            <?php }else{ ?>
+                <div class="col-md-4"><p>Profile cann't found</p></div>
+            <?php } ?>
         </div>
     </div>
 </section>
