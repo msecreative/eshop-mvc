@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title><?= $data["page_title"] ?> | E-Shop</title>
+    <title><?= $page_title ?> | E-Shop</title>
     <link href="<?= ASSETS . THEME ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= ASSETS . THEME ?>css/font-awesome.min.css" rel="stylesheet">
     <link href="<?= ASSETS . THEME ?>css/prettyPhoto.css" rel="stylesheet">
@@ -76,29 +76,7 @@
 						<div class="logo pull-left">
 							<a href="<?=ROOT?>index"><img src="<?= ASSETS . THEME ?>images/home/logo.png" alt="" /></a>
 						</div>
-						<div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									USA
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Canada</a></li>
-									<li><a href="#">UK</a></li>
-								</ul>
-							</div>
-							
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									DOLLAR
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Canadian Dollar</a></li>
-									<li><a href="#">Pound</a></li>
-								</ul>
-							</div>
-						</div>
+						
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
@@ -137,31 +115,26 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="<?=ROOT?>index" class="active">Home</a></li>
-								<li class="dropdown"><a href="<?=ROOT?>shop">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="<?=ROOT?>shop">Products</a></li>
-										<li><a href="<?=ROOT?>product-details">Product Details</a></li> 
-										<li><a href="<?=ROOT?>checkout">Checkout</a></li> 
-										<li><a href="<?=ROOT?>cart">Cart</a></li> 
-										<li><a href="<?=ROOT?>login">Login</a></li> 
-                                    </ul>
-                                </li> 
-								<li class="dropdown"><a href="<?=ROOT?>blog">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="<?=ROOT?>blog">Blog List</a></li>
-										<li><a href="<?=ROOT?>blog-single">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="<?=ROOT?>404">404</a></li>
-								<li><a href="<?=ROOT?>contact-us">Contact</a></li>
+								<li><a href="<?=ROOT?>index" class="<?=$page_title == 'Home' ? 'active': ''?>">Home</a></li>
+								<li class="dropdown"><a href="<?=ROOT?>shop"  class="<?=$page_title == 'Shop' ? 'active': ''?>">Shop</a></li> 
+								<li class="dropdown"><a href="<?=ROOT?>blog"  class="<?=$page_title == 'Blog' ? 'active': ''?>">Blog</a></li> 
+								<li><a href="<?=ROOT?>contact-us"  class="<?=$page_title == 'Home' ? 'Contact-us': ''?>">Contact</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<?php 
+								if (isset($show_serach)) {
+							?>
+							<form action="" method="GET">
+
+								<input name="find" type="text" placeholder="Search"/>
+
+							</form>
+							<?php } ?>
 						</div>
+
 					</div>
 				</div>
 			</div>

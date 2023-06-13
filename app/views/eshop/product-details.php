@@ -2,7 +2,7 @@
 	
 <style>
 	#similar-product .carousel-inner .item img {
-    height: 70px;
+    height: 60px;
 	}
 </style>
 	<section>

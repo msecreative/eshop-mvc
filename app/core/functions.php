@@ -16,4 +16,5 @@
     function esc($data){
         return addslashes($data);
     }
+
 ?>
