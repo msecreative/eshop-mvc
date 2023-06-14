@@ -19,7 +19,7 @@
 						<div class="row">
 							<h2 class="title text-center">Features Items</h2>
 							<?php 
-								if (is_array($product_rows)) {
+								if (isset($product_rows) && is_array($product_rows)) {
 									foreach ($product_rows as $product) {
 							?>
 							<!-- include single product -->

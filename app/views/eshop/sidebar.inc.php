@@ -16,7 +16,7 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#<?=$cat->category ?>">
+										<a <?=in_array($cat->catId, $parents) ? 'data-toggle="collapse"' : '' ?> data-parent="#accordian" href="<?=in_array($cat->catId, $parents) ? '#' . $cat->category : ROOT . 'shop/category/' .$cat->category ?>">
 										<?php 
 											if (in_array($cat->catId, $parents)) {
 										?>
@@ -36,7 +36,7 @@
 												foreach ($categories as $sub_cat) {
 													if ($sub_cat->parent == $cat->catId) {
 											?>
-											<li><a href=""><?=$sub_cat->category ?> </a></li>
+											<li><a href="<?= ROOT . 'shop/category/' .$sub_cat->category?>"><?=$sub_cat->category ?> </a></li>
 											<?php } } ?>
 										</ul>
 									</div>
