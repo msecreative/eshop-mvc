@@ -34,6 +34,11 @@
                     $product_rows[$key]->image = $image_class->get_thumb_post($product_rows[$key]->image);
                 }
             }
+            // get all categories
+            $category = $this->load_model("Category");
+            $data["categories"] = $category->getAllCategory();
+
+
             $data["product_rows"] = $product_rows;
             $data["show_serach"] = true;
             $this ->view("index", $data);
