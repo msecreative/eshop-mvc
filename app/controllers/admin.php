@@ -127,6 +127,22 @@
             $this ->view("admin/users", $data);
         }
 
+        function settings($type){
+
+            $user = $this->load_model("User");
+            $settings = $this->load_model("Setting");
+
+            $user_data = $user->check_login(true, ["admin"]);
+
+            if (is_object($user_data)) {
+                $data["user_data"] = $user_data;
+            }
+            $data["settings"] = $settings->get_all();
+
+            $data["page_title"] = "Admin - $type";
+            $this ->view("admin/socials", $data);
+        }
+
     }
     
 ?>

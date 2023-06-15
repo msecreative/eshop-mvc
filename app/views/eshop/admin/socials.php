@@ -36,7 +36,7 @@
                     <div class="content-panel">
                            
                 <?php 
-                    if (isset($users) && is_array($users)) {
+                    if (isset($settings) && is_array($settings)) {
    
                 ?>
                 <div class="order-table">
@@ -46,27 +46,23 @@
                         <thead>
                             <tr>
                                 <th>Serial</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>rank</th>
-                                <th>Created Date</th>
-                                <th>Orders Count</th>
+                                <th>Setting Name</th>
+                                <th>Setting Value</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody">
                             <?php 
                                 $i = 0;
-                                foreach ($users as $user) {
+                                foreach ($settings as $setting) {
                                 $i++;
                             ?>
                             <tr>
                                 <td><?=$i ?></td>
-                                <td><a href="<?=ROOT?>profile"><?=$user->name ?></a></td>
-                                <td><?=$user->email ?></td>
-                                <td><?=$user->rank ?></td>
-                                <td><?=date("d-M-Y H:i:a", strtotime($user->date)) ?></td>
-                                <td><?=$user->orders_count ?></td>
+                                <td><a href="<?=ROOT?>profile"><?=$setting->setting ?></a></td>
+                                <td><?=$setting->value ?></td>
+                                <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$catRow->disabled.'</span></td>
                                 <td style="font-size: 10px;">view</td>
                             </tr>
                             <?php } ?>
@@ -74,7 +70,7 @@
                     </table>
                 </div>
                 <?php }else{ ?>
-                    <div style="padding: 10px;">No user found</div>
+                    <div style="padding: 10px;">No social link found</div>
                     <?php } ?>
                         
                     </div><!-- /content-panel -->

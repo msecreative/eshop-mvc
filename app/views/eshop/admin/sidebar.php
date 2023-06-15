@@ -45,7 +45,10 @@
                           <span>Settings</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="<?=ROOT ?>admin/settings/slider-image">Home Image</a></li>
+                          <li><a  href="<?=ROOT ?>admin/settings/slider_image">Slider Image</a></li>
+                      </ul>
+                      <ul class="sub">
+                          <li><a  href="<?=ROOT ?>admin/settings/socials">Social Links</a></li>
                       </ul>
                   </li>
                   <li class="sub-menu">
