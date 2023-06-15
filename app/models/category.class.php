@@ -4,7 +4,8 @@
         public function create($DATA){
             $db = Database::newInstance();
             $arr['category'] = ucwords($DATA->category);
-            $arr['parent'] = ucwords($DATA->parent);
+            $arr['cat_slug'] = str_to_url($DATA->category);
+            $arr['parent']   = $DATA->parent;
 
             if (!preg_match("/^[a-zA-Z ]+$/", trim($arr['category']))) {
                 $_SESSION['error'] = "Please enter a valid category name";
@@ -12,7 +13,7 @@
 
             if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
             
-                $sql = "INSERT INTO categories (category,parent) VALUES (:category,:parent)";
+                $sql = "INSERT INTO categories (category,parent,cat_slug) VALUES (:category,:parent,:cat_slug)";
                 
                 $check = $db->write($sql, $arr);
                 if ($check) {
@@ -28,8 +29,9 @@
             $db = Database::newInstance();
             $arr['catId'] = $data->catId;
             $arr['category'] = $data->category;
+            $arr['cat_slug'] = str_to_url($data->category);
             $arr['parent'] = $data->parent;
-            $sql = "UPDATE categories SET category = :category, parent =:parent  WHERE catId = :catId LIMIT 1";
+            $sql = "UPDATE categories SET category = :category, parent =:parent, cat_slug = :cat_slug WHERE catId = :catId LIMIT 1";
             $db->write($sql,$arr);
 
         } 
@@ -58,6 +60,14 @@
             return $data[0];
 
 
+        }
+        // Get single category by name
+        public function get_one_by_name($name){
+            $name = str_replace("-"," ",$name);
+            $name = addslashes($name);
+            $db = Database::newInstance();
+            $data =  $db->read("SELECT * FROM categories WHERE category LIKE :name LIMIT 1", ["name"=>$name]);
+            return $data[0];
         }
 
         public function make_table($allCategory){

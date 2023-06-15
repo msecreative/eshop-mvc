@@ -13,7 +13,7 @@
             $arr['price']       = ucwords($DATA->price);
             $arr['date']        = date("Y-m-d H:i:s");
             $arr['user_url']    = $_SESSION["user_url"];
-            $arr['slag']        = $this->str_to_url($DATA->description);
+            $arr['slag']        = str_to_url($DATA->description);
 
             if (!preg_match("/^[a-zA-Z 0-9._\-,]+$/", trim($arr['description']))) {
 
@@ -88,6 +88,7 @@
             // $id
             $arr['pId']         = $data->pId;
             $arr['description'] = $data->description;
+            $arr['slag']        = str_to_url($data->description);
             $arr['category']    = $data->category;
             $arr['quantity']    = $data->quantity;
             $arr['price']       = $data->price;
@@ -143,7 +144,7 @@
 
             if (!isset($_SESSION['error']) || $_SESSION['error'] == "") {
                 $db = Database::newInstance();
-                $sql = "UPDATE products SET `description` = :description,`category` = :category, `quantity` = :quantity, `price` = :price $image_string  WHERE pId = :pId LIMIT 1";
+                $sql = "UPDATE products SET `description` = :description,`category` = :category, `quantity` = :quantity, `price` = :price, `slag` = :slag $image_string  WHERE pId = :pId LIMIT 1";
                 $db->write($sql,$arr);
             }
 
@@ -207,15 +208,5 @@
             return $result;
 
         } 
-
-        // Convert slug from product description
-        public function str_to_url($url) {
-            $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
-            $url = trim($url, "-");
-            $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
-            $url = strtolower($url);
-            $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
-            return $url;
-        }
     }
 ?>

@@ -45,19 +45,29 @@
             $this ->view("shop", $data);
         }
 
-        public function category($category = ""){
+        public function category($cat_find = ""){
            
             $user = $this->load_model("User");
+            $category = $this->load_model("Category");
             $image_class = $this->load_model("Image");
             $user_data = $user->check_login();
 
             if (is_object($user_data)) {
                 $data["user_data"] = $user_data;
             }
+            //show($cat_find);
 
             $db = Database::newInstance();
+            $cat_id = null;
 
-            $product_rows = $db->read("SELECT * FROM products");
+            $check = $category->get_one_by_name($cat_find);
+            //show($check);
+
+            if (is_object($check)) {
+                $cat_id = $check->catId;
+                $cat_id = $cat_id;
+            }
+            $product_rows = $db->read("SELECT * FROM products WHERE category = :cat_id", ["cat_id"=>$cat_id]);
 
             $data["page_title"] = "Shop";
             
@@ -67,7 +77,6 @@
                 }
             }
             // get all categories
-            $category = $this->load_model("Category");
             $data["categories"] = $category->getAllCategory();
 
 
