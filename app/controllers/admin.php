@@ -137,6 +137,12 @@
             if (is_object($user_data)) {
                 $data["user_data"] = $user_data;
             }
+            if (count($_POST) > 0) {
+                //show($_POST);
+                $errors = $settings->save($_POST);
+                header("Location: " . ROOT . "admin/settings/socials");
+                die;
+            }
             $data["settings"] = $settings->get_all();
 
             $data["page_title"] = "Admin - $type";
