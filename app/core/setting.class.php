@@ -1,16 +1,34 @@
 <?php 
-    class Setting{
+    trait Setting{
         
         private $error = array();
+        //protected $settingsObj = null;
 
-        public function get_all(){
+        public function get_all_settings(){
             
             $db = Database::newInstance();
             $sql = "SELECT * FROM settings";
             return $db->read($sql);
         }
 
-        public function save($post){
+        public function get_all_settings_as_object(){
+            
+            $db = Database::newInstance();
+            $sql = "SELECT * FROM settings";
+            $data = $db->read($sql);
+
+            $settingsObj = (object)[];
+            if (is_array($data)) {
+              
+                foreach ($data as $settingsRow) {
+                    $setting_name = $settingsRow->setting;
+                    $settingsObj->$setting_name = $settingsRow->value;
+                }
+            }
+            return $settingsObj;
+        }
+
+        public function save_settings($post){
             
             $this->error = array();
             $db = Database::newInstance();
@@ -29,8 +47,7 @@
            
 
         }
-
-       
-
     }
+
+
 ?>

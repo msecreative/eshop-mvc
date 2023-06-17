@@ -46,7 +46,7 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+								<li><a href="#"><i class="fa fa-phone"></i> <?=$settings_obj->phone?></a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
 								<?php if(isset($data["user_data"])){ ?>
 									<li><a href="#"><i class="fa fa-user"></i> <?=  $data["user_data"]->name ?></a></li>

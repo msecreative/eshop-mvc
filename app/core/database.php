@@ -18,7 +18,7 @@
 
             if (self::$con) {
 
-                return self::$con;
+                //return self::$con;
             }
 
             return $instance = new self();

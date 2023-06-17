@@ -1,6 +1,8 @@
 <?php 
     class Admin extends Controller
     {
+        use Setting;
+
         public function index() {
             $user = $this->load_model("User");
             $user_data = $user->check_login(true, ["admin"]);
@@ -130,7 +132,6 @@
         function settings($type){
 
             $user = $this->load_model("User");
-            $settings = $this->load_model("Setting");
 
             $user_data = $user->check_login(true, ["admin"]);
 
@@ -139,11 +140,12 @@
             }
             if (count($_POST) > 0) {
                 //show($_POST);
-                $errors = $settings->save($_POST);
+                $errors = $this->save_settings($_POST);
                 header("Location: " . ROOT . "admin/settings/socials");
                 die;
             }
-            $data["settings"] = $settings->get_all();
+            $data["settings"] = $this->get_all_settings();
+            //$data["settings_obj"] = $this->get_all_settings_as_object();
 
             $data["page_title"] = "Admin - $type";
             $this ->view("admin/socials", $data);
