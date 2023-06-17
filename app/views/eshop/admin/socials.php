@@ -62,7 +62,7 @@
                                 <tr>
                                     <td><?=$i ?></td>
                                     <td><a href="<?=ROOT?>profile"><?=ucwords(str_replace("-", " ",$setting->setting)) ?></a></td>
-                                    <td><input type="text" class="form-control" name="<?=$setting->setting?>" value="<?=$setting->value ?>"></td>
+                                    <td><input placeholder="<?=ucwords(str_replace("-", " ",$setting->setting)) ?>" type="text" class="form-control" name="<?=$setting->setting?>" value="<?=$setting->value ?>"></td>
                                     <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$catRow->disabled.'</span></td>
                                     <td style="font-size: 10px;">view</td>
                                 </tr>

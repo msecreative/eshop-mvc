@@ -22,7 +22,11 @@
                 $settings = self::get_all_settings_as_object();
             }
 
-            return $settings->$name;
+            if (isset($settings->$name)) {
+                
+                return $settings->$name;
+            }
+            return "";
         }
         public static function get_all_settings_as_object(){
             $db = Database::newInstance();
@@ -51,6 +55,12 @@
                 
                 $arr = array();
                 $arr["setting"] = $key;
+
+                if ( strstr($key, "_link") ) {
+                    if  (trim($value) != "" && !strstr($value, "https://")) {
+                        $value = "https://" . $value;
+                    }
+                }
                 $arr["value"]   = $value;
                 $sql = "UPDATE settings SET `value` = :value WHERE setting = :setting LIMIT 1";
                 $db->write($sql,$arr);
