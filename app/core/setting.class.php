@@ -1,8 +1,8 @@
 <?php 
-    trait Setting{
+    class Settings{
         
         private $error = array();
-        //protected $settingsObj = null;
+        protected static $settings_Obj = null;
 
         public function get_all_settings(){
             
@@ -11,8 +11,20 @@
             return $db->read($sql);
         }
 
-        public function get_all_settings_as_object(){
-            
+        static function  __callStatic($name, $params)
+        {
+            if (self::$settings_Obj) {
+
+                $settings = self::$settings_Obj;
+
+            }else{
+
+                $settings = self::get_all_settings_as_object();
+            }
+
+            return $settings->$name;
+        }
+        public static function get_all_settings_as_object(){
             $db = Database::newInstance();
             $sql = "SELECT * FROM settings";
             $data = $db->read($sql);
@@ -25,6 +37,8 @@
                     $settingsObj->$setting_name = $settingsRow->value;
                 }
             }
+            self::$settings_Obj = $settingsObj;
+
             return $settingsObj;
         }
 

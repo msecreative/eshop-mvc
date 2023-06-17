@@ -1,10 +1,8 @@
 <?php 
     class Home extends Controller
     {
-        use Setting;
         public function index() {
 
-            $data["settings_obj"] = $this->get_all_settings_as_object();
             // check if its a search
             $search = false;
             if (isset( $_GET["find"])) {
