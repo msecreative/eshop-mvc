@@ -11,6 +11,7 @@
             }
 
             $data["page_title"] = "Admin";
+            $data["current_page"] = "dashboard";
             $this ->view("admin/index", $data);
         }
 
@@ -35,6 +36,7 @@
             $data["forSubCategories"] = $forSubCategories;
 
             $data["page_title"] = "Admin - Categories";
+            $data["current_page"] = "categories";
             $this ->view("admin/categories", $data);
         }
 
@@ -62,6 +64,7 @@
             $data["allcategories"] = $allcategories;
 
             $data["page_title"] = "Admin - Products";
+            $data["current_page"] = "products";
             $this ->view("admin/products", $data);
         }
 
@@ -94,6 +97,7 @@
             $data["orders"] = $orders;
 
             $data["page_title"] = "Admin - Orders";
+            $data["current_page"] = "orders";
             $this ->view("admin/orders", $data);
         }
 
@@ -124,11 +128,14 @@
             $data["users"] = $users;
             //show($data["users"]);
 
+            show($type);
             $data["page_title"] = "Admin - $type";
+            $data["current_page"] = "users";
+            $data["current_tab"] = $type;
             $this ->view("admin/users", $data);
         }
 
-        function settings($type){
+        function settings($type = ""){
 
             $user = $this->load_model("User");
             $Settings = new Settings();
@@ -138,17 +145,65 @@
             if (is_object($user_data)) {
                 $data["user_data"] = $user_data;
             }
-            if (count($_POST) > 0) {
-                //show($_POST);
-                $errors = $Settings->save_settings($_POST);
-                header("Location: " . ROOT . "admin/settings/socials");
-                die;
-            }
-            $data["settings"] = $Settings->get_all_settings();
-            //$data["settings_obj"] = $this->get_all_settings_as_object();
+            // Selection the right page
+            if ($type == "socials") {
+               
+                if (count($_POST) > 0) {
+                    //show($_POST);
+                    $errors = $Settings->save_settings($_POST);
+                    header("Location: " . ROOT . "admin/settings/socials");
+                    die;
+                }
 
+                $data["settings"] = $Settings->get_all_settings();
+            }elseif ($type == "slider_images") {
+
+                $data["action"] = "show";
+
+                if (isset($_GET["action"]) && $_GET["action"] == "add") {
+                    
+                    $data["action"] = "add";
+
+                    // if slider new was posted
+                    if (count($_POST) > 0) {
+
+                        show($_POST);
+                        show($_FILES);
+                        $data["POST"] = $_POST;
+                        // header("Location: " . ROOT . "admin/settings/slider_images");
+                        // die;
+                    }
+                }else
+                if (isset($_GET["action"]) && $_GET["action"] == "edit"){
+                    $data["action"] = "edit";
+                    $data["id"] = null;
+                        if (isset($_GET["id"])) {
+                            $data["id"] = $_GET["id"];
+                        }
+                }else
+                if (isset($_GET["action"]) && $_GET["action"] == "delete") {
+                    $data["action"] = "delete";
+                    $data["id"] = null;
+                        if (isset($_GET["id"])) {
+                            $data["id"] = $_GET["id"];
+                        }
+                }else
+                if (isset($_GET["action"]) && $_GET["action"] == "delete_confirmed") {
+                    $data["action"] = "delete_confirmed";
+                    $data["id"] = null;
+                        if (isset($_GET["id"])) {
+                            $data["id"] = $_GET["id"];
+                        }
+                }
+            }
+
+            $data["type"] = $type;
+
+            $type = strtoupper(str_replace("_", " ", $data["type"]));//To remove "_" form the type
+            
             $data["page_title"] = "Admin - $type";
-            $this ->view("admin/socials", $data);
+            $data["current_page"] = "settings";
+            $this ->view("admin/settings", $data);
         }
 
     }

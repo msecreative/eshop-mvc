@@ -33,8 +33,7 @@
 
           	<div class="row mt">
           		<div class="col-lg-12">
-                    <div class="content-panel">
-                           
+                    <div class="content-panel">  
                 <?php 
                     if (is_array($orders)) {
    
