@@ -41,16 +41,16 @@
 	    					<h2 class="title text-center">Social Networking</h2>
 							<ul>
 								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="<?=Settings::facebook_link() ?>"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="<?=Settings::twitter_link() ?>"><i class="fa fa-twitter"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-google-plus"></i></a>
+									<a href="<?=Settings::google_plus_link() ?>"><i class="fa fa-google-plus"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-youtube"></i></a>
+									<a href="<?=Settings::linkedin_link() ?>"><i class="fa fa-linkedin"></i></a>
 								</li>
 							</ul>
 	    				</div>
