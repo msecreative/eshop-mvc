@@ -160,6 +160,7 @@
 
                 $data["action"] = "show";
 
+                $Slider = $this->load_model("Slider");
                 if (isset($_GET["action"]) && $_GET["action"] == "add") {
                     
                     $data["action"] = "add";
@@ -167,12 +168,20 @@
                     // if slider new was posted
                     if (count($_POST) > 0) {
 
-                        show($_POST);
-                        show($_FILES);
+                        $Image = $this->load_model("Image");
+                        $result = $Slider->create($_POST,$_FILES, $Image);
+
+                        // show($_POST);
+                        // show($result);
+                        //show($_FILES);
                         $data["POST"] = $_POST;
-                        // header("Location: " . ROOT . "admin/settings/slider_images");
-                        // die;
+                        header("Location: " . ROOT . "admin/settings/slider_images");
+                        die;
+
+                        // Read all slider images
                     }
+
+                    
                 }else
                 if (isset($_GET["action"]) && $_GET["action"] == "edit"){
                     $data["action"] = "edit";
@@ -195,6 +204,10 @@
                             $data["id"] = $_GET["id"];
                         }
                 }
+                
+                $data["slider_row"] = $Slider->get_all();
+                //show($data["slider_row"]);
+        
             }
 
             $data["type"] = $type;

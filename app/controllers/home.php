@@ -37,7 +37,15 @@
             // get all categories
             $category = $this->load_model("Category");
             $data["categories"] = $category->getAllCategory();
+            
+            $Slider = $this->load_model("Slider");
+            $data["slider_row"] = $Slider->get_all();
 
+            if ($data["slider_row"]) {
+                foreach ($data["slider_row"] as $key => $row) {
+                    $data["slider_row"][$key]->image = $image_class->get_thumb_post($data["slider_row"][$key]->image,448,441);
+                }
+            }
 
             $data["product_rows"] = $product_rows;
             $data["show_serach"] = true;

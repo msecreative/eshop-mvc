@@ -9,10 +9,10 @@
 
             $this->errors = "";
 
-            $arr['header1_text']    = ucwords($DATA->header1_text);
-            $arr['header2_text']    = ucwords($DATA->header2_text);
-            $arr['text']            = ucwords($DATA->text);
-            $arr['link_text']       = ucwords($DATA->link_text);
+            $arr['header1_text']    = ucwords($DATA["header1_text"]);
+            $arr['header2_text']    = ucwords($DATA["header2_text"]);
+            $arr['text']            = $DATA["text"];
+            $arr['link_text']       = $DATA["link_text"];
             
             if (empty($arr['header1_text']) || !preg_match("/^[a-zA-Z 0-9._\-,]+$/", trim($arr['header1_text']))) {
 
@@ -35,7 +35,7 @@
                 
                 // Allow files type
                 $allowed[] = "image/jpeg";
-                $allowed[] = "image/png";
+                //$allowed[] = "image/png";
                 // $allowed[] = "image/gif";
                 // $allowed[] = "application/pdf";
                 $size = 10;
@@ -71,6 +71,14 @@
             }
 
             return false;
+        }
+
+        public function get_all (){
+            $db = Database::newInstance();
+            $sql = "SELECT * FROM home_slider WHERE `disabled` = 1";
+            $result = $db->read($sql);
+
+            return $result;
         }
     }
 ?>

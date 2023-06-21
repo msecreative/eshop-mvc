@@ -80,9 +80,8 @@
                         <?php }else{ ?>
                             <div style="padding: 10px;">No social link found</div>
                             <?php } }elseif ($type == "slider_images") { 
-                                
                                 if ($action == "show") {
-                                    
+
                                 ?>
                                 <table class="table table-striped table-advance table-hover">
                                     <div style="display: flex; justify-content:space-between; margin-right:10px">
@@ -93,62 +92,7 @@
                                         </a>
                             
                                     </div>
-                                
-                                    <!-- Edit product -->
-                                    <div class="edit-product hide">
-                                        <!-- BASIC FORM ELELEMNTS -->
-                                        <h4 class="mb"><i class="fa fa-angle-right"></i>Edit Slider</h4>
-                                        <form class="form-horizontal style-form" method="POST">
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Slider Title</label>
-                                                <div class="col-sm-8">
-                                                    <input name="description" id="edit_description" type="text" class="form-control" required>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Slider Subtitle</label>
-                                                <div class="col-sm-8">
-                                                    <input name="quantity" id="edit_quantity" type="text" value="" class="form-control" required>
-                                                </div>
-                                            </div>
 
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Slider Text</label>
-                                                <div class="col-sm-8">
-                                                    <input name="price" id="edit_price" type="text" value=""  class="form-control" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Slider Button Text</label>
-                                                <div class="col-sm-8">
-                                                    <input name="price" id="edit_price" type="text" value=""  class="form-control" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Slider Main Image (Required)</label>
-                                                <div class="col-sm-8">
-                                                    <input name="image" id="edit_image" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-edit')" class="form-control" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-4 control-label">Slider Image 2 (optional)</label>
-                                                <div class="col-sm-8">
-                                                    <input name="image2" id="edit_image2" type="file" onchange="display_image(this.files[0],this.name,'js-product-images-edit')" class="form-control">
-                                                </div>
-                                            </div>
-                                            
-                                        
-                                            <div class="js-product-images-edit edit-product-images">
-
-                                            </div>
-                                            <button onclick="collectEditData(event)" type="button" style="position: absolute;bottom:50px; right:20px" class="btn btn-primary">Save</button>
-                                            <button onclick="show_edit_product(0,'',false)" type="button" style="position: absolute;bottom:50px; left:20px" class="btn btn-danger">Close</button>
-                                        </form>
-                                    </div>
-                                    <!-- Edit product end-->
                                     
                                     <hr>
                                     <thead>
@@ -165,17 +109,27 @@
                                     </tr>
                                     </thead>
                                     <tbody id="table_body">
+                                        <?php
+                                            if (isset($slider_row)) {
+                                                $i = 0;
+                                                foreach ($slider_row as $slider) {
+                                                $i++;
+                                        ?>
                                        <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><?=$i?></td>
+                                        <td><?=$slider->header1_text?></td>
+                                        <td><?=$slider->header2_text?></td>
+                                        <td><?=$slider->text?></td>
+                                        <td><?=$slider->link_text?></td>
+                                        <td><img height="50" width="50" src="<?=ROOT . $slider->image?>" alt=""></td>
+                                        <td><?php if (!empty($slider->image2)) { ?>
+                                                <img height="50" width="50" src="<?=ROOT . $slider->image2?>" alt="">
+                                            <?php } ?>
+                                        </td>
+                                        <td><?=$slider->disabled ? "Enable" : "Disabled" ?></td>
+                                        <td>...</td>
                                        </tr>
+                                       <?php } } ?>
                                     </tbody>
                                 </table>
                             <?php }elseif ($action == "add") { ?>
@@ -214,7 +168,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Slider Image (Required)</label>
                                             <div class="col-sm-8">
-                                                <input name="image" id="image" type="file" class="form-control" required>
+                                                <input name="image" id="image" type="file" class="form-control">
                                             </div>
                                         </div>
 

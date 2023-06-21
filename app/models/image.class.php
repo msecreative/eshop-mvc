@@ -82,8 +82,8 @@ class Image
 			}
 		}
 
-		$new_image = imagecreatetruecolor($new_width, $new_height);
-		imagecopyresampled($new_image, $original_image, 0, 0, 0, 0, $new_width, $new_height, $original_width, $original_height);
+		$new_image = imagecreatetruecolor((int)$new_width, (int)$new_height);
+		imagecopyresampled($new_image, $original_image, 0, 0, 0, 0, (int)$new_width, (int)$new_height, (int)$original_width, (int)$original_height);
 
 		imagedestroy($original_image);
 
@@ -251,7 +251,7 @@ class Image
 	}
 
 	//create thumbnail for post image
-	public function get_thumb_post($filename)
+	public function get_thumb_post($filename, $width = 600, $height = 600)
 	{
 
 		$thumbnail = $filename . "_post_thumb.jpg";
@@ -260,7 +260,7 @@ class Image
 			return $thumbnail;
 		}
 
-		$this->crop_image($filename,$thumbnail,600,600);
+		$this->crop_image($filename,$thumbnail,$width,$height);
 
 		if(file_exists($thumbnail))
 		{
