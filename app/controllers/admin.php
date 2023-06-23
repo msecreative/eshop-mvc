@@ -219,6 +219,27 @@
             $this ->view("admin/settings", $data);
         }
 
+        // Messageing system
+
+        function messages(){
+
+            $user = $this->load_model("User");
+            $Message = $this->load_model("Message");
+
+            $user_data = $user->check_login(true, ["admin"]);
+
+            if (is_object($user_data)) {
+                $data["user_data"] = $user_data;
+            }
+
+            $messages = $Message->get_all();
+            $data["messages"] = $messages;
+            //show($data["messages"]);
+            $data["page_title"] = "Admin - Messaging";
+            $data["current_page"] = "messages";
+            $this ->view("admin/messages", $data);
+        }
+
     }
     
 ?>

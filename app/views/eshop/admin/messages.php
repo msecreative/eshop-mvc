@@ -36,11 +36,11 @@
                     <div class="content-panel">
                            
                 <?php 
-                    if (isset($users) && is_array($users)) {
+                    if (isset($messages) && is_array($messages)) {
    
                 ?>
                 <div class="order-table">
-                    <h4><i class="fa fa-angle-right"></i>User List</h4>  
+                    <h4><i class="fa fa-angle-right"></i>Message List</h4>  
                     <hr>
                     <table class="table table-striped table-advance table-hover table-class">
                         <thead>
@@ -48,33 +48,33 @@
                                 <th>Serial</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>rank</th>
-                                <th>Created Date</th>
-                                <th>Orders Count</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Messaging Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody">
                             <?php 
                                 $i = 0;
-                                foreach ($users as $user) {
+                                foreach ($messages as $message) {
                                 $i++;
                             ?>
                             <tr>
                                 <td><?=$i ?></td>
-                                <td><a href="<?=ROOT?>profile"><?=$user->name ?></a></td>
-                                <td><?=$user->email ?></td>
-                                <td><?=$user->rank ?></td>
-                                <td><?=date("d-M-Y H:i:a", strtotime($user->date)) ?></td>
-                                <td><?=$user->orders_count ?></td>
-                                <td style="font-size: 10px;">view</td>
+                                <td><a href="<?=ROOT?>profile"><?=$message->name ?></a></td>
+                                <td><?=$message->email ?></td>
+                                <td><?=$message->subject ?></td>
+                                <td><?=$message->message ?></td>
+                                <td><?=date("d-M-Y H:i:a", strtotime($message->date)) ?></td>
+                                <td style="font-size: 10px;"><button class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
                             </tr>
                             <?php } ?>
                         </tbody>
                     </table>
                 </div>
                 <?php }else{ ?>
-                    <div style="padding: 10px;">No user found</div>
+                    <div style="padding: 10px;">No message found</div>
                     <?php } ?>
                         
                     </div><!-- /content-panel -->

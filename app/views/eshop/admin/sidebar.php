@@ -40,6 +40,12 @@
                       </a>
                   </li>
                   <li class="sub-menu">
+                      <a class="<?=isset($current_page) && $current_page == 'messages' ? 'active' : ''?>" href="<?=ROOT ?>admin/messages" >
+                          <i class="fa fa-envelope"></i>
+                          <span>Messages</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
                       <a class="<?=isset($current_page) && $current_page == 'settings' ? 'active' : ''?>" href="<?=ROOT ?>admin/settings" >
                           <i class="fa fa-cogs"></i>
                           <span>Settings</span>

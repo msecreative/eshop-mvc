@@ -40,77 +40,19 @@
             return $this->error;
         } 
 
-        public function delete($catId){
+        public function delete($contactId){
 
             $db = Database::newInstance();
-            $catId = (int)$catId;
-            $sql = "DELETE FROM categories WHERE catId = '$catId' LIMIT 1";
+            $contactId = (int)$contactId;
+            $sql = "DELETE FROM contact_us WHERE contactId = '$contactId' LIMIT 1";
             $db->write($sql);
 
         } 
         // Get All Category
-        public function getAllCategory(){
+        public function get_all(){
             $db = Database::newInstance();
-            return $db->read("SELECT * FROM categories ORDER BY catId DESC");
-
-
-
+            return $db->read("SELECT * FROM contact_us ORDER BY contactId DESC");
         }
-        // Get single category
-        public function getSingleCategory($catId){
-            $catId = (int)$catId;
-            $db = Database::newInstance();
-            $data =  $db->read("SELECT category FROM categories WHERE catId = '$catId' LIMIT 1 ");
-            return $data[0];
-
-
-        }
-        // Get single category by name
-        public function get_one_by_name($name){
-            $name = str_replace("-"," ",$name);
-            $name = addslashes($name);
-            $db = Database::newInstance();
-            $data =  $db->read("SELECT * FROM categories WHERE category LIKE :name LIMIT 1", ["name"=>$name]);
-            return $data[0];
-        }
-
-        public function make_table($allCategory){
-            $result = "";
-            if (is_array($allCategory)) {
-                $i = 1;
-                foreach ($allCategory as $catRow) {
-                    $catRow->disabled = $catRow->disabled ? "Enabled" : "Disabled";
-                    $status_color = $catRow->disabled == "Enabled" ? "info" : "danger";
-
-                    $args = $catRow->catId.",'".$catRow->disabled."'";
-                    $editArgs = $catRow->catId.",'".$catRow->category."',".$catRow->parent;
-
-                    $parent = "";
-                    foreach ($allCategory as $catRow2) {
-                        if ($catRow->parent == $catRow2->catId) {
-                           $parent = $catRow2->category;
-                        }
-                    }
-                    $result .= "<tr>";
-                        $result .= '
-                            <td>'.$i.'</td>
-                            <td class="hidden-phone"><a href="'.$catRow->catId.'">'.$catRow->category.'</a></td>
-                            <td class="hidden-phone"><a href="'.$catRow->parent.'">'.$parent.'</a></td>
-                            <td><span onclick="disable_row('.$args.')" class="label label-'.$status_color.' label-mini" style="cursor:pointer">'.$catRow->disabled.'</span></td>
-                            <td>
-                                <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
-                                <button onclick="show_edit_category('.$editArgs.')" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button onclick="delete_row('.$catRow->catId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                            </td>
-                        ';
-                    $result .= "</tr>";
-                    $i++;
-                }
-            }
-
-            return $result;
-
-        } 
 
     }
 
