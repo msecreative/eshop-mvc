@@ -6,6 +6,16 @@
 	    		<div class="col-sm-8">
 	    			<div class="contact-form">
 	    				<h2 class="title text-center">Get In Touch</h2>
+						<?php 
+							if (is_array($errors) && count($errors) > 0) {
+								foreach ($errors as $error) {
+						?>
+							<p class="status alert alert-danger"><?=$error?></p>
+						<?php } } ?>
+						<?php 
+							if (isset($_GET["success"])) { ?>
+								<p class="status alert alert-success">Message sent successfully</p>
+						<?php	} ?>
 	    				<div class="status alert alert-success" style="display: none"></div>
 				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
 				            <div class="form-group col-md-6">
@@ -21,7 +31,7 @@
 				                <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Your Message Here"><?=isset($POST["message"]) ? $POST["message"] : ""?></textarea>
 				            </div>                        
 				            <div class="form-group col-md-12">
-				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
+				                <input type="submit" class="btn btn-primary pull-right" value="Submit">
 				            </div>
 				        </form>
 	    			</div>
