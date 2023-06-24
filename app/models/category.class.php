@@ -58,8 +58,6 @@
             $db = Database::newInstance();
             $data =  $db->read("SELECT category FROM categories WHERE catId = '$catId' LIMIT 1 ");
             return $data[0];
-
-
         }
         // Get single category by name
         public function get_one_by_name($name){

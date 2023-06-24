@@ -54,5 +54,13 @@
             return $db->read("SELECT * FROM contact_us ORDER BY contactId DESC");
         }
 
+        // Get single category
+        public function get_one($contactId){
+            $contactId = (int)$contactId;
+            $db = Database::newInstance();
+            $data =  $db->read("SELECT * FROM contact_us WHERE contactId = '$contactId' LIMIT 1 ");
+            return $data[0];
+        }
+
     }
 

@@ -223,6 +223,10 @@
 
         function messages(){
 
+            $mode = isset($_GET["delete"]) ? "delete" : (isset($_GET["delete_confirm"]) ? "delete_confirm" : "read");
+            //$mode = isset($_GET["delete_confirm"]) ? "delete_confirm" : "read";
+            //show($mode);
+
             $user = $this->load_model("User");
             $Message = $this->load_model("Message");
 
@@ -232,7 +236,19 @@
                 $data["user_data"] = $user_data;
             }
 
-            $messages = $Message->get_all();
+            if ($mode == "delete") {
+                $contactId = $_GET["delete"];
+                $messages = $Message->get_one($contactId);
+            }elseif($mode == "delete_confirm"){
+                $contactId = $_GET["delete_confirm"];
+                $messages = $Message->delete($contactId);
+            }else{
+
+                $messages = $Message->get_all();
+            }
+
+
+            $data["mode"] = $mode;
             $data["messages"] = $messages;
             //show($data["messages"]);
             $data["page_title"] = "Admin - Messaging";
