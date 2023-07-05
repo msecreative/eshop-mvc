@@ -25,7 +25,7 @@
 
             $db = Database::newInstance();
 
-            $data["page_title"] = "Contact";
+            $data["page_title"] = "Contact-Us";
             $this ->view("contact", $data);
         }
     }

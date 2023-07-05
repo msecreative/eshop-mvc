@@ -255,6 +255,56 @@
             $data["current_page"] = "messages";
             $this ->view("admin/messages", $data);
         }
+        // Blogs
+
+        function blogs(){
+
+            $mode = isset($_GET["add_new"]) ? "add_new" : (isset($_GET["edit"]) ? "edit" : "read");
+            //$mode = isset($_GET["delete_confirm"]) ? "delete_confirm" : "read";
+            //show($mode);
+
+            $user = $this->load_model("User");
+            $Message = $this->load_model("Message");
+
+            $user_data = $user->check_login(true, ["admin"]);
+
+            if (is_object($user_data)) {
+                $data["user_data"] = $user_data;
+            }
+
+            if ($mode == "delete") {
+                $contactId = $_GET["delete"];
+                $messages = $Message->get_one($contactId);
+            }elseif($mode == "delete_confirm"){
+                $contactId = $_GET["delete_confirm"];
+                $messages = $Message->delete($contactId);
+            }else{
+
+                $messages = $Message->get_all();
+            }
+
+             // if slider new was posted
+             if (count($_POST) > 0) {
+
+                $Blogs = $this->load_model("Blog");
+                $image_class = $this->load_model("Image");
+                $Blogs->create($_POST,$_FILES,$image_class);
+                
+                //  $data["POST"] = $_POST;
+                // header("Location: " . ROOT . "admin/settings/slider_images");
+                // die;
+
+                // Read all slider images
+            }
+
+
+            $data["mode"] = $mode;
+            //$data["blogs"] = $blogs;
+            //show($data["messages"]);
+            $data["page_title"] = "Admin - Blog";
+            $data["current_page"] = "blog";
+            $this ->view("admin/blog", $data);
+        }
 
     }
     

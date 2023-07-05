@@ -46,6 +46,12 @@
                       </a>
                   </li>
                   <li class="sub-menu">
+                      <a class="<?=isset($current_page) && $current_page == 'blog' ? 'active' : ''?>" href="<?=ROOT ?>admin/blogs" >
+                          <i class="fa fa-rss"></i>
+                          <span>Blog</span>
+                      </a>
+                  </li>
+                  <li class="sub-menu">
                       <a class="<?=isset($current_page) && $current_page == 'settings' ? 'active' : ''?>" href="<?=ROOT ?>admin/settings" >
                           <i class="fa fa-cogs"></i>
                           <span>Settings</span>

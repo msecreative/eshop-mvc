@@ -140,7 +140,7 @@
                                 </table>
                             <?php }elseif ($action == "add") { ?>
                                       
-                                <!-- Add new product -->
+                                <!-- Add new SLIDER -->
                                 <div class="add-new-slider">
                                     <!-- BASIC FORM ELELEMNTS -->
                                     <h4 class="mb"><i class="fa fa-angle-right"></i>Add New Slider</h4>
@@ -179,7 +179,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Product Image 2 (optional)</label>
+                                            <label class="col-sm-4 control-label">Slider Image 2 (optional)</label>
                                             <div class="col-sm-8">
                                                 <input name="image2" id="image2" type="file" class="form-control">
                                             </div>
@@ -196,7 +196,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- Add new product end-->
+                                <!-- Add new Slider end-->
                             <?php  } } ?>
                         
                     </div><!-- /content-panel -->
