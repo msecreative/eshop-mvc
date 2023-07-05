@@ -89,6 +89,11 @@
                 <?php }else{ ?>
                     <div style="padding: 10px;">No blog post found!</div>
                 <?php } }elseif ($mode == "add_new") {  ?>
+                    <?php 
+                        if (isset($errors)) { ?>
+                            <p style="margin: 0 10px;" class="status alert alert-danger"><?=$errors ?></p>
+                    <?php } ?>
+
                     <!-- Add new Post -->
                     <div class="add-new-post">
                         <!-- BASIC FORM ELELEMNTS -->
@@ -97,7 +102,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="header1_text">Post Title</label>
                                 <div class="col-sm-8">
-                                    <input value="<?=isset($POST["title"]) ? $POST["title"] : "" ?>" autofocus name="title" id="title" type="text" class="form-control" placeholder="Write a Post title">
+                                    <input value="<?=isset($POST["title"]) ? $POST["title"] : "" ?>" name="title" id="title" type="text" class="form-control" placeholder="Write a Post title">
                                 </div>
                             </div>
                             

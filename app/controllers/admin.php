@@ -289,9 +289,13 @@
                 $Blogs = $this->load_model("Blog");
                 $image_class = $this->load_model("Image");
                 $Blogs->create($_POST,$_FILES,$image_class);
-                
-                //  $data["POST"] = $_POST;
-                // header("Location: " . ROOT . "admin/settings/slider_images");
+                if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
+                    $data['errors'] = $_SESSION['error'];
+                    $data["POST"] = $_POST;
+                }else{
+                   redirect("admin/blogs");
+                }
+
                 // die;
 
                 // Read all slider images
