@@ -139,63 +139,26 @@
 
         } 
 
-        public function delete($pId){
+        public function delete($blogId){
 
             $db = Database::newInstance();
-            $pId = (int)$pId;
-            $sql = "DELETE FROM products WHERE pId = '$pId' LIMIT 1";
+            $blogId = (int)$blogId;
+            $sql = "DELETE FROM blogs WHERE blogId = '$blogId' LIMIT 1";
             $db->write($sql);
 
         } 
-        public function getAllproduct(){
+        // Get All Category
+        public function get_all(){
             $db = Database::newInstance();
-            return $db->read("SELECT * FROM products ORDER BY pId DESC");
-
-
+            return $db->read("SELECT * FROM blogs ORDER BY blogId DESC");
         }
 
-        public function make_table($allproduct, $catModal = NULL){
-            $result = "";
-            if (is_array($allproduct)) {
-                $i = 1;
-                foreach ($allproduct as $productRow) {
-                    $editArgs = $productRow->pId.",'".$productRow->description."'";
-                    $info = array();
-                    $info["pId"] = $productRow->pId;
-                    $info["description"] = $productRow->description;
-                    $info["category"] = $productRow->category;
-                    $info["quantity"] = $productRow->quantity;
-                    $info["price"] = $productRow->price;
-                    $info["image"] = $productRow->image;
-                    $info["image2"] = $productRow->image2;
-                    $info["image3"] = $productRow->image3;
-                    $info["image4"] = $productRow->image4;
-                    
-                    $info = str_replace('"',"'",json_encode($info));
-
-                    $singleCat = $catModal->getSingleCategory($productRow->category);
-                    $result .= "<tr>";
-                        $result .= '
-                            <td>'.$i.'</td>
-                            <td class="hidden-phone"><a href="'.$productRow->pId.'">'.$productRow->description.'</a></td>
-                            <td>'.$singleCat->category.'</td>
-                            <td>'.$productRow->quantity.'</td>
-                            <td>'.$productRow->price.'</td>
-                            <td>'.date("d-M-Y H:i:s", strtotime($productRow->date)).'</td>
-                            <td><a href=""><img src="' .ROOT. $productRow->image.'" alt="product_img" style="height: 50px; width: 50px;"></a></td>
-                            <td>
-                                <!--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>-->
-                                <button info="'.$info.'" onclick="show_edit_product('.$editArgs.',event)" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button onclick="delete_row('.$productRow->pId.')" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                            </td>
-                        ';
-                    $result .= "</tr>";
-                    $i++;
-                }
-            }
-
-            return $result;
-
-        } 
+        // Get single category
+        public function get_one($blogId){
+            $blogId = (int)$blogId;
+            $db = Database::newInstance();
+            $data =  $db->read("SELECT * FROM blogs WHERE blogId = '$blogId' LIMIT 1 ");
+            return $data[0];
+        }
     }
 ?>

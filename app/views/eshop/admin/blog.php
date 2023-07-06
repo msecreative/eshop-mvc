@@ -73,9 +73,9 @@
                                 <td><?=$i ?></td>
                                 <td><a href="<?=ROOT?>profile"><?=$blog->title ?></a></td>
                                 <td><?=$blog->user_url ?></td>
-                                <td><?=$blog->post ?></td>
-                                <td><?=$blog->image ?></td>
+                                <td style="width:40%"><?=$blog->post ?></td>
                                 <td><?=date("d-M-Y H:i:a", strtotime($blog->date)) ?></td>
+                                <td><?=!empty($blog->image) ? "<img src='".ROOT."$blog->image' height='70px' width='70px' alt=''>" : "" ?></td>
                                 <td style="font-size: 10px;">
                                     <a href="<?=ROOT?>admin/blogs?edit=<?=$blog->blogId?>" class="btn btn-danger"><i class="fa fa-pencil"></i></a>
                                     <a href="<?=ROOT?>admin/blogs?delete=<?=$blog->blogId?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>

@@ -259,35 +259,39 @@
 
         function blogs(){
 
-            $mode = isset($_GET["add_new"]) ? "add_new" : (isset($_GET["edit"]) ? "edit" : "read");
+            $mode = isset($_GET["add_new"]) ? "add_new" : (isset($_GET["edit"]) ? "edit" : (isset($_GET["delete"]) ? "delete" : "read"));
             //$mode = isset($_GET["delete_confirm"]) ? "delete_confirm" : "read";
             //show($mode);
 
             $user = $this->load_model("User");
-            $Message = $this->load_model("Message");
-
+            $Blog = $this->load_model("Blog");
+            $image_class = $this->load_model("Image");
+            
             $user_data = $user->check_login(true, ["admin"]);
-
+            
             if (is_object($user_data)) {
                 $data["user_data"] = $user_data;
             }
-
-            if ($mode == "delete") {
-                $contactId = $_GET["delete"];
-                $messages = $Message->get_one($contactId);
-            }elseif($mode == "delete_confirm"){
-                $contactId = $_GET["delete_confirm"];
-                $messages = $Message->delete($contactId);
+            
+            if($mode == "delete"){
+                $blogId = $_GET["delete"];
+                $blogs = $Blog->get_one($blogId);
             }else{
-
-                $messages = $Message->get_all();
+                
+                $blogs = $Blog->get_all();
+                if ($blogs) {
+                    foreach ($blogs as $key => $blog) {
+                        if ($blogs[$key]->image) {
+                            $blogs[$key]->image = $image_class->get_thumb_post($blogs[$key]->image);
+                        }
+                    }
+                }
             }
 
-             // if slider new was posted
+             // if new blog was posted
              if (count($_POST) > 0) {
 
                 $Blogs = $this->load_model("Blog");
-                $image_class = $this->load_model("Image");
                 $Blogs->create($_POST,$_FILES,$image_class);
                 if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
                     $data['errors'] = $_SESSION['error'];
@@ -303,7 +307,7 @@
 
 
             $data["mode"] = $mode;
-            //$data["blogs"] = $blogs;
+            $data["blogs"] = $blogs;
             //show($data["messages"]);
             $data["page_title"] = "Admin - Blog";
             $data["current_page"] = "blog";
