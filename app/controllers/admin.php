@@ -264,7 +264,7 @@
             //show($mode);
 
             $user = $this->load_model("User");
-            $Blog = $this->load_model("Blog");
+            $Blogs = $this->load_model("Blog");
             $image_class = $this->load_model("Image");
             
             $user_data = $user->check_login(true, ["admin"]);
@@ -275,15 +275,15 @@
             
             if($mode == "edit"){
                 $blogId = $_GET["edit"];
-                $blogs = $Blog->get_one($blogId);
+                $blogs = $Blogs->get_one($blogId);
                 $data["POST"] = $blogs;
             }
             elseif($mode == "delete"){
                 $blogId = $_GET["delete"];
-                $blogs = $Blog->get_one($blogId);
+                $blogs = $Blogs->get_one($blogId);
             }else{
                 
-                $blogs = $Blog->get_all();
+                $blogs = $Blogs->get_all();
                 if ($blogs) {
                     foreach ($blogs as $key => $blog) {
                         if ($blogs[$key]->image) {
@@ -298,9 +298,12 @@
 
              // if new blog was posted
              if (count($_POST) > 0) {
+                if ($mode == "edit") {
+                    $Blogs->edit($_POST,$_FILES,$image_class);
+                }else{
 
-                $Blogs = $this->load_model("Blog");
-                $Blogs->create($_POST,$_FILES,$image_class);
+                    $Blogs->create($_POST,$_FILES,$image_class);
+                }
                 if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
                     $data['errors'] = $_SESSION['error'];
                     $data["POST"] = $_POST;

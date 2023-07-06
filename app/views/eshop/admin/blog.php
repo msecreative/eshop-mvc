@@ -143,6 +143,7 @@
                         <!-- BASIC FORM ELELEMNTS -->
                         <h3 class="mb">Edit Post</h3>
                         <form class="form-horizontal style-form" method="POST" enctype="multipart/form-data">
+                            <input value="<?=isset($POST->blogId) ? $POST->blogId : "" ?>" name="blogId" id="title" type="hidden">
                             <div class="form-group">
                                 <label class="col-sm-4 control-label" for="header1_text">Post Title</label>
                                 <div class="col-sm-8">
