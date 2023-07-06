@@ -273,7 +273,12 @@
                 $data["user_data"] = $user_data;
             }
             
-            if($mode == "delete"){
+            if($mode == "edit"){
+                $blogId = $_GET["edit"];
+                $blogs = $Blog->get_one($blogId);
+                $data["POST"] = $blogs;
+            }
+            elseif($mode == "delete"){
                 $blogId = $_GET["delete"];
                 $blogs = $Blog->get_one($blogId);
             }else{
@@ -284,6 +289,9 @@
                         if ($blogs[$key]->image) {
                             $blogs[$key]->image = $image_class->get_thumb_post($blogs[$key]->image);
                         }
+
+                        $blogs[$key]->user_data = $user->get_user($blogs[$key]->user_url);
+
                     }
                 }
             }

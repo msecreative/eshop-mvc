@@ -34,7 +34,7 @@
           	<div class="row mt">
           		<div class="col-lg-12">
                     <div class="content-panel">
-                    <?php if($mode == "add_new"){ ?>
+                    <?php if($mode != "read"){ ?>
                         <a style="margin-left: 10px;" href="<?=ROOT?>admin/blogs" class="btn btn-info pull-left"><i class="fa fa-arrow-left"></i> Back to post list</a>
                    <?php } ?>
                     <a style="margin-right: 10px;" href="<?=ROOT?>admin/blogs?add_new=true" class="btn btn-info pull-right">Add New Post <i class="fa fa-plus"></i></a>
@@ -72,12 +72,12 @@
                             <tr>
                                 <td><?=$i ?></td>
                                 <td><a href="<?=ROOT?>profile"><?=$blog->title ?></a></td>
-                                <td><?=$blog->user_url ?></td>
+                                <td><a href="<?=ROOT?>profile/<?=$blog->user_url ?>"><?=$blog->user_data->name ?></a></td>
                                 <td style="width:40%"><?=$blog->post ?></td>
                                 <td><?=date("d-M-Y H:i:a", strtotime($blog->date)) ?></td>
                                 <td><?=!empty($blog->image) ? "<img src='".ROOT."$blog->image' height='70px' width='70px' alt=''>" : "" ?></td>
                                 <td style="font-size: 10px;">
-                                    <a href="<?=ROOT?>admin/blogs?edit=<?=$blog->blogId?>" class="btn btn-danger"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?=ROOT?>admin/blogs?edit=<?=$blog->blogId?>" class="btn btn-info"><i class="fa fa-pencil"></i></a>
                                     <a href="<?=ROOT?>admin/blogs?delete=<?=$blog->blogId?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
@@ -125,13 +125,63 @@
                                 <img src="" alt="">
                             </div>
                             <div style="display: flex; justify-content: space-between">
-                                <input type="reset" value="Close" class="btn btn-danger">
+                                <a class="btn btn-danger" href="<?=ROOT?>admin/blogs">Close</a>
                                 <input type="submit" value="Post" class="btn btn-primary">
                                 
                             </div>
                         </form>
                     </div>
                     <!-- Add new Post end-->
+                <?php }elseif ($mode == "edit") {  ?>
+                    <?php 
+                        if (isset($errors)) { ?>
+                            <p style="margin: 0 10px;" class="status alert alert-danger"><?=$errors ?></p>
+                    <?php } ?>
+
+                    <!-- Edit Post -->
+                    <div class="add-new-post">
+                        <!-- BASIC FORM ELELEMNTS -->
+                        <h3 class="mb">Edit Post</h3>
+                        <form class="form-horizontal style-form" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" for="header1_text">Post Title</label>
+                                <div class="col-sm-8">
+                                    <input value="<?=isset($POST->title) ? $POST->title : "" ?>" name="title" id="title" type="text" class="form-control" placeholder="Write a Post title">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Post Details</label>
+                                <div class="col-sm-8">
+                                    <textarea placeholder="Write a Post details" name="post" id="post" class="form-control"><?=isset($POST->post) ? $POST->post : "" ?></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Post Image (optional)</label>
+                                <div class="col-sm-8">
+                                    <input name="image" id="image" type="file" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label"></label>
+                                <div class="col-sm-8">
+                                    <?=!empty($POST->image) ? "<img height='100px' width='150px' src='".ROOT."$POST->image' alt=''>" : "" ?>
+                                </div>
+                            </div>
+                            
+                            <div class="js-Post-images-add edit-Post-images">
+                            
+                                
+                            </div>
+                            <div style="display: flex; justify-content: space-between">
+                                <a class="btn btn-danger" href="<?=ROOT?>admin/blogs">Close</a>
+                                <input type="submit" value="Post" class="btn btn-primary">
+                                
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Edit Post end-->
                 <?php } ?>
 
                         
