@@ -1,7 +1,7 @@
 <?php $this->view("header", $data) ?>
 	 
 	 <div id="contact-page" class="container">
-    	<div class="bg">  	
+    	<div class="bg">	
     		<div class="row">  	
 	    		<div class="col-sm-8">
 	    			<div class="contact-form">

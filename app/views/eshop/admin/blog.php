@@ -64,6 +64,7 @@
                             </tr>
                         </thead>
                         <tbody">
+
                             <?php 
                                 $i = 0;
                                 foreach ($blogs as $blog) {
@@ -71,9 +72,9 @@
                             ?>
                             <tr>
                                 <td><?=$i ?></td>
-                                <td><a href="<?=ROOT?>profile"><?=$blog->title ?></a></td>
+                                <td><a href="<?=ROOT?>post/"><?=$blog->title ?></a></td>
                                 <td><a href="<?=ROOT?>profile/<?=$blog->user_url ?>"><?=$blog->user_data->name ?></a></td>
-                                <td style="width:40%"><?=$blog->post ?></td>
+                                <td style="width:40%"><?=nl2br(htmlspecialchars(substr($blog->post, 0, 350)))?> ...</td>
                                 <td><?=date("d-M-Y H:i:a", strtotime($blog->date)) ?></td>
                                 <td><?=!empty($blog->image) ? "<img src='".ROOT."$blog->image' height='70px' width='70px' alt=''>" : "" ?></td>
                                 <td style="font-size: 10px;">

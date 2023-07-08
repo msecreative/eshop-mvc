@@ -1,7 +1,7 @@
 <?php 
-    class Blog extends Controller
+    class Post extends Controller
     {
-        public function index() {
+        public function index($url_address = "") {
 
             // check if its a search
             $search = false;
@@ -24,20 +24,21 @@
                 $arr["title"] = "%" . $find. "%";
                 $blog_rows = $db->read("SELECT * FROM blogs WHERE `title` LIKE :title", $arr);
             }else{
+                $arr = array();
+                $arr["url_address"] = $url_address;
 
-                $blog_rows = $db->read("SELECT * FROM blogs ORDER BY blogId DESC");
+                $blog_rows = $db->read("SELECT * FROM blogs WHERE `url_address` = :url_address LIMIT 1", $arr);
             }
 
-            $data["page_title"] = "Blog";
+            $data["page_title"] = "Blog - Unknown";
             if ($blog_rows) {
-                foreach ($blog_rows as $key => $blog_row) {
-                    
-                    if (file_exists($blog_rows[$key]->image)) {
-                    $blog_rows[$key]->image = $image_class->get_thumb_blog_post($blog_rows[$key]->image);
-                    }
-                    
-                    $blog_rows[$key]->user_data = $user->get_user($blog_rows[$key]->user_url);
+
+                $data["page_title"] = $blog_rows[0]->title;
+                if (file_exists($blog_rows[0]->image)) {
+                    $blog_rows[0]->image = $image_class->get_thumb_blog_post($blog_rows[0]->image);
                 }
+                
+                $blog_rows[0]->user_data = $user->get_user($blog_rows[0]->user_url);
                 
             }
             // get all categories
@@ -45,9 +46,9 @@
             $data["categories"] = $category->getAllCategory();
             
 
-            $data["blog_rows"] = $blog_rows;
+            $data["blog_rows"] = $blog_rows[0];
             $data["show_serach"] = true;
-            $this ->view("blog", $data);
+            $this ->view("single_post", $data);
         }
     }
     

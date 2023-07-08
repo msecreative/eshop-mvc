@@ -8,7 +8,7 @@
 					<div class="blog-post-area">
 						<h2 class="title text-center">Latest From our Blog</h2>
 						<?php 
-						show($blog_rows);
+						
 							if (isset($blog_rows) && is_array($blog_rows)) {
 								foreach ($blog_rows as $blog) {
 						?>
@@ -16,7 +16,7 @@
 							<h3><?=$blog->title ?></h3>
 							<div class="post-meta">
 								<ul>
-									<li><i class="fa fa-user"></i> <?//=$blog->user_data->name ?></li>
+									<li><i class="fa fa-user"></i> <?=$blog->user_data->name ?></li>
 									<li><i class="fa fa-clock-o"></i> <?=date("H:i a", strtotime($blog->date)) ?></li>
 									<li><i class="fa fa-calendar"></i> <?=date("M d, Y", strtotime($blog->date)) ?></li>
 								</ul>
@@ -28,11 +28,12 @@
 										<i class="fa fa-star-half-o"></i>
 								</span>
 							</div>
-							<a href="">
-								<img src="<?=ASSETS . THEME ?>images/blog/blog-one.jpg" alt="">
+							<a href="<?=ROOT . 'post/' . $blog->url_address ?>">
+								<img src="<?=ROOT . $blog->image ?>" alt="">
 							</a>
-							<p><?=$blog->post ?></p>
-							<a  class="btn btn-primary" href="">Read More</a>
+							<p><?=nl2br(htmlspecialchars(substr($blog->post, 0, 350)))?> ...</p>
+							<a class="btn btn-primary" href="<?=ROOT . 'post/' . $blog->url_address ?>">Read More</a>
+							<hr>
 						</div>
 						<?php } ?>
 						<div class="pagination-area">
