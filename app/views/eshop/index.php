@@ -316,35 +316,22 @@
 						
 						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
-								<div class="item active">	
-									<?php 
-									if (isset($slider_rows1) && is_array($slider_rows1)) {
-										foreach ($slider_rows1 as $product) {
-									?>
-									<!-- include single product -->
-										<?php $this->view("product.inc", $product); ?>
-									<?php } } ?>
+								<?php if (isset($slider_rows) && is_array($slider_rows)) { 
+									$num = 0;
+								?>
 									
-								</div>
-								<div class="item">	
-									<?php 
-										if (isset($slider_rows2) && is_array($slider_rows2)) {
-											foreach ($slider_rows2 as $product) {
-									?>
-									<!-- include single product -->
-										<?php $this->view("product.inc", $product); ?>
-									<?php } } ?>
-								</div>
+								<?php foreach ($slider_rows as $slider) { $num++; ?>
 
-								<div class="item">	
+									<div class="item <?=$num == 1 ? 'active' : ''?>">
 									<?php 
-										if (isset($slider_rows3) && is_array($slider_rows3)) {
-											foreach ($slider_rows2 as $product) {
+										foreach ($slider as $product) {
 									?>
 									<!-- include single product -->
 										<?php $this->view("product.inc", $product); ?>
-									<?php } } ?>
+									<?php } ?>
 								</div>
+							<?php } } ?>
+							
 							</div>
 							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
 								<i class="fa fa-angle-left"></i>

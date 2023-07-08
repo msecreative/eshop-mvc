@@ -39,40 +39,19 @@
             $data["product_rows"] = $product_rows;
 
             // read the product bottom carousel slider 1
-
-            $slider_rows1 = $db->read("SELECT * FROM products WHERE rand() LIMIT 3");
-
-            if ($slider_rows1) {
-                foreach ($slider_rows1 as $key => $product_row) {
-                    $slider_rows1[$key]->image = $image_class->get_thumb_post($slider_rows1[$key]->image);
+            $carousel_post_count = 3;
+            for ($i=0; $i < $carousel_post_count; $i++) { 
+                
+                $slider_rows[$i] = $db->read("SELECT * FROM products ORDER BY RAND() LIMIT 3");
+                
+                if ($slider_rows[$i]) {
+                    foreach ($slider_rows[$i] as $key => $product_row) {
+                        $slider_rows[$i][$key]->image = $image_class->get_thumb_post($slider_rows[$i][$key]->image);
+                    }
                 }
+                $data["slider_rows"][] = $slider_rows[$i];
             }
-            $data["slider_rows1"] = $slider_rows1;
-            // read the product bottom carousel slider2
-
-            $slider_rows2 = $db->read("SELECT * FROM products WHERE rand() LIMIT 3");
-
-            if ($slider_rows2) {
-                foreach ($slider_rows2 as $key => $product_row) {
-                    $slider_rows2[$key]->image = $image_class->get_thumb_post($slider_rows2[$key]->image);
-                }
-            }
-            $data["slider_rows2"] = $slider_rows2;
-            // read the product bottom carousel slider3
-
-            $slider_rows3 = $db->read("SELECT * FROM products WHERE rand() LIMIT 3");
-
-            if ($slider_rows3) {
-                foreach ($slider_rows3 as $key => $product_row) {
-                    $slider_rows3[$key]->image = $image_class->get_thumb_post($slider_rows3[$key]->image);
-                }
-            }
-            $data["slider_rows3"] = $slider_rows3;
-
-
-
-
-
+        
             // get all categories
             $category = $this->load_model("Category");
             $data["categories"] = $category->getAllCategory();
