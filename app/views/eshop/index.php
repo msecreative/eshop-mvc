@@ -324,11 +324,12 @@
 
 									<div class="item <?=$num == 1 ? 'active' : ''?>">
 									<?php 
+										if ( is_array($slider) ) {
 										foreach ($slider as $product) {
 									?>
 									<!-- include single product -->
 										<?php $this->view("product.inc", $product); ?>
-									<?php } ?>
+									<?php } } ?>
 								</div>
 							<?php } } ?>
 							

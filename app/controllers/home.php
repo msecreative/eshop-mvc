@@ -51,7 +51,8 @@
                 }
                 $data["slider_rows"][] = $slider_rows[$i];
             }
-        
+            // get product by category for tab product diplay
+            //$data["segment_data"] = $this->get_segment_data();
             // get all categories
             $category = $this->load_model("Category");
             $data["categories"] = $category->getAllCategory();
@@ -68,6 +69,10 @@
             $data["show_serach"] = true;
             $this ->view("index", $data);
         }
+
+        // private function get_segment_data(){
+        //     echo "dsdfsdf";
+        // }
     }
     
 ?>
