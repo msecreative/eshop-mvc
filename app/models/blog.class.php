@@ -71,7 +71,7 @@
         } 
 
         public function edit($DATA,$FILES, $image_class = null){
-
+            $_SESSION['error'] = "";
             // $id
             $arr['blogId']       = ucwords($DATA["blogId"]);
             $arr['title']       = ucwords($DATA["title"]);

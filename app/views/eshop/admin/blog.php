@@ -137,7 +137,6 @@
                         if (isset($errors)) { ?>
                             <p style="margin: 0 10px;" class="status alert alert-danger"><?=$errors ?></p>
                     <?php } ?>
-
                     <!-- Edit Post -->
                     <div class="add-new-post">
                         <!-- BASIC FORM ELELEMNTS -->
@@ -177,12 +176,50 @@
                             </div>
                             <div style="display: flex; justify-content: space-between">
                                 <a class="btn btn-danger" href="<?=ROOT?>admin/blogs">Close</a>
-                                <input type="submit" value="Post" class="btn btn-primary">
+                                <input type="submit" value="Save" class="btn btn-primary">
                                 
                             </div>
                         </form>
                     </div>
                     <!-- Edit Post end-->
+                <?php }elseif ($mode == "delete" && is_object($blogs)) { ?>
+                    <p style="margin: 0 10px;" class="status alert alert-danger">Are you confirmed to delete this post?</p>
+                        <div class="order-table">
+                            <h4><i class="fa fa-angle-right"></i>Message List</h4> 
+                            <hr>
+                            <table class="table table-striped table-advance table-hover table-class">
+                                <thead>
+                                    <tr>
+                                        <th>Serial</th>
+                                        <th>User</th>
+                                        <th>Title</th>
+                                        <th>Post</th>
+                                        <th>Date</th>
+                                        <th>Image</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody">
+                                    <tr>
+                                        <td><?=$blogs->blogId ?></td>
+                                        <td><a href="<?=ROOT?>profile/<?=$blogs->user_url ?>"><?=$blogs->user_data->name ?></a></td>
+                                        <td><a href="<?=ROOT?>profile"><?=$blogs->title ?></a></td>
+                                        <td><?=$blogs->post ?></td>
+                                        <td><?=date("d-M-Y H:i:a", strtotime($blogs->date)) ?></td>
+                                        <td><?=!empty($blogs->image) ? "<img src='".ROOT."$blogs->image' height='70px' width='70px' alt=''>" : "" ?></td>
+                                        <td style="font-size: 10px;">
+                                            <a href="<?=ROOT?>admin/blogs?delete_confirm=<?=$blogs->blogId?>" class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                <?php }elseif($mode == "delete_confirm"){ ?>
+                    <div style="padding: 10px;">
+                        <p class="status alert alert-danger">The post deleted successfully</p>
+                        <a href="<?=ROOT?>admin/blogs" class="btn btn-success"> Back to post list</a>
+                    </div>
                 <?php } ?>
 
                         

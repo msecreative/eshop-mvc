@@ -21,33 +21,28 @@
             $db = Database::newInstance();
             
             if ($search) {
-                $arr["description"] = "%" . $find. "%";
-                $product_rows = $db->read("SELECT * FROM products WHERE `description` LIKE :description", $arr);
+                $arr["title"] = "%" . $find. "%";
+                $blog_rows = $db->read("SELECT * FROM blogs WHERE `title` LIKE :title", $arr);
             }else{
 
-                $product_rows = $db->read("SELECT * FROM products");
+                $blog_rows = $db->read("SELECT * FROM blogs ORDER BY blogId DESC");
             }
 
             $data["page_title"] = "Blog";
-            if ($product_rows) {
-                foreach ($product_rows as $key => $product_row) {
-                    $product_rows[$key]->image = $image_class->get_thumb_post($product_rows[$key]->image);
+            if ($blog_rows) {
+                foreach ($blog_rows as $key => $blog_row) {
+                    $blog_rows[$key]->image = $image_class->get_thumb_blog_post($blog_rows[$key]->image);
                 }
+
+                $blog_rows[$key]->user_data = $user->get_user($blog_rows[$key]->user_url);
+                //show($blog_rows[$key]->user_data);
             }
             // get all categories
             $category = $this->load_model("Category");
             $data["categories"] = $category->getAllCategory();
             
-            $Slider = $this->load_model("Slider");
-            $data["slider_row"] = $Slider->get_all();
 
-            if ($data["slider_row"]) {
-                foreach ($data["slider_row"] as $key => $row) {
-                    $data["slider_row"][$key]->image = $image_class->get_thumb_post($data["slider_row"][$key]->image,448,441);
-                }
-            }
-
-            $data["product_rows"] = $product_rows;
+            $data["blog_rows"] = $blog_rows;
             $data["show_serach"] = true;
             $this ->view("blog", $data);
         }

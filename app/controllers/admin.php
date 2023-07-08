@@ -259,7 +259,7 @@
 
         function blogs(){
 
-            $mode = isset($_GET["add_new"]) ? "add_new" : (isset($_GET["edit"]) ? "edit" : (isset($_GET["delete"]) ? "delete" : "read"));
+            $mode = isset($_GET["add_new"]) ? "add_new" : (isset($_GET["edit"]) ? "edit" : (isset($_GET["delete"]) ? "delete" : (isset($_GET["delete_confirm"]) ? "delete_confirm" : "read")));
             //$mode = isset($_GET["delete_confirm"]) ? "delete_confirm" : "read";
             //show($mode);
 
@@ -281,12 +281,24 @@
             elseif($mode == "delete"){
                 $blogId = $_GET["delete"];
                 $blogs = $Blogs->get_one($blogId);
+                if ($blogs) {
+                   
+                    if (file_exists($blogs->image)) {
+                        $blogs->image = $image_class->get_thumb_post($blogs->image);
+                    }
+                    
+                    $blogs->user_data = $user->get_user($blogs->user_url);
+                        
+                }
+            }elseif($mode == "delete_confirm"){
+                $blogId = $_GET["delete_confirm"];
+                $blogs = $Blogs->delete($blogId);
             }else{
                 
                 $blogs = $Blogs->get_all();
                 if ($blogs) {
                     foreach ($blogs as $key => $blog) {
-                        if ($blogs[$key]->image) {
+                        if (file_exists($blogs[$key]->image)) {
                             $blogs[$key]->image = $image_class->get_thumb_post($blogs[$key]->image);
                         }
 

@@ -271,5 +271,26 @@ class Image
 		}
 	}
 
+	//create thumbnail for blog post image
+	public function get_thumb_blog_post($filename, $width = 866, $height = 396)
+	{
+
+		$thumbnail = $filename . "_post_thumb_blog.jpg";
+		if(file_exists($thumbnail))
+		{
+			return $thumbnail;
+		}
+
+		$this->crop_image($filename,$thumbnail,$width,$height);
+
+		if(file_exists($thumbnail))
+		{
+			return $thumbnail;
+		}else
+		{
+			return $filename;
+		}
+	}
+
 
 }
