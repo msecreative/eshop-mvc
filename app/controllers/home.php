@@ -56,7 +56,7 @@
             $data["categories"] = $category->getAllCategory();
 
             // get product by category for tab product diplay
-            $data["segment_data"] = $this->get_segment_data($db, $data["categories"]);
+            $data["segment_data"] = $this->get_segment_data($db, $data["categories"],$image_class);
             
             $Slider = $this->load_model("Slider");
             $data["slider_row"] = $Slider->get_all();
@@ -71,18 +71,24 @@
             $this ->view("index", $data);
         }
 
-        private function get_segment_data($db,$categories){
+        private function get_segment_data($db,$categories,$image_class){
             $results = array();
             $num = 0;
             foreach ($categories as $cat) {
 
                 $arr["catId"] = $cat->catId;
-                $product_rows = $db->read("SELECT * FROM products WHERE `category` = :catId", $arr);
+                $product_rows = $db->read("SELECT * FROM products WHERE `category` = :catId ORDER BY rand() LIMIT 5", $arr);
 
                 if (is_array($product_rows)) {
                 
                     // If I use catname to get catname without cat slug
                     //$cat->category = preg_replace( "/\W+/", "", $cat->category);
+                    // this code for crop image an actual size
+                    if ($product_rows) {
+                        foreach ($product_rows as $key => $row) {
+                            $product_rows[$key]->image = $image_class->get_thumb_post($product_rows[$key]->image,448,441);
+                        }
+                    }
                     
                   $results[$cat->cat_slug] = $product_rows;
                   //show($results);
