@@ -22,15 +22,23 @@
 						</div>
 				
 					</div><!--features_items-->
+					<?php show($segment_data) ?>
 					
 					<div class="category-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
+								<?php 
+									if ( isset($segment_data) && is_array($segment_data)) {
+										foreach ($segment_data as $data) { ?>
+											<li class=""><a href="#<?=$data?>" data-toggle="tab">T-Shirt</a></li>
+									<?php	}
+									}
+								?>
+								<!-- <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
 								<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
 								<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
 								<li><a href="#kids" data-toggle="tab">Kids</a></li>
-								<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li>
+								<li><a href="#poloshirt" data-toggle="tab">Polo shirt</a></li> -->
 							</ul>
 						</div>
 						<div class="tab-content">

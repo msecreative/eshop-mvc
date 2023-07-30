@@ -44,10 +44,11 @@
             $db->write($sql);
 
         } 
+
         // Get All Category
         public function getAllCategory(){
             $db = Database::newInstance();
-            return $db->read("SELECT * FROM categories ORDER BY catId DESC");
+            return $db->read("SELECT * FROM categories ORDER BY views DESC");
 
 
 
@@ -59,12 +60,18 @@
             $data =  $db->read("SELECT category FROM categories WHERE catId = '$catId' LIMIT 1 ");
             return $data[0];
         }
+
         // Get single category by name
         public function get_one_by_name($name){
             $name = str_replace("-"," ",$name);
             $name = addslashes($name);
             $db = Database::newInstance();
             $data =  $db->read("SELECT * FROM categories WHERE category LIKE :name LIMIT 1", ["name"=>$name]);
+            if (is_array($data)) {
+               
+                $db->write("UPDATE categories SET views = views + 1 WHERE catId = :catId LIMIT 1", ["catId"=>$data[0]->catId]);
+
+            }
             return $data[0];
         }
 

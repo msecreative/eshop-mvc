@@ -51,11 +51,12 @@
                 }
                 $data["slider_rows"][] = $slider_rows[$i];
             }
-            // get product by category for tab product diplay
-            //$data["segment_data"] = $this->get_segment_data();
             // get all categories
             $category = $this->load_model("Category");
             $data["categories"] = $category->getAllCategory();
+
+            // get product by category for tab product diplay
+            $data["segment_data"] = $this->get_segment_data($db, $data["categories"]);
             
             $Slider = $this->load_model("Slider");
             $data["slider_row"] = $Slider->get_all();
@@ -70,9 +71,32 @@
             $this ->view("index", $data);
         }
 
-        // private function get_segment_data(){
-        //     echo "dsdfsdf";
-        // }
+        private function get_segment_data($db,$categories){
+            $results = array();
+            $num = 0;
+            foreach ($categories as $cat) {
+
+                $arr["catId"] = $cat->catId;
+                $product_rows = $db->read("SELECT * FROM products WHERE `category` = :catId", $arr);
+
+                if (is_array($product_rows)) {
+                
+                    // If I use catname to get catname without cat slug
+                    //$cat->category = preg_replace( "/\W+/", "", $cat->category);
+                    
+                  $results[$cat->cat_slug] = $product_rows;
+                  //show($results);
+
+                    $num++;
+                    if ($num > 5) {
+
+                        break;
+                    }
+              
+                }
+            }
+            return $results;
+        }
     }
     
 ?>
