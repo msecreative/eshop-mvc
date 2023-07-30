@@ -23,17 +23,14 @@
 				
 					</div><!--features_items-->
 					<?php show($segment_data) ?>
-					
+					<?php if ( isset($segment_data) && is_array($segment_data)) { $num = 0; ?>
 					<div class="category-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
 								<?php 
-									if ( isset($segment_data) && is_array($segment_data)) {
-										foreach ($segment_data as $data) { ?>
-											<li class=""><a href="#<?=$data?>" data-toggle="tab">T-Shirt</a></li>
-									<?php	}
-									}
-								?>
+									foreach ($segment_data as $key => $data) { $num++ ?>
+										<li class="<?=$num == 1 ? 'active' : '' ?>"><a href="#<?=$key?>" data-toggle="tab"><?=str_replace("-", " ", $key)?></a></li>
+								<?php } ?>
 								<!-- <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
 								<li><a href="#blazers" data-toggle="tab">Blazers</a></li>
 								<li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
@@ -318,6 +315,7 @@
 							</div>
 						</div>
 					</div><!--/category-tab-->
+					<?php } ?>
 					
 					<div class="recommended_items"><!--recommended_items-->
 						<h2 class="title text-center">recommended items</h2>
