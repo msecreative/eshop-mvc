@@ -26,13 +26,13 @@
 							<?php $this->view("product.inc", $product); ?>
 							<?php } } ?>
 						</div>
-						
+						<?php show($page_links->prev) ?>
 						<ul class="pagination">
-							<li><a href="">Next</a></li>
+							<li><a href="<?=$page_links->prev ?>">Prev</a></li>
 							<li class="active"><a href="">1</a></li>
 							<li><a href="">2</a></li>
 							<li><a href="">3</a></li>
-							<li><a href="">Prev</a></li>
+							<li><a href="<?=$page_links->next?>">Next</a></li>
 						</ul>
 					</div><!--features_items-->
 				</div>
