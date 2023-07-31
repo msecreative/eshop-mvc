@@ -2,6 +2,10 @@
     class Shop extends Controller
     {
         public function index() {
+            // Pagination formula
+            $limit = 3;
+            $page_number = isset($_GET["pg"]) ? (int)$_GET["pg"] : 1;
+            $offset = ($page_number - 1) * $limit;
 
             // check if its a search
             $search = false;
@@ -21,10 +25,10 @@
 
             if ($search) {
                 $arr["description"] = "%" . $find. "%";
-                $product_rows = $db->read("SELECT * FROM products WHERE `description` LIKE :description", $arr);
+                $product_rows = $db->read("SELECT * FROM products WHERE `description` LIKE :description limit $limit offset $offset", $arr);
             }else{
 
-                $product_rows = $db->read("SELECT * FROM products");
+                $product_rows = $db->read("SELECT * FROM products limit $limit offset $offset");
             }
 
             $data["page_title"] = "Shop";
@@ -46,6 +50,10 @@
         }
 
         public function category($cat_find = ""){
+             // Pagination formula
+             $limit = 3;
+             $page_number = isset($_GET["pg"]) ? (int)$_GET["pg"] : 1;
+             $offset = ($page_number - 1) * $limit;
            
             $user = $this->load_model("User");
             $category = $this->load_model("Category");
@@ -67,7 +75,7 @@
                 $cat_id = $check->catId;
                 $cat_id = $cat_id;
             }
-            $product_rows = $db->read("SELECT * FROM products WHERE category = :cat_id", ["cat_id"=>$cat_id]);
+            $product_rows = $db->read("SELECT * FROM products WHERE category = :cat_id limit $limit offset $offset", ["cat_id"=>$cat_id]);
 
             $data["page_title"] = "Shop";
             
