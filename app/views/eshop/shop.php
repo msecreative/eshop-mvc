@@ -26,13 +26,17 @@
 							<?php $this->view("product.inc", $product); ?>
 							<?php } } ?>
 						</div>
-						<?php show($page_links->prev) ?>
 						<ul class="pagination">
-							<li><a href="<?=$page_links->prev ?>">Prev</a></li>
-							<li class="active"><a href="">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href="<?=$page_links->next?>">Next</a></li>
+							<li><a href="<?=Page::links()->prev ?>">Prev</a></li>
+							<?php 
+								$max = Page::links()->current + 3;
+								$cur = (Page::links()->current > 3) ? (Page::links()->current - 3) : "1";
+
+								for ($i=$cur; $i < $max; $i++) { 
+							?>
+							<li class="<?=Page::links()->current == $i ? 'active' : ''; ?>"><a href="<?=Page::generate($i) ?>"><?=$i ?></a></li>
+							<?php } ?>
+							<li><a href="<?=Page::links()->next?>">Next</a></li>
 						</ul>
 					</div><!--features_items-->
 				</div>
