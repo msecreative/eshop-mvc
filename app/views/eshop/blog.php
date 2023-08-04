@@ -37,12 +37,7 @@
 						</div>
 						<?php } ?>
 						<div class="pagination-area">
-							<ul class="pagination">
-								<li><a href="" class="active">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
-								<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
-							</ul>
+							<?php Page::show_links(); ?>
 						</div>
 						<?php }else{ ?>
 							<p style="border:1px solid #ddd; padding: 10px">No post found!</p>

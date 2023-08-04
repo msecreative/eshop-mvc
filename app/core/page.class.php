@@ -3,6 +3,28 @@
  * This class created for pagination functionality
  */
 class Page {
+
+    public static function get_offset($limit){
+        $limit = (int)$limit;
+        $page_number = isset($_GET["pg"]) ? (int)$_GET["pg"] : 1;
+        $page_number = $page_number < 1 ? 1 : $page_number;
+        return ($page_number - 1) * $limit;
+    }
+    public static function show_links(){ ?>
+        <ul class="pagination">
+            <li><a href="<?=self::links()->prev ?>">Prev</a></li>
+            <?php 
+                $max = self::links()->current + 3;
+                $cur = (self::links()->current > 3) ? (self::links()->current - 3) : "1";
+
+                for ($i=$cur; $i < $max; $i++) { 
+            ?>
+            <li class="<?=self::links()->current == $i ? 'active' : ''; ?>"><a href="<?=self::generate($i) ?>"><?=$i ?></a></li>
+            <?php } ?>
+            <li><a href="<?=self::links()->next?>">Next</a></li>
+        </ul>
+<?php 
+}
     public static function generate($number){
         $number = (int)$number;
         $query_string = str_replace("url=", "", $_SERVER["QUERY_STRING"]);

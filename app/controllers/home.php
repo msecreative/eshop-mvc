@@ -2,7 +2,9 @@
     class Home extends Controller
     {
         public function index() {
-
+            // Pagination formula
+            $limit = 6;
+            $offset = Page::get_offset($limit);
             // check if its a search
             $search = false;
             if (isset( $_GET["find"])) {
@@ -25,10 +27,10 @@
             // read the main post
             if ($search) {
                 $arr["description"] = "%" . $find. "%";
-                $product_rows = $db->read("SELECT * FROM products WHERE `description` LIKE :description", $arr);
+                $product_rows = $db->read("SELECT * FROM products WHERE `description` LIKE :description limit $limit offset $offset", $arr);
             }else{
 
-                $product_rows = $db->read("SELECT * FROM products");
+                $product_rows = $db->read("SELECT * FROM products limit $limit offset $offset");
             }
 
             if ($product_rows) {

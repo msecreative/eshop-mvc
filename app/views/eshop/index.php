@@ -7,7 +7,6 @@
 		<div class="container">
 			<div class="row">
 			<?php $this->view("sidebar.inc", $data) ?>
-				
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
 						<h2 class="title text-center">Features Items</h2>
@@ -23,11 +22,12 @@
 				
 					</div><!--features_items-->
 					<?php if ( isset($segment_data) && is_array($segment_data)) { $num = 0; ?>
+						
 					<div class="category-tab"><!--category-tab-->
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
 								<?php 
-									foreach ($segment_data as $key => $data) { $num++ ?>
+									foreach ($segment_data as $key => $seg_data) { $num++ ?>
 										<li class="<?=$num == 1 ? 'active' : '' ?>"><a href="#<?=$key?>" data-toggle="tab"><?=str_replace("-", " ", $key)?></a></li>
 								<?php } ?>
 							</ul>
@@ -35,11 +35,11 @@
 						<div class="tab-content">
 							<?php
 								$num1 = 0; 
-								foreach ($segment_data as $key => $data) { $num1++ ?>
+								foreach ($segment_data as $key => $seg_data) { $num1++ ?>
 
 								<div class="tab-pane fade <?=$num1 == 1 ? 'active in' : '' ?>" id="<?=$key?>" >
 								<?php 
-									foreach ($data as $value) { ?>
+									foreach ($seg_data as $value) { ?>
 									<div class="col-sm-3">
 										<div class="product-image-wrapper">
 											<div class="single-products">
@@ -59,7 +59,6 @@
 						</div>
 					</div><!--/category-tab-->
 					<?php } ?>
-					
 					<div class="recommended_items"><!--recommended_items-->
 						<h2 class="title text-center">recommended items</h2>
 						
@@ -91,10 +90,12 @@
 							  </a>			
 						</div>
 					</div><!--/recommended_items-->
+					<?php Page::show_links(); ?>
 					
 				</div>
 			</div>
 		</div>
 	</section>
+	
 
-	<?php $this->view("footer", $data) ?>
+<?php $this->view("footer",$data); ?>

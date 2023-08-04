@@ -65,7 +65,7 @@
 
         public function login($post){
 
-            $data               = array();
+            $data = array();
             $db = Database::getInstance();
             $data["email"]      = trim($_POST['email']);
             $data["password"]   = trim($_POST['password']);

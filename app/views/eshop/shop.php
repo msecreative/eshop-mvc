@@ -26,18 +26,8 @@
 							<?php $this->view("product.inc", $product); ?>
 							<?php } } ?>
 						</div>
-						<ul class="pagination">
-							<li><a href="<?=Page::links()->prev ?>">Prev</a></li>
-							<?php 
-								$max = Page::links()->current + 3;
-								$cur = (Page::links()->current > 3) ? (Page::links()->current - 3) : "1";
-
-								for ($i=$cur; $i < $max; $i++) { 
-							?>
-							<li class="<?=Page::links()->current == $i ? 'active' : ''; ?>"><a href="<?=Page::generate($i) ?>"><?=$i ?></a></li>
-							<?php } ?>
-							<li><a href="<?=Page::links()->next?>">Next</a></li>
-						</ul>
+						<!-- Product pagination -->
+						<?php Page::show_links(); ?>
 					</div><!--features_items-->
 				</div>
 			</div>

@@ -3,6 +3,10 @@
     {
         public function index() {
 
+            // Pagination formula
+            $limit = 2;
+            $offset = Page::get_offset($limit);
+
             // check if its a search
             $search = false;
             if (isset( $_GET["find"])) {
@@ -22,10 +26,10 @@
             
             if ($search) {
                 $arr["title"] = "%" . $find. "%";
-                $blog_rows = $db->read("SELECT * FROM blogs WHERE `title` LIKE :title", $arr);
+                $blog_rows = $db->read("SELECT * FROM blogs WHERE `title` LIKE :title limit $limit offset $offset", $arr);
             }else{
 
-                $blog_rows = $db->read("SELECT * FROM blogs ORDER BY blogId DESC");
+                $blog_rows = $db->read("SELECT * FROM blogs ORDER BY blogId DESC limit $limit offset $offset");
             }
 
             $data["page_title"] = "Blog";
