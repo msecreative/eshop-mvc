@@ -50,8 +50,10 @@
         } 
         // Get All Category
         public function get_all(){
+            $limit = 10;
+            $offset = Page::get_offset($limit);
             $db = Database::newInstance();
-            return $db->read("SELECT * FROM contact_us ORDER BY contactId DESC");
+            return $db->read("SELECT * FROM contact_us ORDER BY contactId DESC limit $limit offset $offset");
         }
 
         // Get single category

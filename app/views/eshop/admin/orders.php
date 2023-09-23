@@ -129,11 +129,12 @@
                             <?php } ?>
                         </tbody>
                     </table>
+                    
                 </div>
                 <?php }else{ ?>
                     <div>No order found</div>
                     <?php } ?>
-                        
+                    <?php Page::show_links(); ?>
                     </div><!-- /content-panel -->
           		</div>
           	</div>

@@ -25,8 +25,11 @@
             }
 
             // Show category all data after refreshing page
+            $limit = 10;
+            $offset = Page::get_offset($limit);
             $db = Database::newInstance();
-            $allCategories = $db->read("SELECT * FROM categories ORDER BY catId DESC");
+            $allCategories = $db->read("SELECT * FROM categories ORDER BY catId DESC limit $limit offset $offset");
+
             $forSubCategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY catId DESC");
 
             $category = $this->load_model("Category");
@@ -50,8 +53,11 @@
             }
 
             // Show Product all data after refreshing page
+            $limit = 10;
+            $offset = Page::get_offset($limit);
+            
             $db = Database::newInstance();
-            $allProducts = $db->read("SELECT * FROM products ORDER BY pId DESC");
+            $allProducts = $db->read("SELECT * FROM products ORDER BY pId DESC limit $limit offset $offset");
             // For display add product
             $db = Database::newInstance();
             $allcategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY catId DESC");

@@ -81,6 +81,7 @@
                 <?php }else{ ?>
                     <div style="padding: 10px;">No message found</div>
                 <?php } ?>
+                <?php Page::show_links(); ?>
                     <?php }elseif($mode == "delete_confirm"){ ?>
                         <div style="padding: 10px;">
                             <p class="status alert alert-danger">The message deleted successfully</p>

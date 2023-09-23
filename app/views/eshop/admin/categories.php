@@ -120,6 +120,7 @@
                                 ?>
                             </tbody>
                         </table>
+                        <?php Page::show_links(); ?>
                     </div><!-- /content-panel -->
           		</div>
           	</div>

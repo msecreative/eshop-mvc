@@ -47,8 +47,10 @@
 
         // Get All Category
         public function getAllCategory(){
+            $limit = 10;
+            $offset = Page::get_offset($limit);
             $db = Database::newInstance();
-            return $db->read("SELECT * FROM categories ORDER BY views DESC");
+            return $db->read("SELECT * FROM categories ORDER BY views DESC limit $limit offset $offset");
 
 
 

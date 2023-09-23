@@ -127,12 +127,13 @@
         }
 
         public function get_all_orders(){
-
+            $limit = 10;
+            $offset = Page::get_offset($limit);
             $orders = false;
     
             $db = Database::newInstance();
     
-            $query = "SELECT * FROM orders ORDER BY orderId DESC LIMIT 100";
+            $query = "SELECT * FROM orders ORDER BY orderId DESC  limit $limit offset $offset";
             $orders = $db->read($query);
     
             return $orders;
