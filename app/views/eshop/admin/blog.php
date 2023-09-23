@@ -44,13 +44,12 @@
                            
                 <?php 
                     if ($mode == "read") {
-                        if (isset($blogs) && is_array($blogs)) {
-   
                 ?>
                 <!-- read table -->
-                <div class="order-table">
+                <div class="order-table p-4">
                     <h4><i class="fa fa-angle-right"></i>Blog List</h4>  
                     <hr>
+                    <?php if (isset($blogs) && is_array($blogs)) { ?>
                     <table class="table table-striped table-advance table-hover table-class">
                         <thead>
                             <tr>
@@ -85,11 +84,13 @@
                             <?php } ?>
                         </tbody>
                     </table>
+                    <?php }else{ ?>
+                    <div style="padding: 10px;">No blog post found!</div>
+                    <?php } ?>
+                    <?php Page::show_links(); ?>
                 </div>
                  <!-- read table end -->
-                <?php }else{ ?>
-                    <div style="padding: 10px;">No blog post found!</div>
-                <?php } }elseif ($mode == "add_new") {  ?>
+                <?php  }elseif ($mode == "add_new") {  ?>
                     <?php 
                         if (isset($errors)) { ?>
                             <p style="margin: 0 10px;" class="status alert alert-danger"><?=$errors ?></p>

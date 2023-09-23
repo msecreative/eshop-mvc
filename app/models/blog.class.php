@@ -140,8 +140,11 @@
         } 
         // Get All Category
         public function get_all(){
+            // For pagination
+            $limit = 4;
+            $offset = Page::get_offset($limit);
             $db = Database::newInstance();
-            return $db->read("SELECT * FROM blogs ORDER BY blogId DESC");
+            return $db->read("SELECT * FROM blogs ORDER BY blogId DESC limit $limit offset $offset");
         }
 
         // Get single category
