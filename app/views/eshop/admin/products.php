@@ -18,7 +18,7 @@
        
         .add-new-product, .edit-product{
             width: 50%;
-            height: 700px;
+            height: 750px;
             background-color: #cecccc;
             position: absolute;
             padding: 10px;
@@ -32,7 +32,7 @@
             margin: 20px 10px 0 0;
             border: 2px solid blue;
             height: 120px;
-            width: 150px;
+            width: 140px;
         }
 
         .edit-product-images {
@@ -80,13 +80,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Brand</label>
                                         <div class="col-sm-8">
-                                            <select name="category" id="category" class="form-control" required>
+                                            <select name="brand" id="brand" class="form-control" required>
                                                 <option value="">Select a brand</option>
                                                 <?php 
-                                                    if (is_array($allcategories)) {
-                                                    foreach ($allcategories as $category) {
+                                                    if (is_array($allbrands)) {
+                                                    foreach ($allbrands as $brand) {
                                                 ?>
-                                                <option value="<?=$category->catId ?>"><?=$category->category ?></option>
+                                                <option value="<?=$brand->brandId ?>"><?=$brand->brand ?></option>
                                                 <?php } } ?>
                                             </select>
                                         </div>
@@ -169,6 +169,22 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Brand</label>
+                                        <div class="col-sm-8">
+                                            <select name="brand" id="edit_brand" class="form-control" required>
+                                                <option value="">Select a brand</option>
+                                                <?php 
+                                                    if (is_array($allbrands)) {
+                                                    foreach ($allbrands as $brand) {
+                                                ?>
+                                                <option value="<?=$brand->brandId ?>"><?=$brand->brand ?></option>
+                                                <?php } } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Quantity</label>
                                         <div class="col-sm-8">
@@ -312,6 +328,13 @@
                 alert("Please enter a valid category name");
                 return;
                }
+
+               var brandInput = document.querySelector("#brand"); 
+               if (brandInput.value.trim() == "" || isNaN(brandInput.value.trim())) {
+                alert("Please enter a valid brand name");
+                return;
+               }
+
                var quantityInput = document.querySelector("#quantity"); 
                if (quantityInput.value.trim() == "" || isNaN(quantityInput.value.trim())) {
                 alert("Please enter a valid quantity name");
@@ -348,6 +371,7 @@
                
                data.append("description", productInput.value.trim());
                data.append("category", categoryInput.value.trim());
+               data.append("brand", brandInput.value.trim());
                data.append("quantity", quantityInput.value.trim());
                data.append("price", priceInput.value.trim());
                data.append("image", imageInput.files[0]);

@@ -60,7 +60,8 @@
             $allProducts = $db->read("SELECT * FROM products ORDER BY pId DESC limit $limit offset $offset");
             // For display add product
             $db = Database::newInstance();
-            $allcategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY catId DESC");
+            $allcategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY views DESC");
+            $allbrands = $db->read("SELECT * FROM brands WHERE `disabled` = 1 ORDER BY views DESC");
 
             $product = $this->load_model("Product");
             $category = $this->load_model("Category");
@@ -68,6 +69,7 @@
 
             $data["table_rows"] = $table_rows;
             $data["allcategories"] = $allcategories;
+            $data["allbrands"] = $allbrands;
 
             $data["page_title"] = "Admin - Products";
             $data["current_page"] = "products";
