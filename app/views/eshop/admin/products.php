@@ -76,6 +76,22 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Product Brand</label>
+                                        <div class="col-sm-8">
+                                            <select name="category" id="category" class="form-control" required>
+                                                <option value="">Select a brand</option>
+                                                <?php 
+                                                    if (is_array($allcategories)) {
+                                                    foreach ($allcategories as $category) {
+                                                ?>
+                                                <option value="<?=$category->catId ?>"><?=$category->category ?></option>
+                                                <?php } } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Product Quantity</label>
                                         <div class="col-sm-8">
