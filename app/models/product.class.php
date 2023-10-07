@@ -195,8 +195,8 @@
                             <td>'.$i.'</td>
                             <td class="hidden-phone"><a href="'.$productRow->pId.'">'.$productRow->description.'</a></td>
                             <td>'.$singleCat->category.'</td>
+                            <td>'.$productRow->brand_name.'</td>
                             <td>'.$productRow->quantity.'</td>
-                            <td>'.$productRow->brand.'</td>
                             <td>'.$productRow->price.'</td>
                             <td>'.date("d-M-Y H:i:s", strtotime($productRow->date)).'</td>
                             <td><a href=""><img src="' .ROOT. $productRow->image.'" alt="product_img" style="height: 50px; width: 50px;"></a></td>

@@ -57,7 +57,14 @@
             $offset = Page::get_offset($limit);
             
             $db = Database::newInstance();
-            $allProducts = $db->read("SELECT * FROM products ORDER BY pId DESC limit $limit offset $offset");
+            $allProducts = $db->read("SELECT
+            products.*, brands.brand AS brand_name
+        FROM
+            brands
+            INNER JOIN
+            products
+            ON 
+                brands.brandId = products.brand ORDER BY products.pId DESC limit $limit offset $offset");
             // For display add product
             $db = Database::newInstance();
             $allcategories = $db->read("SELECT * FROM categories WHERE `disabled` = 1 ORDER BY views DESC");
