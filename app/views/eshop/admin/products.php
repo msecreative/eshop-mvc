@@ -240,6 +240,7 @@
                                   <th><i class="fa fa-bullhorn"></i> Id</th>
                                   <th class="hidden-phone"><i class="fa fa-question-circle"></i>Name</th>
                                   <th><i class=" fa fa-edit"></i> Category</th>
+                                  <th><i class=" fa fa-edit"></i> Brand</th>
                                   <th><i class=" fa fa-edit"></i> Qty</th>
                                   <th><i class=" fa fa-edit"></i> Price</th>
                                   <th><i class=" fa fa-edit"></i> Date</th>
